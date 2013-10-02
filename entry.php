@@ -145,7 +145,8 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 			$del=mysql_query("DELETE FROM journal_flags WHERE journal_id='$thisid' AND flag_id NOT IN ($csv_flags)");
 	echo "<div class='add_entry aligncenter'><h1>1 record added</h1>";
 	echo "<p><a href='".$PHP_SELF ."?clientID=".$clientID." '>Add another entry for ".$row['name']."</a></p>";
-	echo "<p><a href='".$PHP_SELF."'>Add an entry for another client</a></p>";
+	// echo "<p><a href='".$PHP_SELF."'>Add an entry for another client</a></p>";
+	echo "<p><a href='dashboard.php?staffID=".$staffID."'>View all your clients entries</a></p>";
 	echo "</div>";
 	// debug_p($_REQUEST, "all the data coming in");
 
