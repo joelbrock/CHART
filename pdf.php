@@ -117,14 +117,14 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1163", "Marilyn Scholl: How We Got Here, A Co-op History");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1196", "New Resource: Field Guide for Setting up a General Manager Contract");
 		$this->Ln(7);	
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1161", "Featured Video: Ruffin Slater's Re-Imagining Participation");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1193", "Featured Video: Doug Hoffer—Why Grow Co-ops");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1123", "Expansion Projects: Preparing Your Co-op for Successful Growth");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1195", "New Resource: Board Discipline Field Guide");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -143,37 +143,37 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1160", "Great Idea: Restructuring Management Team to Address Long-Range Planning");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1251", "Dreaming Big Together through Strategic Conversations");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"June, 2013");
+		$this->Write(10,"October, 2013");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1159", "Growth and Community Revitalization with Co-op Strategic Leadership");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1252", "Great Idea: Process for Replacing a Board Member");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"June, 2013");
+		$this->Write(10,"October, 2013");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1120", "Transforming a Food Desert through Cooperation");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1201", "The Drive to Re$tock Our Co-op");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','',9);
-		$this->Write(10,"May, 2013");$this->Ln(6);
+		$this->Write(10,"September, 2013");$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter/article/1121", "Great Idea: Templates for Board Use");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1193", "Start Off Right with a New GM");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','',9);
-		$this->Write(10,"May, 2013");
+		$this->Write(10,"August, 2013");
 			
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/cbld_events_2013_2.png',10,155,180);
+		$this->Image('images/2014_events_grid.png',10,155,180);
 		
 		
 		// $this->SetFont('Arial','B',11);
