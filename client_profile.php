@@ -93,32 +93,32 @@ echo "<h2>" . $client['name'] . " &mdash; Client Profile</h2>";
 
 
 <!-- <div id="mini_dash">
-Hours used YTD: <?=number_format($hoursYTD['hoursYTD'],2)?><br />
-Hours used Q<?=$thisQ?>: <?=number_format($hoursQ['hoursQ'],2)?>
+Hours used YTD: <?php echo number_format($hoursYTD['hoursYTD'],2)?><br />
+Hours used Q<?php echo $thisQ?>: <?php echo number_format($hoursQ['hoursQ'],2)?>
 </div> -->
 <div style="margin-right:60px;">
 	<?php mini_dash($clientID,'right'); ?>
 </div>
-<form method='POST' action='<?=$_SERVER['PHP_SELF']?>'>
+<form method='POST' action='<?php echo $_SERVER['PHP_SELF']?>'>
 
 <div id="left_col">
 	<div class="form_field">
 		<h3>Client Name</h3>
-		<input type="text" name="name" value="<?=$client['name']?>" size="60">
+		<input type="text" name="name" value="<?php echo $client['name']?>" size="60">
 	</div>
 	<div class="form_field">
 		<h3>Address</h3>
-		<input type="text" name="address" value="<?=@$client['address']?>" size="60">
+		<input type="text" name="address" value="<?php echo @$client['address']?>" size="60">
 	</div>
 	<div class="form_field">
 		<table border="0" width="">
 			<tr>
 				<td><h3>City</h3>
-				<input type="text" name="city" value="<?=@$client['city']?>" size="37"></td>
+				<input type="text" name="city" value="<?php echo @$client['city']?>" size="37"></td>
 				<td><h3>State</h3>
-				<input type="text" name="state" value="<?=@$client['state']?>" size="2"></td>
+				<input type="text" name="state" value="<?php echo @$client['state']?>" size="2"></td>
 				<td><h3>Zip</h3>
-				<input type="text" name="zip" value="<?=@$client['zip']?>" size="10"></td>
+				<input type="text" name="zip" value="<?php echo @$client['zip']?>" size="10"></td>
 			</tr>
 		</table>
 		
@@ -126,48 +126,48 @@ Hours used Q<?=$thisQ?>: <?=number_format($hoursQ['hoursQ'],2)?>
 	</div>
 	<div class="form_field">
 		<h3>Website</h3>
-		<input type="text" name="url" value="<?=@$client['url']?>" size="40">
+		<input type="text" name="url" value="<?php echo @$client['url']?>" size="40">
 	</div>
 	<div class="form_field">
 		<h3>GM Name</h3>
-		<input type="text" name="gm_name" value="<?=@$client['gm_name']?>" size="40">
+		<input type="text" name="gm_name" value="<?php echo @$client['gm_name']?>" size="40">
 	</div>
 	<div class="form_field">
 		<table border="0" width="">
 			<tr>
 				<td><h3>GM Phone</h3>
-				<input type="text" name="gm_contact" value="<?=@$client['gm_contact']?>" size="16"></td>
+				<input type="text" name="gm_contact" value="<?php echo @$client['gm_contact']?>" size="16"></td>
 				<td><h3>GM Email</h3>
-				<input type="text" name="gm_email" value="<?=@$client['gm_email']?>" size="40">
+				<input type="text" name="gm_email" value="<?php echo @$client['gm_email']?>" size="40">
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="form_field">
 		<h3>Chair Name</h3>
-		<input type="text" name="chair_name" value="<?=@$client['chair_name']?>" size="40">
+		<input type="text" name="chair_name" value="<?php echo @$client['chair_name']?>" size="40">
 	</div>
 	<div class="form_field">
 		<table border="0" width="">
 			<tr>
 				<td><h3>Chair Phone</h3>
-				<input type="text" name="chair_contact" value="<?=@$client['chair_contact']?>" size="16"></td>
+				<input type="text" name="chair_contact" value="<?php echo @$client['chair_contact']?>" size="16"></td>
 				<td><h3>Chair Email</h3>
-				<input type="text" name="chair_email" value="<?=@$client['chair_email']?>" size="40"></td>
+				<input type="text" name="chair_email" value="<?php echo @$client['chair_email']?>" size="40"></td>
 			</tr>
 		</table>
 	</div>
 		<div class="form_field">
 		<h3>Board Name</h3>
-		<input type="text" name="board_name" value="<?=@$client['board_name']?>" size="40">
+		<input type="text" name="board_name" value="<?php echo @$client['board_name']?>" size="40">
 	</div>
 	<div class="form_field">
 		<table border="0" width="">
 			<tr>
 				<td><h3>Board Phone</h3>
-				<input type="text" name="board_contact" value="<?=@$client['board_contact']?>" size="16"></td>
+				<input type="text" name="board_contact" value="<?php echo @$client['board_contact']?>" size="16"></td>
 				<td><h3>Board Email</h3>
-				<input type="text" name="board_email" value="<?=@$client['board_email']?>" size="40"></td>
+				<input type="text" name="board_email" value="<?php echo @$client['board_email']?>" size="40"></td>
 			</tr>
 		</table>
 	</div>
@@ -177,43 +177,43 @@ Hours used Q<?=$thisQ?>: <?=number_format($hoursQ['hoursQ'],2)?>
 <div id="right_col">
 	<div class="form_field">
 		<h3>Client Code (3 letters)</h3>
-		<input type="text" name="code" value="<?=@$client['code']?>" size="3">
+		<input type="text" name="code" value="<?php echo @$client['code']?>" size="3">
 	</div>
 	<div class="form_field">
-		<h3><?= date('Y'); ?> Annual Support Hours (Total)</h3>
-		<input type="text" name="total_hours" value="<?=@$client['total_hours']?>">
+		<h3><?php echo  date('Y'); ?> Annual Support Hours (Total)</h3>
+		<input type="text" name="total_hours" value="<?php echo @$client['total_hours']?>">
 	</div>
 	<div class="form_field">
 		<h3>Contract Expires (yyyy-mm-dd)</h3>
-		<input type="text" name="ExpireDate" class="datepicker" value="<?=@$client['ExpireDate']?>">
+		<input type="text" name="ExpireDate" class="datepicker" value="<?php echo @$client['ExpireDate']?>">
 	</div>
 	<div class="form_field">
 		<h3>Retreat Date (yyyy-mm-dd)</h3>
-		<input type="text" name="RetreatDate" class="datepicker" value="<?=@$client['RetreatDate']?>">
+		<input type="text" name="RetreatDate" class="datepicker" value="<?php echo @$client['RetreatDate']?>">
 	</div>
 	<div class="form_field">
 		<h3>Retreat Description</h3>
-		<textarea name="RetreatDesc" cols=40 rows=4><?=@$client['RetreatDesc']?></textarea>
+		<textarea name="RetreatDesc" cols=40 rows=4><?php echo @$client['RetreatDesc']?></textarea>
 	</div>
 	<br /><br />
 		<div class="form_field">
-		<h3><input type="checkbox" name="UsingPG" id="UsingPG" value="1" <?=(@$client['UsingPG']==1?'checked="checked"':'')?>>  <label for="UsingPG">Using PG?</label></h3>
+		<h3><input type="checkbox" name="UsingPG" id="UsingPG" value="1" <?php echo (@$client['UsingPG']==1?'checked="checked"':'')?>>  <label for="UsingPG">Using PG?</label></h3>
 	</div>
 		<div class="form_field">
-		<h3><input type="checkbox" name="Expansion" id="Expansion" value="1" <?=(@$client['Expansion']==1?'checked="checked"':'')?>>  <label for="Expansion">Expansion</label></h3>
+		<h3><input type="checkbox" name="Expansion" id="Expansion" value="1" <?php echo (@$client['Expansion']==1?'checked="checked"':'')?>>  <label for="Expansion">Expansion</label></h3>
 	</div>
 		<div class="form_field">
-		<h3><input type="checkbox" name="NewGM" id="NewGM" value="1" <?=(@$client['NewGM']==1?'checked="checked"':'')?>>  <label for="NewGM">New GM</label></h3>
+		<h3><input type="checkbox" name="NewGM" id="NewGM" value="1" <?php echo (@$client['NewGM']==1?'checked="checked"':'')?>>  <label for="NewGM">New GM</label></h3>
 	</div>
 		<div class="form_field">
-		<h3><input type="checkbox" name="Retain" id="Retain" value="1" <?=(@$client['Retain']==1?'checked="checked"':'')?>>  <label for="Retain">Retain in <?=(date('Y') + 1)?>?</label></h3>
+		<h3><input type="checkbox" name="Retain" id="Retain" value="1" <?php echo (@$client['Retain']==1?'checked="checked"':'')?>>  <label for="Retain">Retain in <?php echo (date('Y') + 1)?>?</label></h3>
 	</div>
 </div>
 
 <div id="other">
 <br />
 <div class="form_field">
-<input type="hidden" name="clientID" value="<?=@$clientID?>" />
+<input type="hidden" name="clientID" value="<?php echo @$clientID?>" />
 <input type="submit" name="submit" value="Save >>">
 </div>
 </div>

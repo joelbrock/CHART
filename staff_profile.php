@@ -51,24 +51,24 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 ?>
 <div id="wrapper">
 <div id="client_profile">
-<form method='POST' action='<?=$_SERVER['PHP_SELF']?>' autocomplete="off">
+<form method='POST' action='<?php echo $_SERVER['PHP_SELF']?>' autocomplete="off">
 <div id="left_col">
 	<div class="form_field">
 		<h3>Staff Name</h3>
-		<input type="text" name="firstname" value="<?=$staff['firstname']?>" style="margin-right:10px">
-		<input type="text" name="lastname" value="<?=@$staff['lastname']?>">
+		<input type="text" name="firstname" value="<?php echo $staff['firstname']?>" style="margin-right:10px">
+		<input type="text" name="lastname" value="<?php echo @$staff['lastname']?>">
 	</div>
 	<div class="form_field">
 		<h3>Title</h3>
-		<input type="text" name="title" value="<?=@$staff['title']?>" size=30>
+		<input type="text" name="title" value="<?php echo @$staff['title']?>" size=30>
 	</div>
 	<div class="form_field">
 		<h3>Email</h3>
-		<input type="text" name="email" value="<?=@$staff['email']?>" size=30>&nbsp;<span class="email_link"><a href="mailto:<?=@$staff['email']?>">open new email</a></span>
+		<input type="text" name="email" value="<?php echo @$staff['email']?>" size=30>&nbsp;<span class="email_link"><a href="mailto:<?php echo @$staff['email']?>">open new email</a></span>
 	</div>
 	<div class="form_field">
 		<h3>Phone</h3>
-		<input type="text" name="phone" value="<?=@$staff['phone']?>">
+		<input type="text" name="phone" value="<?php echo @$staff['phone']?>">
 	</div>
 	<br /><br />
 	<? if($admin && $userinfo['id']!=$staffID){?>
@@ -76,7 +76,7 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 			<h3>Admin?</h3>
 			<select name="admin">
 				<option value="0">no</option>
-				<option value="1" <?=($staff['admin']==1?"selected='selected'":'')?>>yes</option>
+				<option value="1" <?php echo ($staff['admin']==1?"selected='selected'":'')?>>yes</option>
 			</select>
 		</div>
 	<? }?>
@@ -84,23 +84,23 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 <div id="right_col">
 	<div class="form_field">
 		<h3>Address</h3>
-		<input type="text" name="address" value="<?=@$staff['address']?>" size="60">
+		<input type="text" name="address" value="<?php echo @$staff['address']?>" size="60">
 	</div>
 	<div class="form_field">
 		<table border="0" width="">
 			<tr>
 				<td><h3>City</h3>
-				<input type="text" name="city" value="<?=@$staff['city']?>" size="37"></td>
+				<input type="text" name="city" value="<?php echo @$staff['city']?>" size="37"></td>
 				<td><h3>State</h3>
-				<input type="text" name="state" value="<?=@$staff['state']?>" size="2"></td>
+				<input type="text" name="state" value="<?php echo @$staff['state']?>" size="2"></td>
 				<td><h3>Zip</h3>
-				<input type="text" name="zip" value="<?=@$staff['zip']?>" size="10"></td>
+				<input type="text" name="zip" value="<?php echo @$staff['zip']?>" size="10"></td>
 			</tr>
 		</table>
 	</div>
 	<br><br>
 	<div class="form_field">
-		<h3><?=(!empty($staff['password'])?'Change ':'')?>Password</h3>
+		<h3><?php echo (!empty($staff['password'])?'Change ':'')?>Password</h3>
 		<input type="password" name="staff_password" value="">
 	</div>
 
@@ -140,7 +140,7 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 	
 	
 	<div class="form_field" align="center">
-		<input type="hidden" name="staffID" value="<?=@$staffID?>" />
+		<input type="hidden" name="staffID" value="<?php echo @$staffID?>" />
 		<input type="submit" name="submit" value="Save >>">
 	</div>
 </div>

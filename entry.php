@@ -264,25 +264,25 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 ?>
 	</td></tr>
 	
-	<tr><td colspan=2><span class='label'>Date: </span><input type='text' name='Date' class='datepicker' value="<?= ($fill['Date']) ? $fill['Date'] : date("Y-m-d")?>" size=12 />
-	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' value='<?= ($jid) ? $fill['Hours'] : 0; ?>' /></td>
+	<tr><td colspan=2><span class='label'>Date: </span><input type='text' name='Date' class='datepicker' value="<?php echo  ($fill['Date']) ? $fill['Date'] : date("Y-m-d")?>" size=12 />
+	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' value='<?php echo  ($jid) ? $fill['Hours'] : 0; ?>' /></td>
 	</tr>
 	<tr>
 		<td class='label'>Category: </td><td>
 		<table class="tbl" border="0" style='height: 25px; padding:0; margin:0; border:none;'>
 			<tr>
 				<td style='border:none;'><select name='Category' onchange='switchType(this.value)'>
-					<option value='call' <?= ($fill['Category'] == 'call') ? "SELECTED" : ""; ?>>Call *</option>
-					<option value='quarterly' <?= ($fill['Category'] == 'quarterly') ? "SELECTED" : ""; ?>>Quarterly *</option>
-					<option value='retreat' <?= ($fill['Category'] == 'retreat') ? "SELECTED" : ""; ?>>Retreat *</option>
-					<option value='research' <?= ($fill['Category'] == 'research') ? "SELECTED" : ""; ?>>Research</option>
-					<option value='email' <?= ($fill['Category'] == 'email') ? "SELECTED" : ""; ?>>Email</option>
-					<option value='consult' <?= ($fill['Category'] == 'consult') ? "SELECTED" : ""; ?>>Consult/Meeting</option>
-					<option value='internal' <?= ($fill['Category'] == 'internal') ? "SELECTED" : ""; ?>>Internal</option>
+					<option value='call' <?php echo  ($fill['Category'] == 'call') ? "SELECTED" : ""; ?>>Call *</option>
+					<option value='quarterly' <?php echo  ($fill['Category'] == 'quarterly') ? "SELECTED" : ""; ?>>Quarterly *</option>
+					<option value='retreat' <?php echo  ($fill['Category'] == 'retreat') ? "SELECTED" : ""; ?>>Retreat *</option>
+					<option value='research' <?php echo  ($fill['Category'] == 'research') ? "SELECTED" : ""; ?>>Research</option>
+					<option value='email' <?php echo  ($fill['Category'] == 'email') ? "SELECTED" : ""; ?>>Email</option>
+					<option value='consult' <?php echo  ($fill['Category'] == 'consult') ? "SELECTED" : ""; ?>>Consult/Meeting</option>
+					<option value='internal' <?php echo  ($fill['Category'] == 'internal') ? "SELECTED" : ""; ?>>Internal</option>
 				</select></td>
 				<td style='border:none;'>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type='hidden' name='Billable' value='0' />
-					<input type='checkbox' id='Billable' name='Billable' checked='<?= ($fill['Billable']==0) ? "no" : "yes"; ?>' /></td>
+					<input type='checkbox' id='Billable' name='Billable' checked='<?php echo  ($fill['Billable']==0) ? "no" : "yes"; ?>' /></td>
 				<td class='label' style='border:none;'><label for='Billable'>Billable</label></td>
 			</tr>
 		</table>
@@ -290,18 +290,18 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	</td>
 	</tr>
 <!--<tr><td class='label'>Flags: </td><td><textarea rows=1 cols=110 name='Flags'></textarea></td></tr> -->
-	<tr id='row_nts'><td class='label'>Notes to Self/Team: </td><td><textarea rows=3 cols=80 name='TeamNote'><?= ($jid) ? $fill['TeamNote'] : ''; ?></textarea></td></tr>
-	<tr id='row_ntc'><td class='label'>Notes to Client: </td><td><textarea rows=6 cols=80 name='ClientNote'><?= ($jid) ? $fill['ClientNote'] : ''; ?></textarea>
+	<tr id='row_nts'><td class='label'>Notes to Self/Team: </td><td><textarea rows=3 cols=80 name='TeamNote'><?php echo  ($jid) ? $fill['TeamNote'] : ''; ?></textarea></td></tr>
+	<tr id='row_ntc'><td class='label'>Notes to Client: </td><td><textarea rows=6 cols=80 name='ClientNote'><?php echo  ($jid) ? $fill['ClientNote'] : ''; ?></textarea>
 		<div id='QtrInc_cont'><input type='checkbox' name='QtrInc' id='QtrInc' value='1' /> 
 		<label for='QtrInc'>Include notes on Quarterly Report?</label></div></td></tr>
-	<tr id='row_nq' style='display:none;'><td class='label'>Quarterly Notes: </td><td><textarea rows=6 cols=80 name='Quarterly'><?= ($jid) ? $fill['Quarterly'] : ''; ?></textarea></td></tr>
-	<tr id='row_ni' style='display:none;'><td class='label'>Personal intro note: </td><td><textarea rows=3 cols=80 name='Intro'><?= ($jid) ? $fill['Intro'] : $report['intro_default']; ?></textarea></td></tr>
-	<tr id='row_nr' style='display:none;'><td class='label'>Retreat Notes: </td><td><textarea rows=6 cols=80 name='RetreatNote'><?= ($jid) ? $fill['RetreatNote'] : ''; ?></textarea></td></td></tr>
-	<tr id='row_rd' style='display:none;'><td colspan=2><span class='label'>Retreat Date Start: </span><input type='text' name='RetreatDate1' class='datepicker' value="<?= ($fill['RetreatDate1']) ? $fill['RetreatDate1'] : '' ?>" size=12 />	
-		<span class='label'>Retreat Date End: </span><input type='text' name='RetreatDate2' class='datepicker' value="<?= ($fill['RetreatDate2']) ? $fill['RetreatDate2'] : '' ?>" size=12 /></tr>
+	<tr id='row_nq' style='display:none;'><td class='label'>Quarterly Notes: </td><td><textarea rows=6 cols=80 name='Quarterly'><?php echo  ($jid) ? $fill['Quarterly'] : ''; ?></textarea></td></tr>
+	<tr id='row_ni' style='display:none;'><td class='label'>Personal intro note: </td><td><textarea rows=3 cols=80 name='Intro'><?php echo  ($jid) ? $fill['Intro'] : $report['intro_default']; ?></textarea></td></tr>
+	<tr id='row_nr' style='display:none;'><td class='label'>Retreat Notes: </td><td><textarea rows=6 cols=80 name='RetreatNote'><?php echo  ($jid) ? $fill['RetreatNote'] : ''; ?></textarea></td></td></tr>
+	<tr id='row_rd' style='display:none;'><td colspan=2><span class='label'>Retreat Date Start: </span><input type='text' name='RetreatDate1' class='datepicker' value="<?php echo  ($fill['RetreatDate1']) ? $fill['RetreatDate1'] : '' ?>" size=12 />	
+		<span class='label'>Retreat Date End: </span><input type='text' name='RetreatDate2' class='datepicker' value="<?php echo  ($fill['RetreatDate2']) ? $fill['RetreatDate2'] : '' ?>" size=12 /></tr>
 
-	<input type='hidden' name='staffID' value='<?=$row['StaffID']?>' />
-	<input type='hidden' name='clientID' value='<?=$clientID?>' />
+	<input type='hidden' name='staffID' value='<?php echo $row['StaffID']?>' />
+	<input type='hidden' name='clientID' value='<?php echo $clientID?>' />
 	<tr><td colspan=2 align='center'><input class='aligncenter' type="submit" name="submit" value="Submit" /><br /></td></tr>
 	</table>
 	
@@ -353,7 +353,7 @@ function switchType(type){
 	}
 }
 $(function(){
-	switchType('<?= $fill['Category'] ?>');
+	switchType('<?php echo  $fill['Category'] ?>');
 });
 </script>
 </body>

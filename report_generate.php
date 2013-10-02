@@ -16,12 +16,12 @@ while($row=mysql_fetch_assoc($result)){
 }
 //print_r($c);
 ?>
-<form action="<?= $_SERVER['PHP_SELF'] ?>" method="GET">
+<form action="<?php echo  $_SERVER['PHP_SELF'] ?>" method="GET">
 <select name="thatQ">
-	<option value=1<?=$thisQ == 1 ? ' SELECTED' : ''; ?>>Q1</option>
-	<option value=2<?=$thisQ == 2 ? ' SELECTED' : ''; ?>>Q2</option>	
-	<option value=3<?=$thisQ == 3 ? ' SELECTED' : ''; ?>>Q3</option>
-	<option value=4<?=$thisQ == 4 ? ' SELECTED' : ''; ?>>Q4</option>
+	<option value=1<?php echo $thisQ == 1 ? ' SELECTED' : ''; ?>>Q1</option>
+	<option value=2<?php echo $thisQ == 2 ? ' SELECTED' : ''; ?>>Q2</option>	
+	<option value=3<?php echo $thisQ == 3 ? ' SELECTED' : ''; ?>>Q3</option>
+	<option value=4<?php echo $thisQ == 4 ? ' SELECTED' : ''; ?>>Q4</option>
 </select>
 <select name="thatY">
 	<option value="2013" SELECTED>2013</option>
