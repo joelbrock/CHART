@@ -278,8 +278,8 @@ function event_attendance($client) {
 	$this->Ln(6);
 	$this->Cell( 50, 12, "CBL 101: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event LIKE 'CBL%' AND a.att <> '' 
-		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.lastname";
+	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.att <> '' 
+		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$cblR = mysql_query($cblQ);
 	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
 	$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
@@ -287,8 +287,8 @@ function event_attendance($client) {
 	$this->SetFont('Arial','',12);
 	$this->Cell( 50, 12, "Leadership Training: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event LIKE 'LT%' AND a.att <> ''
-		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.lastname"; 
+	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.att <> ''
+		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$ltR = mysql_query($ltQ);
 	$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
@@ -296,8 +296,8 @@ function event_attendance($client) {
 	$this->SetFont('Arial','',12);
 	$this->Cell( 50, 12, "Strategic Seminar: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event LIKE 'SCS%' AND a.att <> ''
-		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.lastname"; 
+	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'SEM' AND a.att <> ''
+		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$scsR = mysql_query($scsQ);
 	$attSCS = (mysql_num_rows($scsR)==0) ? "None" : mysql_num_rows($scsR);
 	$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
