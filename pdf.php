@@ -397,7 +397,7 @@ function Report($client,$filename,$dest='I')
 		$longdate = strftime('%A %B %e, %Y',strtotime($ret_date));
 		$this->Cell( 20, 12, $longdate, 0, 0, 'B');
 	} else {
-		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $row['clientID'];
+		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
 		$prdateR = mysql_query($prdateQ);
 		list($prdate) = mysql_fetch_row($prdateR);
 		if ($prdate != '0000-00-00') {
