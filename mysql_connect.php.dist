@@ -6,10 +6,10 @@ session_start();
 // This file also establishes a connection to MySQL and selects the database.
 
 // Set the database access information as constants.
-DEFINE ('DB_USER', 'cbldapp');
-DEFINE ('DB_PASSWORD', 'CBLDpa55');
-DEFINE ('DB_HOST', 'mysql.designslife.com');
-DEFINE ('DB_NAME', 'cds_coop');
+DEFINE ('DB_USER', '');
+DEFINE ('DB_PASSWORD', '');
+DEFINE ('DB_HOST', '');
+DEFINE ('DB_NAME', '');
 
 // Make the connection.
 $dbc = @mysql_connect (DB_HOST, DB_USER, DB_PASSWORD) or die ('Could not connect to MySQL.: ' . mysql_error() );
