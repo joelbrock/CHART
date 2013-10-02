@@ -1,5 +1,5 @@
 <?php
-// require_once('mysql_connect.php');
+require_once('mysql_connect.php');
 ?>
 <!DOCTYPE html>
 <HTML>
@@ -86,10 +86,23 @@ echo "</ul></li></ul></div>";
 $greetings = array("Welcome","Bienvenidos","Hello","Hiya","Wilkommen","Shalom","Bon jour","Howdy","Lookin' good","Hola","Konichiwa","Aloha","Mahalo","Bienvenue");
 $greeting = array_rand($greetings);
 echo "<div id='user_btn'>".$greetings[$greeting]." <a href='staff_profile.php?staffID={$userinfo['id']}'>".$userinfo['firstname']."</a>!  
-	<span style='font-size:8.5px; color: #88888;' >cID: $clientID</span></div>";
+	<span style='font-size:8.5px; color: #88888;' >cID: $clientID</span>";
+
+$rcolor = (REPORT_READY) ? "green" : "red";
+echo "&mdash; Reports: <img src='images/".$rcolor."dot.gif' alt='Report readiness indicator' height=12 border=0 
+	class='dot_bg' /></div>";
+	
 echo "<div class='top_btns'> <ul class='dropdown'>";
 echo "<li><a href='#'>OPTIONS</a>
 				<ul class=\"sub_menu\">\n";	
+
+if (REPORT_READY) {
+	if(($report) || ($admin)){
+		echo "<li><a href='#' class='opener'>Generate ".($admin?"Full":"My")." Quarterly Report</a></li>\n";
+	} 
+} else {
+	echo "<li><b>Reports Arent Ready Yet.</b></li>\n";
+}
 if(!empty($clientID)){
 	if(!$client) {
 		$c = mysql_query("SELECT * FROM clients WHERE id='".$clientID."'");
@@ -107,9 +120,8 @@ if($admin){
 	echo "<li><a href='report_profile.php'>Edit Report Profile</a></li>\n";
 	// echo "<li><a href='attendance.php'>Event Attendance</a></li>\n";
 }
-if(($report) || ($admin)){
-	echo "<li><a href='#' class='opener'>Generate ".($admin?"Full":"My")." Quarterly Report</a></li>\n";
-} // echo "<li><a href='entry.php".(isset($_REQUEST['clientID'])?"?clientID=".$_REQUEST['clientID']:'')."'>Track Hours</a></li>\n";
+
+// echo "<li><a href='entry.php".(isset($_REQUEST['clientID'])?"?clientID=".$_REQUEST['clientID']:'')."'>Track Hours</a></li>\n";
 
 echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";

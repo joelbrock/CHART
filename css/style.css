@@ -201,7 +201,10 @@ div.banner h4 {
 #user_btn a {
 	color:#FFF;
 }
-
+.dot_bg {
+	border:#FFF 1px solid;
+	border-radius: 8px;
+}
 .top_btns {
 	float:right;
 /*	background: #f7941e;*/
