@@ -386,20 +386,23 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 
-	$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
-	// echo $retQ;
-	$retR = mysql_query($retQ);
-	$ret = mysql_fetch_row($retR);
 
-
+	
 	if (mysql_num_rows($retR) == 1) {
 		//($ret[0] != '0000-00-00' || $client['RetreatDate'] != '0000-00-00') {
 		$ret_date = $ret[0];
 		$longdate = strftime('%A %B %e, %Y',strtotime($ret_date));
 		$this->Cell( 20, 12, $longdate, 0, 0, 'B');
 	} else {
-		// if (!isset($ret[0]) || $ret[0] == '0000-00-00')
+		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $row['clientID'];
+		$prdateR = mysql_query($prdateQ);
+		list($prdate) = mysql_fetch_row($prdateR);
+		if ($prdate != '0000-00-00') {
+			$longdate = strftime('%A %B %e, %Y',strtotime($prdate));
+			$this->Cell( 20, 12, $longdate, 0, 0, 'B');
+		} else {
 			$this->Cell( 20, 12, "to be decided", 0, 0, 'L');
+		}
 	}
 
 
