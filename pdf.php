@@ -386,8 +386,11 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 
+	$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
+	// echo $retQ;
+	$retR = mysql_query($retQ);
+	$ret = mysql_fetch_row($retR);
 
-	
 	if (mysql_num_rows($retR) == 1) {
 		//($ret[0] != '0000-00-00' || $client['RetreatDate'] != '0000-00-00') {
 		$ret_date = $ret[0];
