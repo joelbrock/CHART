@@ -32,7 +32,7 @@ function Footer()
 	// $this->SetFont('Arial','I',8);
 	//Page number
 	// $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
-	$this->Line(10,$this->GetY(), 190, $this->GetY());
+	// $this->Line(10,$this->GetY(), 190, $this->GetY());
 }
 function jEntryIntro($data,$rc,$in){
 	$clientID = $_REQUEST['clientID'];
@@ -450,11 +450,11 @@ function Report($client,$filename,$dest='I')
 	// $this->SetFont('Arial','',11);
 	// $this->MultiCell(200, 6, $this->content_filter($rc['content-1']), 0, 'L');
 	$this->Write(20, $this->content_filter($rc['content-1']));
-	// $this->Ln(9);
+	$this->Ln(9);
 
 	// $this->SetFont('Arial','',12);
 	$this->Write(20, $this->content_filter($rc['content-2']));
-	// $this->Ln(9);
+	$this->Ln(9);
 
 	// $this->SetFont('Arial','',12);
 	$this->Write(20, $this->content_filter($rc['content-3']));
