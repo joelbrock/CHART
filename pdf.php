@@ -120,7 +120,7 @@ function content_filter($rc) {
 		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1196", "New Resource: Field Guide for Setting up a General Manager Contract");
 		$this->Ln(7);	
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1193", "Featured Video: Doug Hoffer—Why Grow Co-ops");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1193", "Featured Video: Doug Hoffer - Why Grow Co-ops");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -450,11 +450,11 @@ function Report($client,$filename,$dest='I')
 	// $this->SetFont('Arial','',11);
 	// $this->MultiCell(200, 6, $this->content_filter($rc['content-1']), 0, 'L');
 	$this->Write(20, $this->content_filter($rc['content-1']));
-	$this->Ln(9);
+	// $this->Ln(9);
 
 	// $this->SetFont('Arial','',12);
 	$this->Write(20, $this->content_filter($rc['content-2']));
-	$this->Ln(9);
+	// $this->Ln(9);
 
 	// $this->SetFont('Arial','',12);
 	$this->Write(20, $this->content_filter($rc['content-3']));
