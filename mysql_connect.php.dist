@@ -11,6 +11,8 @@ DEFINE ('DB_PASSWORD', '');
 DEFINE ('DB_HOST', '');
 DEFINE ('DB_NAME', '');
 
+DEFINE ('REPORT_READY', False);
+
 // Make the connection.
 $dbc = @mysql_connect (DB_HOST, DB_USER, DB_PASSWORD) or die ('Could not connect to MySQL.: ' . mysql_error() );
 
