@@ -162,18 +162,18 @@ function content_filter($rc) {
 		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1201", "The Drive to Re$tock Our Co-op");
 		$this->Ln(4);
 		$this->Cell(8);
-		$this->SetFont('Arial','',9);
+		$this->SetFont('Arial','I',9);
 		$this->Write(10,"September, 2013");$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
 		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1193", "Start Off Right with a New GM");
 		$this->Ln(4);
 		$this->Cell(8);
-		$this->SetFont('Arial','',9);
+		$this->SetFont('Arial','I',9);
 		$this->Write(10,"August, 2013");
 			
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2014_events_grid.png',10,155,180);
+		$this->Image('images/2014_events_grid_Q1.png',10,145,180);
 		
 		
 		// $this->SetFont('Arial','B',11);
