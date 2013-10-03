@@ -89,8 +89,8 @@ echo "<div id='user_btn'>".$greetings[$greeting]." <a href='staff_profile.php?st
 	<span style='font-size:8.5px; color: #88888;' >cID: $clientID</span>";
 
 $rcolor = (REPORT_READY) ? "green" : "red";
-echo "&mdash; Reports: <img src='images/".$rcolor."dot.gif' alt='Report readiness indicator' height=12 border=0 
-	class='dot_bg' /></div>";
+$rpt_title = (REPORT_READY) ? "Reports are ready to go.  Get to it!" : "Reports not yet ready, sorry";
+echo "&mdash; Reports: <a href='#' title='".$rpt_title."'><img src='images/".$rcolor."dot.gif' alt='Report readiness indicator' height=12 border=0 class='dot_bg' /></a></div>";
 	
 echo "<div class='top_btns'> <ul class='dropdown'>";
 echo "<li><a href='#'>OPTIONS</a>
