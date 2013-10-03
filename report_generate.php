@@ -8,7 +8,7 @@ $reportID=1;
 $thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : thisQ();
 $thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
 
-$query = "SELECT * FROM clients c";
+$query = "SELECT * FROM clients c ORDER BY c.name";
 // echo $query;
 $result = mysql_query($query);
 while($row=mysql_fetch_assoc($result)){
