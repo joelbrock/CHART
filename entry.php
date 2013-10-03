@@ -350,7 +350,7 @@ function switchType(type){
 	 $('#row_nr, #row_rd').show();
 	}else{
 	 $('#row_nts, #row_ntc').show();
-	 $('#row_nq, #row_ni, #row_nr').hide(); 
+	 $('#row_nq, #row_ni, #row_nr, #row_rd').hide(); 
 	}
 }
 $(function(){
