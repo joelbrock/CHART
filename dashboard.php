@@ -296,6 +296,7 @@ if(mysql_num_rows($result)>0){
 				case "email";
 				case "internal":
 				case "consult":
+				case "research":
 				case "call":
 					$note_text =  ($row['clientnote'] != '') ? "client: ".substr($row['clientnote'],0,$col) : (($row['teamnote'] != '') ? "team: ".substr($row['teamnote'],0,$col) : "");
 					$full_text = "team note: " . htmlspecialchars($row['teamnote']) . "<br /><br />client note: " . htmlspecialchars($row['clientnote']);
