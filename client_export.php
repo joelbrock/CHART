@@ -69,6 +69,16 @@ function Report($client,$filename,$dest='I')
 	$this->Line( 10, 52 ,190 ,52 );
 	$this->Ln(8);
 	
+	
+	
+	$this->SetFont('Arial','B',12);
+	$this->Cell( 90, 12, '', 0, 0, 'L' );
+
+	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
+	$staffname = mysql_fetch_row($staffnameR);
+	$this->Cell( 55, 12, "CBLD Consultant: "$staffname[0]." ".$staffname[1], 0, 0, 'B' );
+	
+	
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 55, 12, "Ongoing Support:", 0, 0, 'L' );
 	$this->Ln(8);
@@ -103,13 +113,7 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 94, 12, "On track for balanced use of hours for the year? ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'yes':'no'), 0, 0, 'L');
-	$this->SetFont('Arial','B',12);
-	$this->Ln(6);
 
-	$this->jEntries($client['hours'],$in);
-
-	$this->Ln(4);
-	
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
@@ -142,21 +146,14 @@ function Report($client,$filename,$dest='I')
 		$this->Cell($in);
 		$this->MultiCell( 175, 5.25, $ret[2]);
 	}
-	$this->Ln(9);
 
-
+	$this->Ln(6);
 	$this->SetFont('Arial','B',12);
-	$this->Cell( 90, 12, '', 0, 0, 'L' );
+	$this->Cell( 55, 12, "Hours Details:", 0, 0, 'L' );
+	$this->Ln(8);
 
-	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
-	$staffname = mysql_fetch_row($staffnameR);
-	$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'B' );
+	$this->jEntries($client['hours'],$in);
 
-	$this->Ln(7);
-	$this->Cell( 90, 12, '', 0, 0, 'L' );
-	$this->PutLink('http://cdsconsulting.coop','CDS Consulting Co-op');
-	$this->Write( 10,' | ');
-	$this->PutLink('http://cdssconsulting.coop/cbld','CBLD Program');
 	$this->Ln(10);
 			
 	$this->Output($filename,$dest);
@@ -189,11 +186,11 @@ function Report($client,$filename,$dest='I')
 			$clientID=$client['id'];
 			$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 			$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
-			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) < (".(3*($thisQ-1)+1)."))";//hours used this year prior to Q
+			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY";
 			$hours_tyr = mysql_query($hours_ty);
 			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
-			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) ORDER BY Category='quarterly' DESC, Date DESC ";
+			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY Date DESC ";
 			$hoursr = mysql_query($hoursq); 
 			if(mysql_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
