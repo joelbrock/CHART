@@ -63,17 +63,13 @@ function Report($client,$filename,$dest='I')
 	$this->SetFont('Arial','B',14);
 	$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
-	$this->Cell( 40, 12, "Q".thisQ()."-".date('Y'), 0, 0, 'L' );
+	$this->Cell( 40, 12, "YTD-".date('Y'), 0, 0, 'L' );
 	$this->Cell( 40, 12, date('n/j/Y'), 0, 0, 'L' );
 	$this->SetLineWidth(0.8);
 	$this->Line( 10, 52 ,190 ,52 );
 	$this->Ln(8);
 	
-	
-	
 	$this->SetFont('Arial','B',12);
-	$this->Cell( 90, 12, '', 0, 0, 'L' );
-
 	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysql_fetch_row($staffnameR);
 	$this->Cell( 55, 12, "CBLD Consultant: ".$staffname[0]." ".$staffname[1], 0, 0, 'L' );
