@@ -69,7 +69,7 @@ function Report($client,$filename,$dest='I')
 	$this->Line( 10, 52 ,190 ,52 );
 	$this->Ln(8);
 	
-	$this->SetFont('Arial','B',12);
+	$this->SetFont('Arial','',12);
 	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysql_fetch_row($staffnameR);
 	$this->Cell( 55, 12, "CBLD Consultant: ".$staffname[0]." ".$staffname[1], 0, 0, 'L' );
@@ -109,8 +109,10 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 94, 12, "On track for balanced use of hours for the year? ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'yes':'no'), 0, 0, 'L');
-	$this->Ln(6);
-	$this->SetFont('Arial','B',12);
+	$this->Ln(8);
+
+	$this->SetFont('Arial','',12);
+	$this->Cell($in);
 	$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 

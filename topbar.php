@@ -113,6 +113,7 @@ if(!empty($clientID)){
 		// echo "<li><a href='dashboard.php?clientID=".$client['id']."'>View all for $client[name]</a></li>\n";
 		// if ($userinfo['id'] == $staffID || ($admin)) 
 			echo "<li><a href='client_profile.php?clientID=".$client['id']."'>Edit Client Profile</a></li>\n";
+			echo "<li><a href='client_export.php?clientID=".$client['id']."'>Export Client Data</a></li>\n";
 	}
 }
 if($admin){
@@ -123,6 +124,7 @@ if($admin){
 }
 
 // echo "<li><a href='entry.php".(isset($_REQUEST['clientID'])?"?clientID=".$_REQUEST['clientID']:'')."'>Track Hours</a></li>\n";
+
 
 echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";
