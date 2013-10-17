@@ -4,6 +4,7 @@ require_once('mysql_connect.php');
 <!DOCTYPE html>
 <HTML>
 <head>
+<title>CHART</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"></link>
 <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" charset="utf-8"></link>
 <!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script> -->
