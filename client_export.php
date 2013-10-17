@@ -29,26 +29,12 @@ function Footer()
 }
 function jEntry($k,$data,$in){
 	global $thisQ;
-	if($data['Category']=='quarterly'){
-		$this->Write(10, "Quarterly Note:");
-		$this->Ln(9);
-		$this->Cell($in);
-		$this->SetFont('Arial','',12);
-		// $this->Write(10,$data['Quarterly']);
-		$this->MultiCell(175,5.25,$data['Quarterly']);
-		$this->Ln(6);
-	} else {//this is a call or research entry
-		if($k==0){			
-			$this->SetFont('Arial','B',12);
-			$this->Cell(0,12,'Q' . thisQ() . ' Note:',0,1);	
-			$this->Ln(6);
-		}
-		$this->SetFont('Arial','',10);
-		$hr = ($data['Hours'] == 1)?"hr":"hrs";
-		$this->SetFont('Arial','',10);
-		$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '.$data['Hours'] . $hr . ' - ' .$data['ClientNote']);
-		$this->Ln(3);
-	}
+
+	$this->SetFont('Arial','',10);
+	$hr = ($data['Hours'] == 1)?"hr":"hrs";
+	$this->SetFont('Arial','',10);
+	$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '.$data['Hours'] . $hr . ' - ' .$data['ClientNote']);
+	$this->Ln(3);
 }
 function jEntries($hours,$in){
 	foreach($hours as $k=>$h){
