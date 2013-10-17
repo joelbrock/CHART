@@ -76,7 +76,7 @@ function Report($client,$filename,$dest='I')
 
 	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysql_fetch_row($staffnameR);
-	$this->Cell( 55, 12, "CBLD Consultant: "$staffname[0]." ".$staffname[1], 0, 0, 'B' );
+	$this->Cell( 55, 12, "CBLD Consultant: ".$staffname[0]." ".$staffname[1], 0, 0, 'B' );
 	
 	
 	$this->SetFont('Arial','B',12);
