@@ -48,7 +48,7 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	if ($_POST['Retain'] == 0) { $Retain = 0; } else { $Retain = 1; }
 	$cols[]='Retain';$vals[]="$Retain";
 	if(!empty($clientID)){
-		$upd=db_send($cols,$vals,'clients','update',"id='$clientID'",1);
+		$upd=db_send($cols,$vals,'clients','update',"id='$clientID'",0);
 	} else {
 		$ins=db_send($cols,$vals,'clients','insert');
 		$clientID=mysql_insert_id();
