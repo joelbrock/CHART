@@ -130,7 +130,7 @@ function content_filter($rc) {
 		$this->Cell(8);
 		$this->Write(11,"And a ");
 		$this->PutLink("http://www.cdsconsulting.coop/co-op_cafe", "dozen short video recordings");
-		$this->Write(11," from this year's Strategic Seminars");
+		$this->Write(11," from this year's Cooperative Cafes");
 		$this->Ln(3);
 		$this->Cell(8);
 		$this->Write(11," focused on growing our co-ops.");
@@ -294,7 +294,7 @@ function event_attendance($client) {
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 	$this->Ln(6);
 	$this->SetFont('Arial','',12);
-	$this->Cell( 50, 12, "Strategic Seminar: ", 0, 0, 'L' );
+	$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'SEM' AND a.att <> ''
 		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
