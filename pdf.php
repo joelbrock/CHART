@@ -51,7 +51,7 @@ function jEntryIntro($data,$rc,$in){
 		$this->Write(6, $rc['intro_default']);
 		$this->Ln(6);
 	} else {
-		$this->MultiCell(175, 5.25, $row[0]);
+		$this->MultiCell(175, 5.25, stripslashes($row[0]));
 	
 		// 
 		// if($data['Category']=='quarterly'){
@@ -69,7 +69,7 @@ function jEntry($k,$data,$in){
 		$this->Cell($in);
 		$this->SetFont('Arial','',12);
 		// $this->Write(10,$data['Quarterly']);
-		$this->MultiCell(175,5.25,$data['Quarterly']);
+		$this->MultiCell(175,5.25,stripslashes($data['Quarterly']));
 		$this->Ln(6);
 
 	} else {//this is a call or research entry
@@ -88,7 +88,8 @@ function jEntry($k,$data,$in){
 			// $this->Write(8,$data['created_fmt'].' - '.$data['Hours'] . $hr . ' - ');
 			$this->SetFont('Arial','',10);
 			// $this->Write(8,$data['ClientNote']);
-			$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '.$data['Hours'] . $hr . ' - ' .$data['ClientNote']);
+			$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '
+				.$data['Hours'] . $hr . ' - ' .stripslashes($data['ClientNote']));
 			$this->Ln(3);
 		}
 		// $this->Ln(10);
