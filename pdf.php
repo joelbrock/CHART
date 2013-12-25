@@ -423,7 +423,7 @@ function Report($client,$filename,$dest='I')
 	if ($ret[2] != '') {
 		$this->Ln(10);
 		$this->Cell($in);
-		$this->MultiCell( 175, 5.25, $ret[2]);
+		$this->MultiCell( 175, 5.25, stripslashes($ret[2]));
 	}
 	$this->Ln(9);
 
