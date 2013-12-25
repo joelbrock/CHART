@@ -63,7 +63,7 @@ function jEntryIntro($data,$rc,$in){
 }
 function jEntry($k,$data,$in){
 	global $thisQ;
-	if($data['Category']=='quarterly'){
+	if($data['Category']=='quarterly' && $data['Quarterly'] != ""){
 		$this->Write(10, "Quarterly Note:");
 		$this->Ln(9);
 		$this->Cell($in);
