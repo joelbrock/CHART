@@ -130,6 +130,7 @@ if (!$client_ID && !$staffID) { $staffID = $userinfo['id']; }//add authenticatio
 // else $sqladmin = "";
 // $sqlgroup = (!$staffID) ? "j.ClientID, j.Date" : "j.ClientID, j.Date";
 $sqlrange = '';
+$sqlyear = '';
 switch ($_GET['range']) {
 	case 'today':
 		$sqlrange = "AND j.Date = CURDATE()";
@@ -146,22 +147,27 @@ switch ($_GET['range']) {
 	case 'prev_quarter':
 		$sqlrange = "AND QUARTER(j.Date) = QUARTER(CURDATE()) - 1";
 		break;
-
+	case 'this_year':
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
+		break;
+	case 'prev_year':
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
+		break;
 }
 if ($staffID == 'ALL') {
-	$sql = "";
+	$sqljoin = "";
 	$sqlgroup = "c.id";
 	$single = False;
 } elseif($staffID =='SUPERALL') {
-	$sql = "";
+	$sqljoin = "";
 	$sqlgroup = "j.id";
 	$single = True;
 } elseif (!$staffID) {
-	$sql = "AND j.clientID = $client_ID";
+	$sqljoin = "AND j.clientID = $client_ID";
 	$sqlgroup = "j.id";
 	$single = True;
 } else {
-	$sql = "AND j.StaffID = $staffID";
+	$sqljoin = "AND j.StaffID = $staffID";
 	$sqlgroup = "c.id";
 	$single = False;
 }
@@ -182,8 +188,8 @@ $query = "SELECT j.created AS created,
 		j.id AS jid
  	FROM journal j JOIN staff s ON j.StaffID = s.id JOIN clients c 
 	ON j.ClientID = c.id 
-	AND YEAR(j.Date) = YEAR(CURDATE())
-	$sql
+	$sqlyear
+	$sqljoin
 	$sqlrange
 	GROUP BY $sqlgroup
 	ORDER BY j.Date, c.name ASC";
@@ -207,20 +213,24 @@ $result = mysql_query($query) or die(mysql_error());
 echo "<div id='journal_output'>";	
 
 
-echo "<div id='datebar'><a onClick='remove' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=today'>today</a>";
+echo "<div id='datebar'><a onClick='remove' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=today'>
+	today</a>";
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_week'>this week</a>";
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_month'>this month</a>";
-echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=prev_quarter' alt='Previous Quarter'><<</a>";
+echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=prev_quarter' 
+	alt='Previous Quarter'><<</a>";
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_quarter'>this quarter</a>";
-
+echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=prev_year' 
+	alt='Previous Year'><<</a>";
+echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
+
 $group_on = ($_GET['range']) ? $_GET['range'] : '';
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
 	'clientID' => ($clientID) ? 'client' : 0
 );
-
 
 echo "<div id='grouped'>";
 
