@@ -174,10 +174,10 @@ if ($staffID == 'ALL') {
 } else {
 	$sqljoin = "AND j.StaffID = $staffID";
 	$sqlgroup = "INNER JOIN (
-	  		SELECT MAX(Date) as MaxDate, ClientID
+	  		SELECT MAX(created) as MaxDate, ClientID
 	  		FROM journal GROUP BY ClientID
 		) j2 ON j.ClientID = j2.ClientID
-		AND j.Date = j2.MaxDate";
+		AND j.created = j2.MaxDate";
 	$single = False;
 }
 
@@ -193,7 +193,8 @@ $query = "SELECT j.created AS created,
 		j.Hours AS hours,
 		c.total_hours AS totalhours,
 		CONCAT(s.firstname,\" \",s.lastname) AS consultant, 
-		j.StaffID AS staffID, j.ClientID AS clientID,
+		j.StaffID AS staffID, 
+		j.ClientID AS clientID,
 		j.id AS jid
  	FROM journal j 
 	JOIN staff s ON j.StaffID = s.id 
