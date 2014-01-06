@@ -126,7 +126,7 @@ if($admin){
 
 // echo "<li><a href='entry.php".(isset($_REQUEST['clientID'])?"?clientID=".$_REQUEST['clientID']:'')."'>Track Hours</a></li>\n";
 
-
+echo "<li><a href='https://github.com/joelbrock/CHART/commits/master'>Changelog</a></li>";
 echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";
 echo "<li><a href='#'>CONSULTANTS</a>
