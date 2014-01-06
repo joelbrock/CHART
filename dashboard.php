@@ -29,7 +29,6 @@ function confirmclick(cid,jid) {
     var r = confirm ('This action cannot be undone. Are you sure you want to perform this action?');
     if (r) {
               location.href = 'dashboard.php?delete=delete&clientID='+cid+'&jid='+jid;
-              // Or do an AJAX operation
     }
 }
 
@@ -129,8 +128,10 @@ if (!$client_ID && !$staffID) { $staffID = $userinfo['id']; }//add authenticatio
 // if ($staffID != 'ALL') $sqladmin = (!$staffID) ? "AND j.clientID = $clientID" : "AND j.StaffID = $staffID";
 // else $sqladmin = "";
 // $sqlgroup = (!$staffID) ? "j.ClientID, j.Date" : "j.ClientID, j.Date";
-$sqlrange = '';
-$sqlyear = '';
+$sqlrange = "";
+$sqlyear = "";
+$sqlgroup = "";
+$sqlgroup = "";
 switch ($_GET['range']) {
 	case 'today':
 		$sqlrange = "AND j.Date = CURDATE()";
@@ -156,19 +157,27 @@ switch ($_GET['range']) {
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
-	$sqlgroup = "c.id";
+	$sqlgroup = "INNER JOIN (
+	  		SELECT MAX(Date) as MaxDate, ClientID
+	  		FROM journal GROUP BY ClientID
+		) j2 ON j.ClientID = j2.ClientID
+		AND j.Date = j2.MaxDate";
 	$single = False;
 } elseif($staffID =='SUPERALL') {
 	$sqljoin = "";
-	$sqlgroup = "j.id";
+	$sqlgroup = "GROUP BY j.id";
 	$single = True;
 } elseif (!$staffID) {
 	$sqljoin = "AND j.clientID = $client_ID";
-	$sqlgroup = "j.id";
+	$sqlgroup = "GROUP BY j.id";
 	$single = True;
 } else {
 	$sqljoin = "AND j.StaffID = $staffID";
-	$sqlgroup = "c.id";
+	$sqlgroup = "INNER JOIN (
+	  		SELECT MAX(Date) as MaxDate, ClientID
+	  		FROM journal GROUP BY ClientID
+		) j2 ON j.ClientID = j2.ClientID
+		AND j.Date = j2.MaxDate";
 	$single = False;
 }
 
@@ -186,13 +195,14 @@ $query = "SELECT j.created AS created,
 		CONCAT(s.firstname,\" \",s.lastname) AS consultant, 
 		j.StaffID AS staffID, j.ClientID AS clientID,
 		j.id AS jid
- 	FROM journal j JOIN staff s ON j.StaffID = s.id JOIN clients c 
-	ON j.ClientID = c.id 
+ 	FROM journal j 
+	JOIN staff s ON j.StaffID = s.id 
+	JOIN clients c ON j.ClientID = c.id 	
 	$sqlyear
 	$sqljoin
 	$sqlrange
-	GROUP BY $sqlgroup
-	ORDER BY j.Date, c.name ASC";
+	$sqlgroup
+	ORDER BY j.Date DESC";
 
 // echo "<br><br><br>".$query;
 
@@ -293,7 +303,8 @@ if(mysql_num_rows($result)>0){
 			if($single == True) {
 				echo "<td align='right'>" . $row['hours'] ."</td>";
 			} else {
-				echo "<td align='right'>" . rtrim($tot[0],'.0') . "</td>";
+				$hrs = ($tot[0]==0) ? 0 : rtrim($tot[0],'.0');
+				echo "<td align='right'>$hrs</td>";
 			}
 			$rem = $row['totalhours'] - $tot[0];
 			$left = ((($row['totalhours'] - $tot[0]) / $row['totalhours']) * 100);
