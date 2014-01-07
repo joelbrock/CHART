@@ -328,7 +328,7 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 	$this->Cell( 40, 12, "Q".(!isset($_GET['thatQ']))?thisQ():$_GET['thatQ']."-"
-		.(!isset($_GET['thatY']))?date('Y'):$_GET['thatY']), 0, 0, 'L' );
+		.(!isset($_GET['thatY']))?date('Y'):$_GET['thatY'], 0, 0, 'L' );
 	$this->Cell( 40, 12, date('n/j/Y'), 0, 0, 'L' );
 	$this->SetLineWidth(0.8);
 	$this->Line( 10, 52 ,190 ,52 );
