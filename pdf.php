@@ -63,6 +63,8 @@ function jEntryIntro($data,$rc,$in){
 }
 function jEntry($k,$data,$in){
 	global $thisQ;
+	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
+	
 	if($data['Category']=='quarterly' && $data['Quarterly'] != ""){
 		$this->Write(10, "Quarterly Note:");
 		$this->Ln(9);
@@ -75,7 +77,7 @@ function jEntry($k,$data,$in){
 	} else {//this is a call or research entry
 		if($k==0){			
 			$this->SetFont('Arial','B',12);
-			$this->Cell(0,12,'Q' . (!isset($_GET['thatQ']))?thisQ():$_GET['thatQ'] . ' Note:',0,1);	
+			$this->Cell(0,12,'Q' . $printQ . ' Note:',0,1);	
 			$this->Ln(6);
 			
 		}
@@ -323,12 +325,13 @@ function Report($client,$filename,$dest='I')
 	$this->AddPage();
 	
 	$in = 6;
+	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
+	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 	
 	$this->SetFont('Arial','B',14);
 	$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
-	$this->Cell( 40, 12, "Q".(!isset($_GET['thatQ']))?thisQ():$_GET['thatQ']."-"
-		.(!isset($_GET['thatY']))?date('Y'):$_GET['thatY'], 0, 0, 'L' );
+	$this->Cell( 40, 12, "Q".$printQ."-".$printY, 0, 0, 'L' );
 	$this->Cell( 40, 12, date('n/j/Y'), 0, 0, 'L' );
 	$this->SetLineWidth(0.8);
 	$this->Line( 10, 52 ,190 ,52 );
