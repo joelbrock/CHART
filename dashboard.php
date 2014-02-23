@@ -354,16 +354,21 @@ if(mysql_num_rows($result)>0){
 				$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $row['clientID'];
 				$prdateR = mysql_query($prdateQ);
 				list($prdate) = mysql_fetch_row($prdateR);
-				if ($prdate != '0000-00-00') 
+				if ($prdate != '0000-00-00') {
 					$spit = "&#10004; ".date('m/d', strtotime($prdate));
-				else
+					$color = 'green';
+				} else {
 					$spit = '<b>&times;</b>';
+					$color = 'red';
+				}
 			} elseif($rdate1 != '0000-00-00') {
 				$spit = "&#10004; ".date('m/d', strtotime($rdate1));
+				$color = 'green';
 			} else {
 				$spit = '<b>&times;</b>';
+				$color = 'red';
 			}
-			echo "<td align='left'>$spit</td>";
+			echo "<td align='left' style='color:$color'>$spit</td>";
 
 
 
