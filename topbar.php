@@ -80,7 +80,8 @@ echo "<div class='track_btn'><ul class='dropdown'><li><a href='#'>TRACK!</a><ul 
 $clientr = mysql_query("SELECT * FROM clients LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' ORDER BY clients.name");
 
 while ($clientRow = mysql_fetch_assoc($clientr)) {
-	echo "<li><a href='entry.php?clientID=".$clientRow['id']."'>".acronymize($clientRow['name'])."</a></li>";
+	$ccode = ($clientRow['code'] == '') ? acronymize($clientRow['name']) : $clientRow['code'];
+	echo "<li><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a></li>";
 }
 echo "</ul></li></ul></div>";
 
@@ -125,7 +126,7 @@ if($admin){
 
 // echo "<li><a href='entry.php".(isset($_REQUEST['clientID'])?"?clientID=".$_REQUEST['clientID']:'')."'>Track Hours</a></li>\n";
 
-
+echo "<li><a href='https://github.com/joelbrock/CHART/commits/master' target='_BLANK'>Changelog</a></li>";
 echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";
 echo "<li><a href='#'>CONSULTANTS</a>

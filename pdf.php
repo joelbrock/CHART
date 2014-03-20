@@ -51,7 +51,7 @@ function jEntryIntro($data,$rc,$in){
 		$this->Write(6, $rc['intro_default']);
 		$this->Ln(6);
 	} else {
-		$this->MultiCell(175, 5.25, $row[0]);
+		$this->MultiCell(175, 5.25, stripslashes($row[0]));
 	
 		// 
 		// if($data['Category']=='quarterly'){
@@ -63,19 +63,21 @@ function jEntryIntro($data,$rc,$in){
 }
 function jEntry($k,$data,$in){
 	global $thisQ;
-	if($data['Category']=='quarterly'){
+	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
+	
+	if($data['Category']=='quarterly' && $data['Quarterly'] != ""){
 		$this->Write(10, "Quarterly Note:");
 		$this->Ln(9);
 		$this->Cell($in);
 		$this->SetFont('Arial','',12);
 		// $this->Write(10,$data['Quarterly']);
-		$this->MultiCell(175,5.25,$data['Quarterly']);
+		$this->MultiCell(175,5.25,stripslashes($data['Quarterly']));
 		$this->Ln(6);
 
 	} else {//this is a call or research entry
 		if($k==0){			
 			$this->SetFont('Arial','B',12);
-			$this->Cell(0,12,'Q' . thisQ() . ' Note:',0,1);	
+			$this->Cell(0,12,'Q' . $printQ . ' Note:',0,1);	
 			$this->Ln(6);
 			
 		}
@@ -88,7 +90,8 @@ function jEntry($k,$data,$in){
 			// $this->Write(8,$data['created_fmt'].' - '.$data['Hours'] . $hr . ' - ');
 			$this->SetFont('Arial','',10);
 			// $this->Write(8,$data['ClientNote']);
-			$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '.$data['Hours'] . $hr . ' - ' .$data['ClientNote']);
+			$this->MultiCell(175,5.25,strftime("%D",strtotime($data['Date'])).' - '
+				.$data['Hours'] . $hr . ' - ' .stripslashes($data['ClientNote']));
 			$this->Ln(3);
 		}
 		// $this->Ln(10);
@@ -295,7 +298,7 @@ function event_attendance($client) {
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 	$this->Ln(6);
 	$this->SetFont('Arial','',12);
-	$this->Cell( 50, 12, "Strategic Seminar: ", 0, 0, 'L' );
+	$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'SEM' AND a.att <> ''
 		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
@@ -323,11 +326,13 @@ function Report($client,$filename,$dest='I')
 	$this->AddPage();
 	
 	$in = 6;
+	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
+	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 	
 	$this->SetFont('Arial','B',14);
 	$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
-	$this->Cell( 40, 12, "Q".thisQ()."-".date('Y'), 0, 0, 'L' );
+	$this->Cell( 40, 12, "Q".$printQ."-".$printY, 0, 0, 'L' );
 	$this->Cell( 40, 12, date('n/j/Y'), 0, 0, 'L' );
 	$this->SetLineWidth(0.8);
 	$this->Line( 10, 52 ,190 ,52 );
@@ -423,7 +428,7 @@ function Report($client,$filename,$dest='I')
 	if ($ret[2] != '') {
 		$this->Ln(10);
 		$this->Cell($in);
-		$this->MultiCell( 175, 5.25, $ret[2]);
+		$this->MultiCell( 175, 5.25, stripslashes($ret[2]));
 	}
 	$this->Ln(9);
 
