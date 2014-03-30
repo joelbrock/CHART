@@ -26,10 +26,9 @@ while($row=mysql_fetch_assoc($result)){
 	<option value=4<?php echo $thisQ == 4 ? ' SELECTED' : ''; ?>>Q4</option>
 </select>
 <select name="thatY">
-	<option value="2013">2014</option>	
-	<option value="2013" SELECTED>2013</option>
+	<option value="2014" SELECTED>2014</option>	
+	<option value="2013">2013</option>
 	<option value="2012">2012</option>
-	<option value="2011">2011</option>
 </select>
 <input type="submit" value="submit" />
 </form>
