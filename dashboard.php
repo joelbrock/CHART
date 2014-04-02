@@ -309,7 +309,7 @@ if(mysql_num_rows($result)>0){
 			}
 			$rem = $row['totalhours'] - $tot[0];
 			$left = ((($row['totalhours'] - $tot[0]) / $row['totalhours']) * 100);
-			echo "<td align='right'>$rem | " . number_format($left,0) ."%</td>";			
+			echo "<td align='right'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 			echo "<td><p class='textblock'>";
