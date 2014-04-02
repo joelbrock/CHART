@@ -74,6 +74,8 @@ function confirmclick(cid,jid) {
 #output { width: 100%; }
 
 .textblock a:hover { cursor:pointer; text-decoration:none; }
+
+.year-marker {	text-align: center; font-weight: bold; font-size:1.3em; border: 1px solid black;}
 </style>
 <script>
 function removeTag() {
@@ -277,10 +279,12 @@ if(mysql_num_rows($result)>0){
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
-			$yrmark = '2011-01-01';
-			if (date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))
-				echo "<tr><td colspan=9>" . date('Y',strtotime($row['date'])) . "</td></tr>";
-			$yrmark = $row['date'];
+//			$yrmark = '2011-01-01';
+			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
+			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
+			// 		. date('Y',strtotime($row['date'])) . "</span></td><td>" 
+			// 		. date('Y',strtotime($row['date'])) . "-01-01</td><td>&nbsp;</td></tr>";
+			// $yrmark = $row['date'];
 			
 			// if(!$single) { 
 			$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
