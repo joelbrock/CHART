@@ -277,6 +277,11 @@ if(mysql_num_rows($result)>0){
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
+			$yrmark = '2011-01-01';
+			if (date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))
+				echo "<tr><td colspan=9>" . date('Y',strtotime($row['date'])) . "</td></tr>";
+			$yrmark = $row['date'];
+			
 			// if(!$single) { 
 			$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
 					AND YEAR(Date) = YEAR(NOW())";
