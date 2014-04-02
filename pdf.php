@@ -131,7 +131,7 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->Write(11,"And a ");
+		$this->Write(11,"And ");
 		$this->PutLink("http://www.cdsconsulting.coop/co-op_cafe", "dozens of short video recordings");
 		$this->Write(11," from the Cooperative Cafes");
 		$this->Ln(3);
