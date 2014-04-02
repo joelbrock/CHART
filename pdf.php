@@ -276,13 +276,15 @@ function content_filter($rc) {
 }
 function event_attendance($client) {
 	global $userinfo;
+	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
+	
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 45, 12, "In-Person Event Attendance", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 	$this->Ln(6);
 	$this->Cell( 50, 12, "CBL 101: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.att <> '' 
+	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> '' 
 		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$cblR = mysql_query($cblQ);
 	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
@@ -291,7 +293,7 @@ function event_attendance($client) {
 	$this->SetFont('Arial','',12);
 	$this->Cell( 50, 12, "Leadership Training: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.att <> ''
+	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
 		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$ltR = mysql_query($ltQ);
 	$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
@@ -300,7 +302,7 @@ function event_attendance($client) {
 	$this->SetFont('Arial','',12);
 	$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'SEM' AND a.att <> ''
+	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
 		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$scsR = mysql_query($scsQ);
 	$attSCS = (mysql_num_rows($scsR)==0) ? "None" : mysql_num_rows($scsR);
