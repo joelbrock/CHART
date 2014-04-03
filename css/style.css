@@ -83,6 +83,9 @@ div.banner h4 {
 	float: right;
 	display: block;
 }
+
+.narrow { width: 90px !important; }
+
 #dropdown ul {
 	list-style:none;
 	margin:0;

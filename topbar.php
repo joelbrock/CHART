@@ -76,12 +76,12 @@ echo "<div class='banner'>\n";
 // echo "<div id='searchbox'><input id=\"chooseclient\" /></div>";
 // echo "<div id='track_btn'><a href='entry.php'>TRACK! (Q".thisQ().'-'.date('Y').")</a></div>";
 
-echo "<div class='track_btn'><ul class='dropdown'><li><a href='#'>TRACK!</a><ul class='sub_menu'>";
+echo "<div class='track_btn'><ul class='dropdown'><li class='narrow'><a href='#'>TRACK!</a><ul class='sub_menu narrow'>";
 $clientr = mysql_query("SELECT * FROM clients LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' ORDER BY clients.name");
 
 while ($clientRow = mysql_fetch_assoc($clientr)) {
 	$ccode = ($clientRow['code'] == '') ? acronymize($clientRow['name']) : $clientRow['code'];
-	echo "<li><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a></li>";
+	echo "<li class='narrow'><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a></li>";
 }
 echo "</ul></li></ul></div>";
 
