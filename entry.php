@@ -280,6 +280,7 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 					<option value='email' <?php echo  ($fill['Category'] == 'email') ? "SELECTED" : ""; ?>>Email</option>
 					<option value='consult' <?php echo  ($fill['Category'] == 'consult') ? "SELECTED" : ""; ?>>Consult/Meeting</option>
 					<option value='internal' <?php echo  ($fill['Category'] == 'internal') ? "SELECTED" : ""; ?>>Internal</option>
+					<option value='adjust' <?php echo  ($fill['Category'] == 'adjust') ? "SELECTED" : ""; ?>>Hours Adjustment</option>
 				</select></td>
 				<td style='border:none;'>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type='hidden' name='Billable' value='0' />

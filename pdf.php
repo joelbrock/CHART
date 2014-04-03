@@ -504,7 +504,7 @@ function Report($client,$filename,$dest='I')
 			$clientID=$client['id'];
 			$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 			$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
-			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) < (".(3*($thisQ-1)+1)."))";//hours used this year prior to Q
+			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) < (".(3*($thisQ-1)+1).")) AND Category <> 'reset'";//hours used this year prior to Q
 			$hours_tyr = mysql_query($hours_ty);
 			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
