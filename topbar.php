@@ -87,8 +87,8 @@ echo "</ul></li></ul></div>";
 
 $greetings = array("Welcome","Bienvenidos","Hello","Hiya","Wilkommen","Shalom","Bon jour","Howdy","Lookin' good","Hola","Konichiwa","Aloha","Mahalo","Bienvenue");
 $greeting = array_rand($greetings);
-echo "<div id='user_btn'>".$greetings[$greeting]." <a href='staff_profile.php?staffID={$userinfo['id']}'>".$userinfo['firstname']."</a>!  
-	<span style='font-size:8.5px; color: #88888;' >cID: $clientID</span>";
+echo "<div id='user_btn'>".$greetings[$greeting]." <a href='staff_profile.php?staffID={$userinfo['id']}'>".$userinfo['firstname']."</a>!";  
+//echo "<span style='font-size:8.5px; color: #88888;' >cID: $clientID</span>";
 
 $rcolor = (REPORT_READY) ? "green" : "red";
 $rpt_title = (REPORT_READY) ? "Reports are ready to go.  Get to it!" : "Reports not yet ready, sorry";
