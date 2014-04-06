@@ -276,6 +276,7 @@ function content_filter($rc) {
 }
 function event_attendance($client) {
 	global $userinfo;
+	$clientID = $_REQUEST['clientID'];
 	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 	
 	$this->SetFont('Arial','B',12);
@@ -287,7 +288,7 @@ function event_attendance($client) {
 	// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> '' 
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> '' 
-		AND a.clientID = $client GROUP BY a.id";
+		AND a.clientID = $clientID GROUP BY a.id";
 	$cblR = mysql_query($cblQ);
 	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
 	$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
@@ -298,7 +299,7 @@ function event_attendance($client) {
 	// $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
-		AND a.clientID = $client GROUP BY a.id"; 
+		AND a.clientID = $clientID GROUP BY a.id"; 
 	$ltR = mysql_query($ltQ);
 	$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
@@ -309,7 +310,7 @@ function event_attendance($client) {
 //	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
 //		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
 	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
-		AND a.clientID = $client GROUP BY a.id"; 
+		AND a.clientID = $clientID GROUP BY a.id"; 
 	$scsR = mysql_query($scsQ);
 	$attSCS = (mysql_num_rows($scsR)==0) ? "None" : mysql_num_rows($scsR);
 	$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
