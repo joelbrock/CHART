@@ -8,17 +8,17 @@ if(!empty($staffID))	{
 }
 
 if (($_POST['submit'])) {
-	$cols[]='firstname';$vals[]=mysql_escape_string($_REQUEST['firstname']);
-	$cols[]='lastname';$vals[]=mysql_escape_string($_REQUEST['lastname']);
-	$cols[]='email';$vals[]=mysql_escape_string($_REQUEST['email']);
-	$cols[]='title';$vals[]=mysql_escape_string($_REQUEST['title']);
+	$cols[]='firstname';$vals[]=mysql_real_escape_string($_REQUEST['firstname']);
+	$cols[]='lastname';$vals[]=mysql_real_escape_string($_REQUEST['lastname']);
+	$cols[]='email';$vals[]=mysql_real_escape_string($_REQUEST['email']);
+	$cols[]='title';$vals[]=mysql_real_escape_string($_REQUEST['title']);
 	if(!empty($_REQUEST['staff_password'])){$cols[]='password';$vals[]=sha1($_REQUEST['staff_password']);}
-	$cols[]='phone';$vals[]=mysql_escape_string($_REQUEST['phone']);
-	$cols[]='admin';$vals[]=mysql_escape_string($_REQUEST['admin']);
-	$cols[]='address';$vals[]=mysql_escape_string($_REQUEST['address']);
-	$cols[]='city';$vals[]=mysql_escape_string($_REQUEST['city']);
-	$cols[]='state';$vals[]=mysql_escape_string($_REQUEST['state']);
-	$cols[]='zip';$vals[]=mysql_escape_string($_REQUEST['zip']);
+	$cols[]='phone';$vals[]=mysql_real_escape_string($_REQUEST['phone']);
+	$cols[]='admin';$vals[]=mysql_real_escape_string($_REQUEST['admin']);
+	$cols[]='address';$vals[]=mysql_real_escape_string($_REQUEST['address']);
+	$cols[]='city';$vals[]=mysql_real_escape_string($_REQUEST['city']);
+	$cols[]='state';$vals[]=mysql_real_escape_string($_REQUEST['state']);
+	$cols[]='zip';$vals[]=mysql_real_escape_string($_REQUEST['zip']);
 	if(!empty($staffID)){
 		$upd=db_send($cols,$vals,'staff','update',"id='$staffID'",1);//die();
 	} else {

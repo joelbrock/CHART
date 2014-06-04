@@ -89,7 +89,7 @@ function escape_data ($data) {
 		global $dbc; // Need the connection.
 		$data = mysql_real_escape_string (trim($data), $dbc);
 	} else {
-		$data = mysql_escape_string (trim($data));
+		$data = mysql_real_escape_string (trim($data));
 	}
 	
 	// Return the escaped value.

@@ -94,14 +94,14 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	if ($_GET['jid']) {
 		$update = "UPDATE journal SET Hours = '$Hours', 
 			Billable = '$Billable', 
-			TeamNote = '".mysql_escape_string($TeamNote)."', 
-			ClientNote = '".mysql_escape_string($ClientNote). "', 
-			RetreatNote = '".mysql_escape_string($RetreatNote). "', 
+			TeamNote = '".mysql_real_escape_string($TeamNote)."', 
+			ClientNote = '".mysql_real_escape_string($ClientNote). "', 
+			RetreatNote = '".mysql_real_escape_string($RetreatNote). "', 
 			RetreatDate1 = '$RetreatDate1',
 			RetreatDate2 = '$RetreatDate2',
 			QtrInc = '$QtrInc', 
-			Quarterly = '".mysql_escape_string($Quarterly)."', 
-			Intro = '".mysql_escape_string($Intro)."',
+			Quarterly = '".mysql_real_escape_string($Quarterly)."', 
+			Intro = '".mysql_real_escape_string($Intro)."',
 			Date = '$Date',
 			Category = '$Category',
 			created = NOW()
@@ -109,7 +109,7 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	} else {
 //		$Hours = round(($Hours / 60) / 60, 2);//timer (minutes to hours)
 		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES
-			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysql_escape_string($TeamNote) . "', '". mysql_escape_string($ClientNote)."', '". mysql_escape_string($RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysql_escape_string($Quarterly)."', '".mysql_escape_string($Intro)."', '$Date', '$Category', NOW())";
+			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysql_real_escape_string($TeamNote) . "', '". mysql_real_escape_string($ClientNote)."', '". mysql_real_escape_string($RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysql_real_escape_string($Quarterly)."', '".mysql_real_escape_string($Intro)."', '$Date', '$Category', NOW())";
 	}
 	// echo $update;
 	if (!mysql_query($update)) {

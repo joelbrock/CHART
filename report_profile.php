@@ -4,10 +4,10 @@ $reportID=1;
 $get_r=mysql_query("SELECT * FROM report_content WHERE id='$reportID'");
 $report=mysql_fetch_assoc($get_r);
 if (($_POST['submit'])) {
-	$cols[]='`content-1`';$vals[]=mysql_escape_string($_REQUEST['content-1']);
-	$cols[]='`content-2`';$vals[]=mysql_escape_string($_REQUEST['content-2']);
-	$cols[]='`content-3`';$vals[]=mysql_escape_string($_REQUEST['content-3']);
-	$cols[]='`intro_default`';$vals[]=mysql_escape_string($_REQUEST['intro_default']);
+	$cols[]='`content-1`';$vals[]=mysql_real_escape_string($_REQUEST['content-1']);
+	$cols[]='`content-2`';$vals[]=mysql_real_escape_string($_REQUEST['content-2']);
+	$cols[]='`content-3`';$vals[]=mysql_real_escape_string($_REQUEST['content-3']);
+	$cols[]='`intro_default`';$vals[]=mysql_real_escape_string($_REQUEST['intro_default']);
 	if(!empty($report)){
 		$upd=db_send($cols,$vals,'report_content','update',"id='$reportID'",0);//die();
 	} else {
