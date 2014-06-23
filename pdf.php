@@ -127,7 +127,7 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1380", "Featured: Participation&mdash;Going Further");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1380", "Featured: Participation–—Going Further");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -154,7 +154,7 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1398", "Raise Your Co-op’s Profile: Focus on Strategic Leadership");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1398", "Raise Your Co-ops Profile: Focus on Strategic Leadership");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
