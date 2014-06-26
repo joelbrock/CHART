@@ -177,7 +177,7 @@ function content_filter($rc) {
 		$this->Write(10,"May, 2014");
 			
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2014_events_grid_Q3.png',12,145,180);
+		$this->Image('images/2014_events_grid_Q3_v2.png',12,145,180);
 		
 		
 		// $this->SetFont('Arial','B',11);
