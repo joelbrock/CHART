@@ -71,8 +71,11 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 <!-- <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js" type="text/javascript"></script> -->
 <!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script> -->
 <!-- <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script> -->
-
-
+<script>	
+	$(function() {
+		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+</script>
 </head>
 <body>
 
@@ -220,12 +223,6 @@ Hours used Q<?php echo $thisQ?>: <?php echo number_format($hoursQ['hoursQ'],2)?>
 </div>
 </div>
 </form>
-
-<script>
-$("#unfold").click(function () {
-	$("#last").slideToggle("slow");
-});
-</script>
 </body>
 </html>
 <? }?>
