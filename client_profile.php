@@ -94,11 +94,6 @@ echo "<h2>" . $client['name'] . " &mdash; Client Profile</h2>";
 
 <div id="client_profile">
 
-
-<!-- <div id="mini_dash">
-Hours used YTD: <?php echo number_format($hoursYTD['hoursYTD'],2)?><br />
-Hours used Q<?php echo $thisQ?>: <?php echo number_format($hoursQ['hoursQ'],2)?>
-</div> -->
 <div style="margin-right:60px;">
 	<?php mini_dash($clientID,'right'); ?>
 </div>
