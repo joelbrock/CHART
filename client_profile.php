@@ -72,7 +72,6 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 <!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script> -->
 <!-- <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script> -->
 
-
 </head>
 <body>
 
@@ -91,11 +90,6 @@ echo "<h2>" . $client['name'] . " &mdash; Client Profile</h2>";
 
 <div id="client_profile">
 
-
-<!-- <div id="mini_dash">
-Hours used YTD: <?php echo number_format($hoursYTD['hoursYTD'],2)?><br />
-Hours used Q<?php echo $thisQ?>: <?php echo number_format($hoursQ['hoursQ'],2)?>
-</div> -->
 <div style="margin-right:60px;">
 	<?php mini_dash($clientID,'right'); ?>
 </div>
@@ -220,12 +214,11 @@ Hours used Q<?php echo $thisQ?>: <?php echo number_format($hoursQ['hoursQ'],2)?>
 </div>
 </div>
 </form>
-
-<script>
-$("#unfold").click(function () {
-	$("#last").slideToggle("slow");
-});
-</script>
 </body>
 </html>
-<?php }?>
+<? }?>
+<script>	
+	$(function() {
+		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+</script>
