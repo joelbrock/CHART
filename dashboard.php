@@ -288,16 +288,16 @@ if(mysql_num_rows($result)>0){
 			// 		. date('Y',strtotime($row['date'])) . "-01-01</td><td>&nbsp;</td></tr>";
 			// $yrmark = $row['date'];
 			
-			if($single) { 
-				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
+			if($single) {
+				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
 					AND YEAR(Date) = YEAR(NOW()) AND Date <= '" . $row['date'] . "'";
 //			if ($single == True)
-//				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
+//				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
 //					AND Date <= '". $row['date'] ."'";
 			} else {
 				$query1 = "SELECT ROUND(SUM(j.Hours),2) FROM journal j WHERE j.ClientID = " . $row['clientID'] . " $sqlyear";
 			}
-//			echo $query1;
+			// echo $query1;
 			$result1 = mysql_query($query1);
 			$tot = mysql_fetch_row($result1);
 			
