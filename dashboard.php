@@ -150,12 +150,14 @@ switch ($_GET['range']) {
 	case 'prev_quarter':
 		$sqlrange = "AND QUARTER(j.Date) = QUARTER(CURDATE()) - 1";
 		break;
-	case 'this_year':
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
-		break;
 	case 'prev_year':
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
 		break;
+	case 'this_year':
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
+		break;
+	default: //this_year
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -238,7 +240,7 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$group_on = ($_GET['range']) ? $_GET['range'] : '';
+$group_on = ($_GET['range']) ? $_GET['range'] : 'this_year';
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
