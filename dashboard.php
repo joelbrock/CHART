@@ -151,12 +151,14 @@ switch ($_GET['range']) {
 	case 'prev_quarter':
 		$sqlrange = "AND QUARTER(j.Date) = QUARTER(CURDATE()) - 1";
 		break;
-	case 'this_year':
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
-		break;
 	case 'prev_year':
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
 		break;
+	case 'this_year':
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
+		break;
+	default: //this_year
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -240,7 +242,7 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$group_on = ($_GET['range']) ? $_GET['range'] : '';
+$group_on = ($_GET['range']) ? $_GET['range'] : 'this_year';
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
@@ -288,15 +290,15 @@ if(mysql_num_rows($result)>0){
 			// 		. date('Y',strtotime($row['date'])) . "-01-01</td><td>&nbsp;</td></tr>";
 			// $yrmark = $row['date'];
 			
-			// if(!$single) { 
-			$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
-					AND YEAR(Date) = YEAR(NOW())";
-			if ($single == True)
-				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . " 
-					AND Date <= '". $row['date'] ."'";
-			// } else {
-				// $query1 = "SELECT Hours FROM journal WHERE ClientID = " . $row['clientID'] . " AND YEAR(Date) = YEAR(NOW())";
-			// }
+			if($single) {
+				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
+					AND YEAR(Date) = YEAR(NOW()) AND Date <= '" . $row['date'] . "'";
+//			if ($single == True)
+//				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
+//					AND Date <= '". $row['date'] ."'";
+			} else {
+				$query1 = "SELECT ROUND(SUM(j.Hours),2) FROM journal j WHERE j.ClientID = " . $row['clientID'] . " $sqlyear";
+			}
 			// echo $query1;
 			$result1 = mysql_query($query1);
 			$tot = mysql_fetch_row($result1);
