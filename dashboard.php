@@ -134,6 +134,7 @@ $sqlrange = "";
 $sqlyear = "";
 $sqlgroup = "";
 $sqlgroup = "";
+$sqlactive = "AND c.active <> 0";
 switch ($_GET['range']) {
 	case 'today':
 		$sqlrange = "AND j.Date = CURDATE()";
@@ -206,6 +207,7 @@ $query = "SELECT j.created AS created,
 	$sqlyear
 	$sqljoin
 	$sqlrange
+	$sqlactive
 	$sqlgroup
 	ORDER BY j.Date DESC";
 
