@@ -283,6 +283,7 @@ if(mysql_num_rows($result)>0){
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
+			$totalHours = (!$row['totalHours']) ? 15 : $row['totalHours'];
 //			$yrmark = '2011-01-01';
 			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
 			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
