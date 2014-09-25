@@ -302,6 +302,7 @@ if(mysql_num_rows($result)>0){
 			// echo $query1;
 			$result1 = mysql_query($query1);
 			$tot = mysql_fetch_row($result1);
+			$tot0 = (!$tot[0]) ? 0 : $tot[0];
 			
 			echo "<tr>\n";
 			echo "<td><a id='opener' href='dashboard.php?clientID=".$row['clientID']."' title='Show all for ".$row['coopname']."'>";
@@ -315,14 +316,14 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='right'>" . $rem ."</td>";
 
 			if($single == True) {
-				echo "<td align='right'>" . $row['hours'] ."</td>";
+				echo "<td align='center'>" . $row['hours'] ."</td>";
 			} else {
 				$hrs = ($tot[0]==0) ? 0 : rtrim($tot[0],'.0');
-				echo "<td align='right'>$hrs</td>";
+				echo "<td align='center'>$hrs</td>";
 			}
-			$rem = $row['totalhours'] - $tot[0];
-			$left = ((($row['totalhours'] - $tot[0]) / $row['totalhours']) * 100);
-			echo "<td align='right'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
+			$rem = $row['totalhours'] - $tot0;
+			$left = ((($row['totalhours'] - $tot0) / $row['totalhours']) * 100);
+			echo "<td align='center'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 			echo "<td><p class='textblock'>";
