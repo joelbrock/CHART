@@ -283,7 +283,7 @@ if(mysql_num_rows($result)>0){
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
-			$totalHours = (!$row['totalHours']) ? 15 : $row['totalHours'];
+			$totalhours = (!$row['totalhours']) ? 15 : $row['totalhours'];
 //			$yrmark = '2011-01-01';
 			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
 			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
@@ -322,8 +322,8 @@ if(mysql_num_rows($result)>0){
 				$hrs = ($tot[0]==0) ? 0 : rtrim($tot[0],'.0');
 				echo "<td align='center'>$hrs</td>";
 			}
-			$rem = $row['totalhours'] - $tot0;
-			$left = ((($row['totalhours'] - $tot0) / $row['totalhours']) * 100);
+			$rem = $totalhours - $tot0;
+			$left = ((($totalhours - $tot0) / $tot0) * 100);
 			echo "<td align='center'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
