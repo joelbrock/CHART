@@ -142,7 +142,7 @@ echo "</ul></li>";
 
 echo "<li><a href='#'>CLIENTS</a>
 		<ul class=\"sub_menu\">\n";
-$clientr = mysql_query("SELECT * FROM clients".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' AND active = 1 ORDER BY clients.name":' AND active = 1 ORDER BY clients.name'));
+$clientr = mysql_query("SELECT * FROM clients".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' AND active = 1 ORDER BY clients.name":' WHERE active = 1 ORDER BY clients.name'));
 
 while ($clientRow = mysql_fetch_assoc($clientr)) {
 	echo "<li><a href=dashboard.php?clientID=" . $clientRow['id'] . ">" . ucwords($clientRow['name']) . "</a></li>\n";
