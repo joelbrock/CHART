@@ -44,13 +44,13 @@ function jEntryIntro($data,$rc,$in){
 		ORDER BY Date DESC LIMIT 1";
 	$intror = mysql_query($introq);
 	// echo $introq;
-	$row = mysql_fetch_row($intror) OR DIE (mysql_error());
+	$row = mysql_fetch_row($intror);
 	
 	$this->Ln(6);
 	
 	$this->Cell($in);
 	$this->SetFont('Arial','',12);
-	if ($row[0] == '') {
+	if ($row[0] == '' || (!$row[0]) {
 		$this->Write(6, $intro_default);
 		$this->Ln(6);
 	} else {
@@ -183,79 +183,6 @@ function content_filter($rc) {
 	} elseif (preg_match($pattern1, $rc)) {
 		$this->Image('images/2015_events_grid.png',12,145,180);
 		
-		
-		// $this->SetFont('Arial','B',11);
-		// $this->Write(11,"Upcoming In-Person Events ");
-		// $this->SetFont('Arial','',10);
-		// 
-		// $this->Ln(6);
-		// 
-		// $this->SetFont('Arial','B',10);
-		// $this->Cell(8);
-		// $this->PutLink("https://cdsconsulting.centraldesktop.com/cbld/doc/6555219/", "Jul. 7:  Baltimore, MD");
-		// $this->Cell(34);
-		// $this->SetFont('Arial','',9);
-		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
-		// $this->Ln(4);
-		// $this->Cell(8);	
-		// $this->SetFont('Arial','B',10);
-		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/4890658#twi", "Sep. 22:  Minneapolis, MN");
-		// $this->Cell(27);
-		// $this->SetFont('Arial','',9);
-		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
-		// $this->Ln(4);
-		// $this->Cell(8);	
-		// $this->SetFont('Arial','B',10);
-		// $this->PutLink("https://cdsconsulting.centraldesktop.com/cbld/doc/5649597/", "Sep. 29:  Sacramento, CA");
-		// $this->Cell(27.5);
-		// $this->SetFont('Arial','',9);
-		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
-		// $this->Ln(4);
-		// $this->Cell(8);	
-		// $this->SetFont('Arial','B',10);
-		// $this->Write(10, "Oct. 5 & 6: Food System / Strategic Seminar Seattle, WA");
-		// $this->Cell(10);
-		// $this->SetFont('Arial','',9);
-		// $this->PutLink("http://nwcoops2012.eventbrite.com/", "[register]");
-		// 
-		// 
-		// // 
-		// $this->PutLink("http://www.cdsconsulting.coop/services/lead-training", "Leadership Training");
-		// $this->Cell(32);
-		// $this->PutLink("http://www.cdsconsulting.coop/services/cbl101", "CBL101");
-		// $this->Cell(53);
-		// $this->PutLink("http://www.cdsconsulting.coop/services/seminars", "Strategic Co-op Seminar");
-		// 
-		// $this->Ln(6);
-		// $this->SetFont('Arial','',10);
-		// $this->Cell(66,7,"9/29 - Sacramento, CA", 0);
-		// // $this->Cell(66,7,"1/21 - Minneapolis, MN", 0);
-		// // $this->Cell(66,7,"3/3 - Greater Asheville, NC", 0);
-		// $this->Ln(4);
-		// $this->Cell(66,7,"1/28 - Brattleboro, VT", 0);
-		// $this->Cell(66,7,"1/21 - Albuquerque, NM", 0);
-		// $this->Cell(66,7,"3/17 - La Crosse, WI Area", 0);
-		// $this->Ln(4);
-		// $this->Cell(66,7,"", 0);
-		// $this->Cell(66,7,"1/28 - Brattleboro, VT", 0);
-		// $this->Cell(66,7,"3/31 - Brattleboro, VT Area", 0);
-		// $this->Ln(4);
-		// $this->Cell(66,7,"", 0);
-		// $this->Cell(66,7,"1/28 - Asheville, NC", 0);
-		// $this->Cell(66,7,"", 0);
-		// $this->Ln(4);
-		// $this->Cell(66,7,"", 0);
-		// $this->Cell(66,7,"3/31 - Portland, OR", 0);
-		// $this->Cell(66,7,"", 0);
-		// $this->Ln(4);
-		
-		
-		// $this->Cell(60);
-		// $this->PutLink("http://www.cdsconsulting.coop/register", "Register Here"); 
-		// $this->Write(10, " for a 2012 CBLD event! ");
-		// $this->Write(10,"New!  ");
-		// $this->PutLink("http://www.cdsconsulting.coop/services/seminars", "Strategic Co-op Seminars");
-		// $this->Write(10, "!");
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
 		$this->Write(11,"The CBLD Program Includes");
