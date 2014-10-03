@@ -50,7 +50,7 @@ function jEntryIntro($data,$rc,$in){
 	
 	$this->Cell($in);
 	$this->SetFont('Arial','',12);
-	if ($row[0] == '' || (!$row[0]) {
+	if ($row[0] == '' || (!$row[0])) {
 		$this->Write(6, $intro_default);
 		$this->Ln(6);
 	} else {
