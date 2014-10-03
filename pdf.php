@@ -36,9 +36,12 @@ function Footer()
 }
 function jEntryIntro($data,$rc,$in){
 	$clientID = $_REQUEST['clientID'];
+	$intro_default = "Here is your CBLD quarterly report.  Please have a look and let me know if you have any questions.  And keep up the great work!";
 	
 	global $client,$thisQ;
-	$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
+	$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . " 
+		AND YEAR(Date) = '".$thatY."' AND QUARTER(Date) = '".$thatQ."'
+		ORDER BY Date DESC LIMIT 1";
 	$intror = mysql_query($introq);
 	// echo $introq;
 	$row = mysql_fetch_row($intror) OR DIE (mysql_error());
@@ -48,7 +51,7 @@ function jEntryIntro($data,$rc,$in){
 	$this->Cell($in);
 	$this->SetFont('Arial','',12);
 	if ($row[0] == '') {
-		$this->Write(6, $rc['intro_default']);
+		$this->Write(6, $intro_default);
 		$this->Ln(6);
 	} else {
 		$this->MultiCell(175, 5.25, stripslashes($row[0]));
