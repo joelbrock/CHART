@@ -362,7 +362,10 @@ ul.dropdown a:hover		            { color:#000;	background-color:#fff; }
 ul.dropdown li a                    { display: block; padding: 7px 8px; color: #FFF; position: relative; z-index: 2000; text-decoration:none; }
 ul.dropdown li a:hover,
 ul.dropdown li a.hover              { background: #eee; position: relative; border-radius: 12px 12px 0 0; }
-
+ul.dropdown li .inactive {
+	color:red;
+	font-weight:bold;
+}
 
 /* 
 	LEVEL TWO
@@ -705,8 +708,4 @@ input:focus, textarea:focus{
 .stat_box .of {
 	font-size:1em;
 	font-weight: 200;
-}
-.inactive {
-	color:red;
-	font-weight:bold;
 }
