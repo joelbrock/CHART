@@ -77,8 +77,8 @@ $clientr = mysql_query("SELECT * FROM clients LEFT JOIN staff_clients ON clients
 
 while ($clientRow = mysql_fetch_assoc($clientr)) {
 	$ccode = ($clientRow['code'] == '') ? acronymize($clientRow['name']) : $clientRow['code'];
-	echo "<li class='narrow'><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a>&nbsp;&nbsp;
-		" . ($clientRow['active']==0) ? ."<a href='#' title='INACTIVE! Contact tech support'>&CircleTimes;</a>". : "" . "</li>";
+	$color = ($clientRow['active'] == 0) ? ' inactive' : '';
+	echo "<li class='narrow$color'><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a></li>";
 }
 echo "</ul></li></ul></div>";
 
