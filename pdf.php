@@ -40,7 +40,7 @@ function jEntryIntro($data,$rc,$in){
 	
 	global $client,$thisQ;
 	$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . " 
-		AND YEAR(Date) = '".$thatY."' AND QUARTER(Date) = '".$thatQ."'
+		AND YEAR(Date) = '".$_GET['thatY']."' AND QUARTER(Date) = '".$_GET['thatQ']."'
 		ORDER BY Date DESC LIMIT 1";
 	$intror = mysql_query($introq);
 	// echo $introq;
