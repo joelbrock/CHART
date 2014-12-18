@@ -123,14 +123,14 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1440", "Featured: Cracking open the 'Serve' Nut");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1481", "Featured: Share Values and Grow Community");
 		$this->Ln(7);	
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1444", "Featured: Building Belonging, Creating Community");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1471", "Featured: The Co-op Difference Starts with Staff");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1445", "Planning and Budgeting Report Templates");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1462", "Featured: Peoples Expands: A Tale of Two Co-ops");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -157,27 +157,27 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1439", "Great Idea for General Managers: GM Compensation Database");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1479", "Improve Trust and Teamwork Throughout Growth");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"August, 2014");
+		$this->Write(10,"December, 2014");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1438", "NCGA Advocating for Co-ops on Capitol Hill");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1480", "Great Idea: Thriving in the New Competitive Landscape-Cooperative Cafe 2015");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"August, 2014");
+		$this->Write(10,"December, 2014");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1406", "Great Idea: Using Trend Data in Financial Reporting");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1470", "Great Idea: Board President Succession Planning");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"July, 2014");
+		$this->Write(10,"November, 2014");
 
 			
 	} elseif (preg_match($pattern1, $rc)) {
