@@ -128,7 +128,7 @@ echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";
 echo "<li><a href='#'>CONSULTANTS</a>
 	<ul class=\"sub_menu\">\n";	
-$staffr = mysql_query("SELECT * FROM staff ORDER BY firstname");
+$staffr = mysql_query("SELECT * FROM staff WHERE active = 1 ORDER BY firstname");
 if ($admin) echo "<li><a href='dashboard.php?staffID=SUPERALL'>--Super ALL --</a></li>\n";
 echo "<li><a href='dashboard.php?staffID=ALL'>-- ALL --</a></li>\n";
 while ($staffRow = mysql_fetch_assoc($staffr)) {
