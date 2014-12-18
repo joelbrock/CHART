@@ -165,7 +165,7 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1480", "Great Idea: Thriving in the New Competitive Landscape-Cooperative Cafe 2015");
+		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1480", "Great Idea: Thriving in the New Competitive Landscape-Co-op Cafe 2015");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
