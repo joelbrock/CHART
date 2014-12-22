@@ -384,11 +384,12 @@ function Report($client,$filename,$dest='I')
 	if ($cons_ct > 1) {
 		$staffnames = "";
 		foreach ($staffname as $name) {
-			$sep = (end($name)) ? "" : " & ";
+			$sep = (end($staffname)) ? "" : " & ";
 			$staffnames .= $name[0]." ".$name[1].$sep;
 		}
-		$this->Cell( 35, 12, $staffnames, 0, 0, 'L');
-		$this->Ln(7)
+		$this->Cell( 55, 12, $staffnames, 0, 0, 'L');
+		$this->Ln(7);	
+		$this->Cell( 90, 12, '', 0, 0, 'L' );
 		$this->SetFont('Arial','I',12);
 		$this->Cell( 35, 12, "CBLD Consultants", 0, 0, 'I');
 	} else {
