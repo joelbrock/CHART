@@ -340,7 +340,10 @@ function Report($client,$filename,$dest='I')
 	if (mysql_num_rows($retR) == 1) {
 		//($ret[0] != '0000-00-00' || $client['RetreatDate'] != '0000-00-00') {
 		$ret_date = $ret[0];
-		$longdate = strftime('%A %B %e, %Y',strtotime($ret_date));
+		if($ret_date == "0000-00-00")
+			$longdate = "to be decded";
+		else
+			$longdate = strftime('%A %B %e, %Y',strtotime($ret_date));
 		$this->Cell( 20, 12, $longdate, 0, 0, 'B');
 	} else {
 		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
