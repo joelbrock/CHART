@@ -380,7 +380,16 @@ function Report($client,$filename,$dest='I')
 
 	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysql_fetch_row($staffnameR);
-	$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'B' );
+	$cons_ct = mysql_num_rows($staffname);
+	if ($cons_ct > 1) {
+		foreach ($staffname as $name) {
+			$sep = (end($name)) ? "" : " & ";
+			$this->Cell( 35, 12, $name[0]." ".$name[1].$sep, 0, 0, 'B');
+		}
+		$this->Cell( 35, 12, "CBLD Consultants", 0, 0, 'I');
+	} else {
+		$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'B' );
+	}
 
 	$this->Ln(7);
 	$this->Cell( 90, 12, '', 0, 0, 'L' );
