@@ -380,18 +380,23 @@ function Report($client,$filename,$dest='I')
 
 	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysql_fetch_row($staffnameR);
-	$cons_ct = mysql_num_rows($staffname);
+	$cons_ct = mysql_num_rows($staffnameR);
 	if ($cons_ct > 1) {
+		$staffnames = "";
 		foreach ($staffname as $name) {
 			$sep = (end($name)) ? "" : " & ";
-			$this->Cell( 35, 12, $name[0]." ".$name[1].$sep, 0, 0, 'B');
+			$staffnames .= $name[0]." ".$name[1].$sep;
 		}
+		$this->Cell( 35, 12, $staffnames, 0, 0, 'L');
+		$this->Ln(7)
+		$this->SetFont('Arial','I',12);
 		$this->Cell( 35, 12, "CBLD Consultants", 0, 0, 'I');
 	} else {
-		$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'B' );
+		$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'L' );
 	}
 
 	$this->Ln(7);
+	$this->SetFont('Arial','B',12);
 	$this->Cell( 90, 12, '', 0, 0, 'L' );
 	$this->PutLink('http://cdsconsulting.coop','CDS Consulting Co-op');
 	$this->Write( 10,' | ');
