@@ -279,16 +279,17 @@ if(mysql_num_rows($result)>0){
 			<!-- <th class='sortable-numeric'>tot</th> -->\n
 			<th class='sortable-numeric'>time</th>\n
 			<th class='sortable-numeric'>rem</th>\n	
-			<!-- <th class='sortable-text'>cat</th> -->\n
-			<th>Client Notes</th>\n";
-	echo ($admin) ? "<th>CB|LT|CC</th>" : "";
-	echo "		<th class='sortable-numeric'>Retreat</th>\n			
+			<!-- <th class='sortable-text'>cat</th> -->\n";
+	echo ($admin) ? "<th class='sortable-numeric'>att</th>" : "";
+	echo "		<th>Client Notes</th>\n
+			<th class='sortable-numeric'>Retreat</th>\n			
 			<th class='sortable-numeric'>Date</th>\n
 			<th></th>\n
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
 			$totalhours = (!$row['totalhours']) ? 15 : $row['totalhours'];
+			if (!is_numeric($totalhours) || $totalhours == 0) $totalhours = 15;
 //			$yrmark = '2011-01-01';
 			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
 			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
@@ -332,6 +333,26 @@ if(mysql_num_rows($result)>0){
 			echo "<td align='center'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
+
+                        if ($admin) {
+                                $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> ''
+                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+                                $cblR = mysql_query($cblQ);
+                                $attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
+                                $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
+                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+                                $ltR = mysql_query($ltQ);
+                                $attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
+                                $scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
+                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+                                $scsR = mysql_query($scsQ);
+                                $attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);
+                         	$attTOT = $attCBL + $attLT + $attSCS;
+				echo "<td align='center'>";
+                                echo "<a href='#' title='CBL 101: $attCBL | LT: $attLT | Co-op Cafe: $attSCS'>$attTOT</a>";
+                                echo "</td>\n";
+                        }
+
 			echo "<td><p class='textblock'>";
 			$col = 60;
 			switch($row['cat']) {
@@ -363,24 +384,6 @@ if(mysql_num_rows($result)>0){
 			// echo ($row['clientnote'] != '') ? "client: ".substr($row['clientnote'],0,100) : (($row['teamnote'] != '') ? "team: ".substr($row['teamnote'],0,100) : "");
 			// echo "</p></td>\n";
 			echo "</p></td>\n";
-			if ($admin) {
-				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> '' 
-					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-//echo $cblQ;
-				$cblR = mysql_query($cblQ);
-				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
-				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
-					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
- 				$ltR = mysql_query($ltQ);
- 				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
- 				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
-					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-				$scsR = mysql_query($scsQ);
-				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);			
-				echo "<td>";
-				echo $attCBL . " | " . $attLT . " | " . $attSCS;
-				echo "</td>\n";
-			}
 
 			$rdateQ = "SELECT MAX(RetreatDate1), MAX(RetreatDate2) FROM journal 
 				WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $row['clientID'];
