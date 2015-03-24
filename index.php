@@ -40,9 +40,7 @@ require("mysql_connect.php");
 ?>
 <head>
 <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"></link>
-<!--<link rel="stylesheet" href="css/tablesort.css" type="text/css" charset="utf-8">-->
 <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" charset="utf-8"></link>
-<!-- <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js" type="text/javascript"></script> -->
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
 
@@ -62,18 +60,8 @@ require("mysql_connect.php");
 		echo "<tr><td colspan=2>&nbsp;</td></tr>";
 		echo "<tr><td colspan=2 align='right'><input type=\"submit\" name=\"submit\" value=\"Submit\" /></td></tr>";
 		echo "</table>";
-
-
 		echo "</form>";
-	
 
-
-// echo "<input type=\"submit\" name=\"submit\" value=\"Add\">\n";
-
-
-
-// print_r($row);
-// debug_p($_REQUEST, "all the data coming in");
 ?>
 <script>
 $("#unfold").click(function () {

@@ -1,0 +1,212 @@
+body {
+	font-family: Helvetica, Tahoma, Arial, sans-serif;
+	font-size: 12px;
+	text-align: center;
+	font-weight: normal;
+}
+a {
+	text-decoration: none;
+	color: #000000;
+	text-align: center;
+}
+a:hover {
+	text-decoration: none;
+	color: #3163CE;
+}
+.year {
+	border-style: outset;
+	border-width: 1px;
+	background-color: #ffffff;
+	text-align: center;
+}
+.month {
+	border-style: none;
+	background-color: #ffffff;
+	text-align: center;
+}
+.yearname {
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+.monthname {
+	text-align: center;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: #ffffff;
+	color: #000000;
+	border-style: none;
+	border-width:1px
+}
+.dayname {
+	text-align: center;
+	font-size: 9px;
+	font-weight: bold;
+	background-color: #ffffff;
+	color: #000000;
+	border-style: none;
+	border-width:1px
+}
+.weeknumtitle {
+	text-align: center;
+	font-size: 10px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-style: none;
+	border-width:1px
+}
+.weeknum {
+	text-align: center;
+	font-size: 10px;
+	height:20px;
+	width:20px;
+	color: #000000;
+	background-color: #ffffff;
+}
+.week {
+	border-style: none;
+	background-color: #ffffff;
+	text-align: center;
+}
+.monthweek {
+	text-align: center;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	border-style: solid;
+	border-width:1px
+}
+.yearnavigation {
+	font-size: 12px;
+}
+.datepicker {
+	background-color: #ffffff;
+}
+.datepickerform {
+	margin: 0px;
+}
+.monthnavigation {
+	font-family: Tahoma, Arial, sans-serif;
+}
+.monthpicker {
+	font-size: 11px;
+	background-color: #ffffff;
+}
+.yearpicker {
+	font-size: 11px;
+	background-color: #ffffff;
+}
+.pickerbutton {
+
+}
+.nomonthday {
+	text-align: center;
+	font-size: 10px;
+	height:20px;
+	width:20px;
+	color: #aaaaaa;
+}
+.monthday {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #ffffff;
+	color: #000000;
+	height:24px;
+	width:28px;
+}
+.today {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #ffffff;
+	color: #000000;
+	height:24px;
+	width:28px;
+}
+.selectedday {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	border-width: 1px;
+	border-style: outset;
+	background-color: #ffffff;
+	height:24px;
+	width:28px;
+}
+.sunday {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #667171;
+	height:24px;
+	width:28px;
+}
+.sunday a {
+	color: #667171;
+}
+.saturday {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	color: #667171;
+	height:25px;
+	width:28px;
+}
+.saturday a {
+	color: #667171;
+}
+.event {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	border-width: 1px;
+	border-style: solid;
+	color: #000000;
+	background-color: #ffae51;
+	height:24px;
+	width:28px;
+}
+.event a {
+	background-color: #ffae51;
+	color: #000000;
+}
+.selectedevent {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	border-width: 1px;
+	border-style: solid;
+	color: #000000;
+	background-color: #ffffff;
+	height:24px;
+	width:28px;
+}
+.selectedevent a {
+	background-color: #ffffff;
+	color: #000000;
+}
+.todayevent {
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	border-width: 1px;
+	border-style: solid;
+	color: red;
+	background-color: #ffffff;
+	height:24px;
+	width:28px;
+}
+.todayevent a {
+	background-color: #ffffff;
+	color: #000000;
+}
+.eventcontent {
+	font-size: 10px;
+	border-style: outset;
+	border-width: 1px;
+	width: 100%;
+}
+

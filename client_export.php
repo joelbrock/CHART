@@ -194,7 +194,9 @@ function Report($client,$filename,$dest='I')
 			$hoursQ=0;
 			while($h=mysql_fetch_assoc($hoursr)){
 				$h['Hours']=round($h['Hours'],2);
-				$client['hours'][] = $h; $client['hrs']['total']+=$h['Hours']; $hoursQ+=$h['Hours'];
+				$client['hours'][] = $h; 
+				// $client['hrs']['total']+=$h['Hours'];
+				$hoursQ+=$h['Hours'];
 				$client['hrs']['cat'][$h['Category']]=(isset($client['hrs']['cat'][$h['Category']])?$client['hrs']['cat'][$h['Category']]:0)+1;
 			}
 			$client['hrs']['R'] = $client['total_hours']-$client['hrs']['total']; //hours remaining (yearly)

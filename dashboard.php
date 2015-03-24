@@ -158,7 +158,8 @@ switch ($_GET['range']) {
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
 		break;
 	default: //this_year
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
+		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
+		$sqlyear = "";		
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -185,6 +186,9 @@ if ($staffID == 'ALL') {
 		AND j.created = j2.MaxDate";
 	$single = False;
 }
+$yearQ = mysql_query("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
+$yearR = mysql_fetch_row($yearQ);
+$year = $yearR[0];
 
 $query = "SELECT j.created AS created,
  		j.Date AS date,
@@ -276,13 +280,15 @@ if(mysql_num_rows($result)>0){
 			<th class='sortable-numeric'>time</th>\n
 			<th class='sortable-numeric'>rem</th>\n	
 			<!-- <th class='sortable-text'>cat</th> -->\n
-			<th>Client Notes</th>\n
-			<th class='sortable-numeric'>Retreat</th>\n			
+			<th>Client Notes</th>\n";
+	echo ($admin) ? "<th>CB|LT|CC</th>" : "";
+	echo "		<th class='sortable-numeric'>Retreat</th>\n			
 			<th class='sortable-numeric'>Date</th>\n
 			<th></th>\n
 		</tr>\n
 	</thead>\n<tbody>\n";
 		while ($row = mysql_fetch_assoc($result)) {
+			$totalhours = (!$row['totalhours']) ? 15 : $row['totalhours'];
 //			$yrmark = '2011-01-01';
 			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
 			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
@@ -302,6 +308,7 @@ if(mysql_num_rows($result)>0){
 			// echo $query1;
 			$result1 = mysql_query($query1);
 			$tot = mysql_fetch_row($result1);
+			$tot0 = (!$tot[0] || $tot[0] == '0') ? 1 : $tot[0];
 			
 			echo "<tr>\n";
 			echo "<td><a id='opener' href='dashboard.php?clientID=".$row['clientID']."' title='Show all for ".$row['coopname']."'>";
@@ -315,14 +322,14 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='right'>" . $rem ."</td>";
 
 			if($single == True) {
-				echo "<td align='right'>" . $row['hours'] ."</td>";
+				echo "<td align='center'>" . $row['hours'] ."</td>";
 			} else {
-				$hrs = ($tot[0]==0) ? 0 : rtrim($tot[0],'.0');
-				echo "<td align='right'>$hrs</td>";
+				$hrs = ($tot0==0) ? 0 : rtrim($tot0,'.0');
+				echo "<td align='center'>$hrs</td>";
 			}
-			$rem = $row['totalhours'] - $tot[0];
-			$left = ((($row['totalhours'] - $tot[0]) / $row['totalhours']) * 100);
-			echo "<td align='right'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
+			$rem = $totalhours - $tot0;
+			$left = ((($totalhours - $tot0) / $totalhours) * 100);
+			echo "<td align='center'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 			echo "<td><p class='textblock'>";
@@ -356,6 +363,24 @@ if(mysql_num_rows($result)>0){
 			// echo ($row['clientnote'] != '') ? "client: ".substr($row['clientnote'],0,100) : (($row['teamnote'] != '') ? "team: ".substr($row['teamnote'],0,100) : "");
 			// echo "</p></td>\n";
 			echo "</p></td>\n";
+			if ($admin) {
+				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> '' 
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+//echo $cblQ;
+				$cblR = mysql_query($cblQ);
+				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
+				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+ 				$ltR = mysql_query($ltQ);
+ 				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
+ 				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+				$scsR = mysql_query($scsQ);
+				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);			
+				echo "<td>";
+				echo $attCBL . " | " . $attLT . " | " . $attSCS;
+				echo "</td>\n";
+			}
 
 			$rdateQ = "SELECT MAX(RetreatDate1), MAX(RetreatDate2) FROM journal 
 				WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $row['clientID'];
