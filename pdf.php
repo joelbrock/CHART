@@ -36,15 +36,15 @@ function Footer()
 }
 function jEntryIntro($data,$rc,$in){
 	$clientID = $_REQUEST['clientID'];
-	
+
 	global $client,$thisQ;
 	$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
 	$intror = mysql_query($introq);
 	// echo $introq;
 	$row = mysql_fetch_row($intror) OR DIE (mysql_error());
-	
+
 	$this->Ln(6);
-	
+
 	$this->Cell($in);
 	$this->SetFont('Arial','',12);
 	if ($row[0] == '') {
@@ -52,8 +52,8 @@ function jEntryIntro($data,$rc,$in){
 		$this->Ln(6);
 	} else {
 		$this->MultiCell(175, 5.25, stripslashes($row[0]));
-	
-		// 
+
+		//
 		// if($data['Category']=='quarterly'){
 		// 	$this->Write(20,$data['Intro']);
 		// } else {
@@ -64,7 +64,7 @@ function jEntryIntro($data,$rc,$in){
 function jEntry($k,$data,$in){
 	global $thisQ;
 	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
-	
+
 	if($data['Category']=='quarterly' && $data['Quarterly'] != ""){
 		$this->Write(10, "Quarterly Note:");
 		$this->Ln(9);
@@ -75,11 +75,11 @@ function jEntry($k,$data,$in){
 		$this->Ln(6);
 
 	} else {//this is a call or research entry
-		if($k==0){			
+		if($k==0){
 			$this->SetFont('Arial','B',12);
-			$this->Cell(0,12,'Q' . $printQ . ' Note:',0,1);	
+			$this->Cell(0,12,'Q' . $printQ . ' Note:',0,1);
 			$this->Ln(6);
-			
+
 		}
 		// $this->Cell($in);
 		// $this->SetLeftMargin($in);
@@ -109,56 +109,56 @@ function content_filter($rc) {
 	$pattern1 = '/%SCHEDULE%/';
 	$pattern2 = '/%PROGRAM%/';
 	$pattern3 = '/%CONNECTIONS%/';
-	
+
 
 
 	if (preg_match($pattern0, $rc)) {
 		// $this->Write( 2, $replace);
 		$this->SetFont('Arial','B',11);
-		$this->Write(11,"The Newest Resources Available to You on the ");
-		$this->PutLink("http://cdsconsulting.coop/cbldlibrary", "CBLD Library");
+		$this->Write(11,"The Newest Resources Available to You on the NEW ");
+		$this->PutLink("http://library.cdsconsulting.coop/", "CDS CC Library");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1440", "Featured: Cracking open the 'Serve' Nut");
-		$this->Ln(7);	
+		$this->PutLink("", "Policy Governance Quick Guide");
+		$this->Ln(7);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1444", "Featured: Building Belonging, Creating Community");
+		$this->PutLink("", "Featured: Building Belonging, Creating Community");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1445", "Planning and Budgeting Report Templates");
+		$this->PutLink("", "Planning and Budgeting Report Templates");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
 		$this->Write(11,"And ");
-		$this->PutLink("http://www.cdsconsulting.coop/co-op_cafe", "dozens of short video recordings");
+		$this->PutLink("http://library.cdsconsulting.coop/cooperative-cafe", "dozens of short video recordings");
 		$this->Write(11," from the Cooperative Cafes");
 		$this->Ln(3);
 		$this->Cell(8);
 		$this->Write(11," focused on growing our co-ops.");
 		$this->Ln(7);
-	
+
 	} elseif (preg_match($pattern3, $rc)) {
 		$this->SetFont('Arial','B',11);
 		$this->Write(11,"New Connections Articles -- from the ");
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter", "Connections Archive");
+		$this->PutLink("http://library.cdsconsulting.coop/article", "Connections Archive");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1446", "It’s Time to Pull Out Your 2015 Calendars!");
+		$this->PutLink("http://library.cdsconsulting.coop/article/great-idea-whaddaya-call-it-co-op-governance/", "Great Idea: Whaddya call it? Co-op Governance");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"September, 2014");
+		$this->Write(10,"February, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1439", "Great Idea for General Managers: GM Compensation Database");
+		$this->PutLink("http://library.cdsconsulting.coop/article/ncg-consumer-advocacy-and-gmo-labeling/", "NCG Consumer Advocacy and GMO Labeling");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"August, 2014");
+		$this->Write(10,"February, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -166,27 +166,27 @@ function content_filter($rc) {
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"August, 2014");
+		$this->Write(10,"February, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1406", "Great Idea: Using Trend Data in Financial Reporting");
+		$this->PutLink("http://library.cdsconsulting.coop/article/cds-cc-library-launches-new-improved-site-features/", "CDS CC Library Re-Launched!");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"July, 2014");
+		$this->Write(10,"March, 2015");
 
-			
+
 	} elseif (preg_match($pattern1, $rc)) {
 		$this->Image('images/2015_events_grid.png',12,145,180);
-		
-		
+
+
 		// $this->SetFont('Arial','B',11);
 		// $this->Write(11,"Upcoming In-Person Events ");
 		// $this->SetFont('Arial','',10);
-		// 
+		//
 		// $this->Ln(6);
-		// 
+		//
 		// $this->SetFont('Arial','B',10);
 		// $this->Cell(8);
 		// $this->PutLink("https://cdsconsulting.centraldesktop.com/cbld/doc/6555219/", "Jul. 7:  Baltimore, MD");
@@ -194,35 +194,35 @@ function content_filter($rc) {
 		// $this->SetFont('Arial','',9);
 		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
 		// $this->Ln(4);
-		// $this->Cell(8);	
+		// $this->Cell(8);
 		// $this->SetFont('Arial','B',10);
 		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/4890658#twi", "Sep. 22:  Minneapolis, MN");
 		// $this->Cell(27);
 		// $this->SetFont('Arial','',9);
 		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
 		// $this->Ln(4);
-		// $this->Cell(8);	
+		// $this->Cell(8);
 		// $this->SetFont('Arial','B',10);
 		// $this->PutLink("https://cdsconsulting.centraldesktop.com/cbld/doc/5649597/", "Sep. 29:  Sacramento, CA");
 		// $this->Cell(27.5);
 		// $this->SetFont('Arial','',9);
 		// $this->PutLink("http://cdsconsulting.centraldesktop.com/cbld/doc/14721993", "[register]");
 		// $this->Ln(4);
-		// $this->Cell(8);	
+		// $this->Cell(8);
 		// $this->SetFont('Arial','B',10);
 		// $this->Write(10, "Oct. 5 & 6: Food System / Strategic Seminar Seattle, WA");
 		// $this->Cell(10);
 		// $this->SetFont('Arial','',9);
 		// $this->PutLink("http://nwcoops2012.eventbrite.com/", "[register]");
-		// 
-		// 
-		// // 
+		//
+		//
+		// //
 		// $this->PutLink("http://www.cdsconsulting.coop/services/lead-training", "Leadership Training");
 		// $this->Cell(32);
 		// $this->PutLink("http://www.cdsconsulting.coop/services/cbl101", "CBL101");
 		// $this->Cell(53);
 		// $this->PutLink("http://www.cdsconsulting.coop/services/seminars", "Strategic Co-op Seminar");
-		// 
+		//
 		// $this->Ln(6);
 		// $this->SetFont('Arial','',10);
 		// $this->Cell(66,7,"9/29 - Sacramento, CA", 0);
@@ -245,10 +245,10 @@ function content_filter($rc) {
 		// $this->Cell(66,7,"3/31 - Portland, OR", 0);
 		// $this->Cell(66,7,"", 0);
 		// $this->Ln(4);
-		
-		
+
+
 		// $this->Cell(60);
-		// $this->PutLink("http://www.cdsconsulting.coop/register", "Register Here"); 
+		// $this->PutLink("http://www.cdsconsulting.coop/register", "Register Here");
 		// $this->Write(10, " for a 2012 CBLD event! ");
 		// $this->Write(10,"New!  ");
 		// $this->PutLink("http://www.cdsconsulting.coop/services/seminars", "Strategic Co-op Seminars");
@@ -270,7 +270,7 @@ function content_filter($rc) {
 		$this->Cell(8);
 		$this->Write(10,"CBLD Resources");
 		// $this->Ln(4);
-		
+
 	} else {
 		$this->Write( 6, $rc);
 	}
@@ -279,16 +279,16 @@ function event_attendance($client) {
 	global $userinfo;
 	$clientID = $_REQUEST['clientID'];
 	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
-	
+
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 45, 12, "In-Person Event Attendance", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
 	$this->Ln(6);
 	$this->Cell( 50, 12, "CBL 101: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
-	// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> '' 
+	// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
-	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> '' 
+	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
 		AND a.clientID = $clientID GROUP BY a.id";
 	$cblR = mysql_query($cblQ);
 	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
@@ -298,9 +298,9 @@ function event_attendance($client) {
 	$this->Cell( 50, 12, "Leadership Training: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 	// $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
-	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
+	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
-		AND a.clientID = $clientID GROUP BY a.id"; 
+		AND a.clientID = $clientID GROUP BY a.id";
 	$ltR = mysql_query($ltQ);
 	$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
@@ -309,14 +309,14 @@ function event_attendance($client) {
 	$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 	$this->SetFont('Arial','B',12);
 //	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
-//		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id"; 
+//		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
-		AND a.clientID = $clientID GROUP BY a.id"; 
+		AND a.clientID = $clientID GROUP BY a.id";
 	$scsR = mysql_query($scsQ);
 	$attSCS = (mysql_num_rows($scsR)==0) ? "None" : mysql_num_rows($scsR);
 	$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
 	$this->Ln(6);
-	
+
 }
 
 
@@ -334,11 +334,11 @@ function Report($client,$filename,$dest='I')
 	$clientID = $_REQUEST['clientID'];
 	$this->AliasNbPages();
 	$this->AddPage();
-	
+
 	$in = 6;
 	$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
 	$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
-	
+
 	$this->SetFont('Arial','B',14);
 	$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
@@ -356,7 +356,7 @@ function Report($client,$filename,$dest='I')
 	// $this->Write(20, $rc['intro_default']);
 	// $this->Write(20, $client['Intro']);
 	$this->jEntryIntro($client,$rc,$in);
-	
+
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 55, 12, "Ongoing Support:", 0, 0, 'L' );
 	$this->Ln(8);
@@ -368,12 +368,12 @@ function Report($client,$filename,$dest='I')
 	$this->SetFont('Arial','',12);
 	$this->Cell( 40, 12, "Hours Remaining", 0, 0, 'L' );
 	$this->SetFont('Arial','B',14);
-	if ($client['hrs']['alert']=='med') { $fcolor = '#cc0033'; 
+	if ($client['hrs']['alert']=='med') { $fcolor = '#cc0033';
 		$this->SetTextColor(204,0,51);
 	}//if we are over hours
-	elseif ($client['hrs']['alert']=='high') { $fcolor = '#ff9900'; 
+	elseif ($client['hrs']['alert']=='high') { $fcolor = '#ff9900';
 		$this->SetTextColor(255,153,0);
-	}//if 
+	}//if
 	$this->Cell( 30, 12, $client['hrs']['R'], 0, 0, 'L' );
 	$this->SetFont('Arial','',14);
 	$this->SetTextColor(0,0,0);
@@ -397,7 +397,7 @@ function Report($client,$filename,$dest='I')
 	$this->jEntries($client['hours'],$in);
 
 	$this->Ln(4);
-	
+
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 	$this->SetFont('Arial','',12);
@@ -459,16 +459,16 @@ function Report($client,$filename,$dest='I')
 	$this->PutLink('http://cdssconsulting.coop/cbld','CBLD Program');
 	$this->Ln(10);
 
-	$this->AddPage();		
-	
+	$this->AddPage();
+
 	$this->SetLineWidth(0.8);
 	$this->Line( 10, $this->GetY() ,190 ,$this->GetY() );
 	$this->Ln(2);
-	
+
 	$this->Image( '../images/CBLD_logo_full.gif', 152, $this->GetY(), 40 );
 	$this->Image( '../images/findus.jpg', 152, $this->GetY() + 68, 40, 0, 'jpg', 'https://www.facebook.com/CDSConsultingCoop' );
-	$this->Image( '../images/theCooperativeCafe-title.jpg', 152, $this->GetY() + 82, 40, 0, 'jpg', 'http://www.cdsconsulting.coop/co-op_cafe' );	
-	
+	$this->Image( '../images/theCooperativeCafe-title.jpg', 152, $this->GetY() + 82, 40, 0, 'jpg', 'http://www.cdsconsulting.coop/co-op_cafe' );
+
 	// $this->SetFont('Arial','',11);
 	// $this->MultiCell(200, 6, $this->content_filter($rc['content-1']), 0, 'L');
 	$this->Write(20, $this->content_filter($rc['content-1']));
@@ -481,7 +481,7 @@ function Report($client,$filename,$dest='I')
 	// $this->SetFont('Arial','',12);
 	$this->Write(20, $this->content_filter($rc['content-3']));
 	// $this->Ln(4);
-			
+
 	$this->Output($filename,$dest);
 }
 }
@@ -492,21 +492,21 @@ function Report($client,$filename,$dest='I')
 			// echo $query;
 			$result = mysql_query($query);
 			while($row=mysql_fetch_assoc($result)){
-				$c[]=$row; 
+				$c[]=$row;
 			}
 			//print_r($c);
-	
+
 		} else {
 			$query = "SELECT * FROM clients c WHERE c.id = " . $clientID . " LIMIT 1";
 			// echo $query;
 			$action='single';
 			$result = mysql_query($query);
-			$c[]=$row=mysql_fetch_assoc($result); 
+			$c[]=$row=mysql_fetch_assoc($result);
 			//print_r($c);
 			if (!$row['id']) {
 				empty($clientID);
 				header('Location: dashboard.php');
-			} 
+			}
 		}
 		foreach($c as $client) {
 			$clientID=$client['id'];
@@ -517,7 +517,7 @@ function Report($client,$filename,$dest='I')
 			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) ORDER BY Category='quarterly' DESC, Date DESC ";
-			$hoursr = mysql_query($hoursq); 
+			$hoursr = mysql_query($hoursq);
 			if(mysql_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
 			while($h=mysql_fetch_assoc($hoursr)){
@@ -527,9 +527,9 @@ function Report($client,$filename,$dest='I')
 			}
 			$client['hrs']['R'] = $client['total_hours']-$client['hrs']['total']; //hours remaining (yearly)
 			$client['q_hours']=$client['total_hours']/4; //est hours per q
-			
+
 			if($client['hrs']['total'] > $client['total_hours'] || ($client['hrs']['total'] == $client['total_hours'] && $thisQ<4))$client['hrs']['alert']='med';
-			elseif ($thisQ<4 && $client['hrs']['total'] > ($row['q_hours']*$thisQ) && $client['hrs']['total'] < (2*$row['q_hours']/3)) $client['hrs']['alert']='high'; 
+			elseif ($thisQ<4 && $client['hrs']['total'] > ($row['q_hours']*$thisQ) && $client['hrs']['total'] < (2*$row['q_hours']/3)) $client['hrs']['alert']='high';
 			else $client['hrs']['alert']='low';
 				$filename=($action=='batch'?$_SERVER['DOCUMENT_ROOT'].'/reports/':'').'CBLD_'.$thatY.'_Q'.thisQ().'-'.getSlug($client['name']).'.pdf'; if($action=='batch')$filenames[]=$filename;
 				$pdf=new PDF();
@@ -544,7 +544,7 @@ function Report($client,$filename,$dest='I')
 				if ($v_list > 0) {
 					header("Content-type: application/octet-stream");
 					header("Content-disposition: attachment; filename=$zname");
-					readfile($zname_full);			
+					readfile($zname_full);
 				} else {
 					die ("An error occurred.");
 				}
