@@ -119,23 +119,23 @@ function content_filter($rc) {
 		// $this->Write( 2, $replace);
 		$this->SetFont('Arial','B',11);
 		$this->Write(11,"The Newest Resources Available to You on the ");
-		$this->PutLink("http://cdsconsulting.coop/cbldlibrary", "CBLD Library");
+		$this->PutLink("http://library.cdsconsulting.coop/", "CDS CC Library");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1481", "Featured: Share Values and Grow Community");
+		$this->PutLink("http://library.cdsconsulting.coop/tag/roundups/", "Co-op Cafe Video Roundups from March 2015!");
 		$this->Ln(7);	
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1471", "Featured: The Co-op Difference Starts with Staff");
+		$this->PutLink("http://library.cdsconsulting.coop/fieldguide/policy-governance-quick-guide/", "Field Guide: Policy Governance Quick Guide");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1462", "Featured: Peoples Expands: A Tale of Two Co-ops");
+		$this->PutLink("http://library.cdsconsulting.coop/fieldguide/general-manager-contract-template-field-guide/", "General Manager Contract Templates");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
 		$this->Write(11,"And ");
-		$this->PutLink("http://www.cdsconsulting.coop/co-op_cafe", "dozens of short video recordings");
+		$this->PutLink("http://library.cdsconsulting.coop/tag/cooperative-cafe-2/", "dozens of short video recordings");
 		$this->Write(11," from the Cooperative Cafes");
 		$this->Ln(3);
 		$this->Cell(8);
@@ -145,39 +145,39 @@ function content_filter($rc) {
 	} elseif (preg_match($pattern3, $rc)) {
 		$this->SetFont('Arial','B',11);
 		$this->Write(11,"New Connections Articles -- from the ");
-		$this->PutLink("http://www.cdsconsulting.coop/newsletter", "Connections Archive");
+		$this->PutLink("http://library.cdsconsulting.coop/article", "Connections Archive");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1446", "It's Time to Pull Out Your 2015 Calendars!");
+		$this->PutLink("http://library.cdsconsulting.coop/article/great-idea-whaddaya-call-it-co-op-governance/", "Great Idea: Whaddya Call it? Co-op governance!");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"September, 2014");
+		$this->Write(10,"February, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1479", "Improve Trust and Teamwork Throughout Growth");
+		$this->PutLink("http://library.cdsconsulting.coop/article/ncg-consumer-advocacy-and-gmo-labeling/", "NCG Consumer Advicacy and GMO Labeling");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"December, 2014");
+		$this->Write(10,"February, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1480", "Great Idea: Thriving in the New Competitive Landscape-Co-op Cafe 2015");
+		$this->PutLink("http://library.cdsconsulting.coop/article/great-idea-using-financial-conditions-monitoring-templates/", "Great Idea: Using FInancial Conditions Monitoring Templates");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"December, 2014");
+		$this->Write(10,"January, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://cdsconsulting.coop/newsletter/article/1470", "Great Idea: Board President Succession Planning");
+		$this->PutLink("http://library.cdsconsulting.coop/article/co-ops-ends-encompass-community-vision/", "Co-op's Ends Encompass Community Vision");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"November, 2014");
+		$this->Write(10,"January, 2015");
 
 			
 	} elseif (preg_match($pattern1, $rc)) {
@@ -406,7 +406,7 @@ function Report($client,$filename,$dest='I')
 	$this->Cell( 90, 12, '', 0, 0, 'L' );
 	$this->PutLink('http://cdsconsulting.coop','CDS Consulting Co-op');
 	$this->Write( 10,' | ');
-	$this->PutLink('http://cdssconsulting.coop/cbld','CBLD Program');
+	$this->PutLink('http://cdsconsulting.coop/cbld','CBLD Program');
 	$this->Ln(10);
 
 	$this->AddPage();		
