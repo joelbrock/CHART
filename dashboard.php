@@ -158,7 +158,8 @@ switch ($_GET['range']) {
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
 		break;
 	default: //this_year
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
+		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
+		$sqlyear = "";		
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -185,6 +186,9 @@ if ($staffID == 'ALL') {
 		AND j.created = j2.MaxDate";
 	$single = False;
 }
+$yearQ = mysql_query("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
+$yearR = mysql_fetch_row($yearQ);
+$year = $yearR[0];
 
 $query = "SELECT j.created AS created,
  		j.Date AS date,
@@ -276,8 +280,9 @@ if(mysql_num_rows($result)>0){
 			<th class='sortable-numeric'>time</th>\n
 			<th class='sortable-numeric'>rem</th>\n	
 			<!-- <th class='sortable-text'>cat</th> -->\n
-			<th>Client Notes</th>\n
-			<th class='sortable-numeric'>Retreat</th>\n			
+			<th>Client Notes</th>\n";
+	echo ($admin) ? "<th>CB|LT|CC</th>" : "";
+	echo "		<th class='sortable-numeric'>Retreat</th>\n			
 			<th class='sortable-numeric'>Date</th>\n
 			<th></th>\n
 		</tr>\n
@@ -358,6 +363,24 @@ if(mysql_num_rows($result)>0){
 			// echo ($row['clientnote'] != '') ? "client: ".substr($row['clientnote'],0,100) : (($row['teamnote'] != '') ? "team: ".substr($row['teamnote'],0,100) : "");
 			// echo "</p></td>\n";
 			echo "</p></td>\n";
+			if ($admin) {
+				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> '' 
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+//echo $cblQ;
+				$cblR = mysql_query($cblQ);
+				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
+				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+ 				$ltR = mysql_query($ltQ);
+ 				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
+ 				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
+					AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+				$scsR = mysql_query($scsQ);
+				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);			
+				echo "<td>";
+				echo $attCBL . " | " . $attLT . " | " . $attSCS;
+				echo "</td>\n";
+			}
 
 			$rdateQ = "SELECT MAX(RetreatDate1), MAX(RetreatDate2) FROM journal 
 				WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $row['clientID'];
