@@ -304,7 +304,7 @@ function Report($client,$filename,$dest='I')
 	elseif ($client['hrs']['alert']=='high') { $fcolor = '#ff9900';
 		$this->SetTextColor(255,153,0);
 	}//if
-	$this->Cell( 30, 12, $client['hrs']['R'], 0, 0, 'L' );
+	$this->Cell( 30, 12, number_format($client['hrs']['R'],2), 0, 0, 'L' );
 	$this->SetFont('Arial','',14);
 	$this->SetTextColor(0,0,0);
 	$this->Ln(6);
