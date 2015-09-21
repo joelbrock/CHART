@@ -123,14 +123,14 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/being-really-great-grocers-cfc/", "Co-op Cafe: Being Really Great Grocers");
+		$this->PutLink("http://library.cdsconsulting.coop/fieldguide/orienting-new-directors/", "Field Guide: Orienting New Directors");
 		$this->Ln(7);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/fieldguide/nominating-board-candidates/", "Field Guide: Nominating Board Candidates");
+		$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-what-is-meant-by-a-reasonable-interpretation/", "Video: What is Meant by a 'Reasonable Interpretation'?");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/doc/4-pillars-of-cooperative-governance-self-assessment-tool/", "UPDATED: Co-op Governance Self-Assessment Tool");
+		$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-the-always-appoint-principle/", "Video: The Always Appoint Principle");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -145,7 +145,15 @@ function content_filter($rc) {
 	} elseif (preg_match($pattern3, $rc)) {
 		$this->SetFont('Arial','B',11);
 		$this->Write(11,"New Connections Articles -- from the ");
-		$this->PutLink("http://library.cdsconsulting.coop/article", "Connections Archive");
+		$this->PutLink("http://library.cdsconsulting.coop/category/articles/connections/", "Connections Archive");
+		$this->Ln(6);
+		$this->SetFont('Arial','B',10);
+		$this->Cell(8);
+		$this->PutLink("http://library.cdsconsulting.coop/co-ops-thriving-into-the-future/", "Co-ops THRIVING into the Future");
+		$this->Ln(4);
+		$this->Cell(8);
+		$this->SetFont('Arial','I',9);
+		$this->Write(10,"August, 2015");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
@@ -157,31 +165,23 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
+		$this->PutLink("http://library.cdsconsulting.coop/article/gmo-labeling-consumer-right-to-know-at-risk/", "GMO Labeling: Consumer Right to Know at Risk");
+		$this->Ln(4);
+		$this->Cell(8);
+		$this->SetFont('Arial','I',9);
+		$this->Write(10,"August, 2015");
+		$this->Ln(6);
+		$this->SetFont('Arial','B',10);
+		$this->Cell(8);
 		$this->PutLink("http://library.cdsconsulting.coop/article/sustaining-wheatsvilles-big-direction/", "Sustaining Wheatsville's BIG Direction");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
 		$this->Write(10,"March, 2015");
-		$this->Ln(6);
-		$this->SetFont('Arial','B',10);
-		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/great-idea-using-financial-conditions-monitoring-templates/", "Great Idea: Using FInancial Conditions Monitoring Templates");
-		$this->Ln(4);
-		$this->Cell(8);
-		$this->SetFont('Arial','I',9);
-		$this->Write(10,"January, 2015");
-		$this->Ln(6);
-		$this->SetFont('Arial','B',10);
-		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/co-ops-ends-encompass-community-vision/", "Co-op's Ends Encompass Community Vision");
-		$this->Ln(4);
-		$this->Cell(8);
-		$this->SetFont('Arial','I',9);
-		$this->Write(10,"January, 2015");
 
 
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2015_events_grid_v2.png',12,145,180);
+		$this->Image('images/2015_events_grid_v3.png',12,145,180);
 
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
