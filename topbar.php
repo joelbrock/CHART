@@ -96,9 +96,9 @@ echo "<li><a href='#'>OPTIONS</a>
 				<ul class=\"sub_menu\">\n";	
 
 if (REPORT_READY) {
-	if(($report) || ($admin)){
+//	if(($report) || ($admin)){
 		echo "<li><a href='#' class='opener'>Generate ".($admin?"Full":"My")." Quarterly Report</a></li>\n";
-	} 
+//	} 
 } else {
 	echo "<li><b>Reports Arent Ready Yet.</b></li>\n";
 }
