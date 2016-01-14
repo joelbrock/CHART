@@ -26,10 +26,13 @@ while($row=mysql_fetch_assoc($result)){
 	<option value=4<?php echo $thisQ == 4 ? ' SELECTED' : ''; ?>>Q4</option>
 </select>
 <select name="thatY">
-	<option value="2015" SELECTED>2015</option>	
-	<option value="2014">2014</option>
-	<option value="2013">2013</option>
-	<option value="2012">2012</option>
+<?php
+$yearR = mysql_query("SELECT YEAR(MIN(Date)), YEAR(MAX(Date)) FROM journal");
+list($yr1, $yr2) = $yearR;
+for ($i = $yr1; $i <= $yr2; $i++) {
+	echo "<option value='" . $i . "'" . ($i == date('Y')) ? " SELECTED" : "" . ">" . $i . "</option>";
+}
+?>
 </select>
 <input type="submit" value="submit" />
 </form>
