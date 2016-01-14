@@ -28,9 +28,11 @@ while($row=mysql_fetch_assoc($result)){
 <select name="thatY">
 <?php
 $yearR = mysql_query("SELECT YEAR(MIN(Date)), YEAR(MAX(Date)) FROM journal");
-list($yr1, $yr2) = $yearR;
+list($yr1, $yr2) = mysql_fetch_row($yearR);
 for ($i = $yr1; $i <= $yr2; $i++) {
-	echo "<option value='" . $i . "'" . ($i == date('Y')) ? " SELECTED" : "" . ">" . $i . "</option>";
+	echo "<option value='" . $i . "'";
+	echo ($i == date('Y')) ? " SELECTED" : "";
+	echo ">" . $i . "</option>";
 }
 ?>
 </select>
