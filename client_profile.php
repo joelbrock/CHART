@@ -216,7 +216,7 @@ echo "<h2>" . $client['name'] . " &mdash; Client Profile</h2>";
 </form>
 </body>
 </html>
-<? }?>
+<?php }?>
 <script>	
 	$(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
