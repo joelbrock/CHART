@@ -101,7 +101,7 @@ function client_health($client) {
 	
 	$query = "SELECT j.ClientID as cID, SUM(j.Hours) as hours, (CASE WHEN c.total_hours = 0 THEN 15 ELSE c.total_hours END) AS total, COUNT(*) as count
 		FROM journal j, clients c WHERE j.ClientID = c.id AND j.ClientID = ". $client . " AND YEAR(j.Date) = " . date('Y') . " AND j.Billable = 1 GROUP BY cID";
-	echo $query;
+	// echo $query;
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
 	
