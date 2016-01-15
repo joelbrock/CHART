@@ -157,9 +157,9 @@ switch ($_GET['range']) {
 	case 'this_year':
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
 		break;
-	default: //this_year
-		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";		
-		$sqlyear = "";		
+	default: 
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
+		// $sqlyear = "";
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -246,7 +246,7 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$group_on = ($_GET['range']) ? $_GET['range'] : 'prev_year';
+$group_on = ($_GET['range']) ? $_GET['range'] : 'this_year';
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
@@ -277,8 +277,8 @@ if(mysql_num_rows($result)>0){
 			<th class='sortable-text' filter-type='ddl'>Consultant</th>\n
 			<!-- <th class='sortable-numeric'>used</th> -->\n
 			<!-- <th class='sortable-numeric'>tot</th> -->\n
-			<th class='sortable-numeric'>time</th>\n
-			<th class='sortable-numeric'>rem</th>\n	
+			<th class='sortable-numeric'>hrs. used (tot)</th>\n
+			<th class='sortable-numeric'>pct. remain</th>\n	
 			<!-- <th class='sortable-text'>cat</th> -->\n";
 	echo ($admin) ? "<th class='sortable-numeric'>att</th>" : "";
 	echo "		<th>Client Notes</th>\n
@@ -323,14 +323,15 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='right'>" . $rem ."</td>";
 
 			if($single == True) {
-				echo "<td align='center'>" . $row['hours'] ."</td>";
+				echo "<td align='center'>" . $row['hours'];
 			} else {
 				$hrs = ($tot0==0) ? 0 : rtrim($tot0,'.0');
-				echo "<td align='center'>$hrs</td>";
+				echo "<td align='center'>" . $hrs;
 			}
+			echo " (". floatval($totalhours) .")</td>";
 			$rem = $totalhours - $tot0;
 			$left = ((($totalhours - $tot0) / $totalhours) * 100);
-			echo "<td align='center'>" . number_format($rem,2) . " | " . number_format($left,0) ."%</td>";			
+			echo "<td align='center'>" . number_format($left,0) ."%</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
