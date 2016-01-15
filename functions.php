@@ -99,8 +99,9 @@ function getSlug($text)
 function client_health($client) {
 	$thisQ = ceil(date('n')/3);
 	
-	$query = "SELECT j.ClientID as cID, SUM(j.Hours) as hours, (CASE WHEN c.total_hours = 0 THEN 15 ELSE c.total_hours END) AS total FROM journal j, clients c WHERE j.ClientID = c.id AND j.ClientID = ". $client . " AND YEAR(j.Date) = " . date('Y') . " AND j.Billable = 1 GROUP BY cID";
-	// echo $query;
+	$query = "SELECT j.ClientID as cID, SUM(j.Hours) as hours, (CASE WHEN c.total_hours = 0 THEN 15 ELSE c.total_hours END) AS total, COUNT(*) as count
+		FROM journal j, clients c WHERE j.ClientID = c.id AND j.ClientID = ". $client . " AND YEAR(j.Date) = " . date('Y') . " AND j.Billable = 1 GROUP BY cID";
+	echo $query;
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
 	
@@ -112,8 +113,9 @@ function client_health($client) {
 	// $sub = $hours / $total;
 	$tot = $hours / $rtotal;
 	$mos = date('m') / 12;
+	$ct = $row['count'] * $mos;
 	$sub = $tot / $mos;
-	// echo "Q: $thisQ, hours: $hours, tot: $tot, total: $total, sub: $sub";
+	// echo "Q: $thisQ, mos: $mos, hours: $hours, tot: $tot, total: ".$row['total'].", count: ".$row['count'].", ct: $ct, sub: $sub";
 
 	if ($sub < .5) {
 		$health = 1;
