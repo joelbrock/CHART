@@ -1,5 +1,6 @@
 <?php
 require_once('mysql_connect.php');
+if(!function_exists('thisQ')) require_once('functions.php');
 //GET LOGGED IN USER
 if (isset($_SESSION['username'])){
 	$result = mysql_query("SELECT a.* FROM staff a WHERE a.email='" . mysql_real_escape_string($_SESSION['username']) . "' AND a.password='" . mysql_real_escape_string($_SESSION['password']) . "' AND a.password IS NOT NULL LIMIT 1") or die(mysql_error());
