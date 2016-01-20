@@ -309,7 +309,7 @@ if(mysql_num_rows($result)>0){
 			// echo $query1;
 			$result1 = mysql_query($query1);
 			$tot = mysql_fetch_row($result1);
-			$tot0 = (!$tot[0] || $tot[0] == '0') ? 1 : $tot[0];
+			$tot0 = (!$tot[0] || $tot[0] == '0') ? 0 : $tot[0];
 			
 			echo "<tr>\n";
 			echo "<td><a id='opener' href='dashboard.php?clientID=".$row['clientID']."' title='Show all for ".$row['coopname']."'>";
