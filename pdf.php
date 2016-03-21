@@ -123,19 +123,19 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/doc/4-pillars-of-cooperative-governance-self-assessment-tool/", "Four Pillars Self-Assessment Tool");
+		$this->PutLink("http://library.cdsconsulting.coop/tag/roundups/", "Quilts and Pics from this Springs Co-op Cafe Series");
 		$this->Ln(7);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/the-food-co-op-as-third-space/", "Video: The Food Co-op as Third Space");
+		$this->PutLink("http://library.cdsconsulting.coop/doc/fresh-start-bylaws-template/", "UPDATED: 'Fresh Start' Bylaws Template");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-introduction-to-the-four-pillars/", "Video: Intro to the Four Pillars");
+		$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-tips-for-facilitating-board-meetings/", "Video: Tips for Facilitating Board Meetings");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
 		$this->Write(11,"And ");
-		$this->PutLink("http://library.cdsconsulting.coop/category/cooperative-cafe/", "dozens of short video recordings");
+		$this->PutLink("http://library.cdsconsulting.coop/category/cooperative-cafe/", "over 100 short video recordings");
 		$this->Write(11," from the Cooperative Cafes");
 		$this->Ln(3);
 		$this->Cell(8);
@@ -149,39 +149,39 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/cooperative-cafes-inspire-teamwork-and-connect/", "Co-op Cafes Inspire Teamwork and Connect");
+		$this->PutLink("http://library.cdsconsulting.coop/article/stakeholder-engagement-is-vital-to-co-op-alignment/", "Stakeholder Engagement is Vital to Co-op Alignment");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"November, 2015");
+		$this->Write(10,"March, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/coop-forest-offsets-carbon-emissions-and-supports-south-american-co-ops/", "'Co+op Forest' Offsets Carbon Emissions");
+		$this->PutLink("http://library.cdsconsulting.coop/article/board-leadership-development-starts-with-commitment-to-good-governance/", "Board Leadership Development Starts with Commitment to Good Governance");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"November, 2015");
+		$this->Write(10,"February, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/gmo-labeling-consumer-right-to-know-at-risk/", "GMO Labeling: Consumer Right to Know at Risk");
+		$this->PutLink("http://library.cdsconsulting.coop/article/leadership-is-core-of-effective-co-op-governance/", "Leadership is Core of Effective Co-op Governance");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"August, 2015");
+		$this->Write(10,"January, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/article/boards-role-in-cooperative-growth/", "Board's Role in Cooperative Growth");
+		$this->PutLink("http://library.cdsconsulting.coop/article/update-gmo-labeling-advocates-bring-opposing-side-to-negotiating-table/", "Update: GMO Labeling Advocates Bring Opposing Side to Negotiating Table");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"June, 2015");
+		$this->Write(10,"February, 2016");
 
 
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2016_events_grid.png',12,145,180);
+		$this->Image('images/2016_events_grids.png',12,145,180);
 
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
