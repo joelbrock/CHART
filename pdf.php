@@ -218,7 +218,7 @@ function event_attendance($client) {
 	$this->SetFont('Arial','B',12);
 	// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
-	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
+	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $printY AND a.att <> ''
 		AND a.clientID = $clientID GROUP BY a.id";
 	$cblR = mysql_query($cblQ);
 	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
