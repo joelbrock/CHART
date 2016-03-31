@@ -218,7 +218,7 @@ function mini_dash($client,$align) {
 	$thisQ = ceil(date('n')/3);
 
 	$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $client . " 
-		AND YEAR(created) = YEAR(curdate())";
+		AND YEAR(Date) = YEAR(curdate())";
 	$hoursr = mysql_query($hoursq);
 	$hours = mysql_fetch_row($hoursr);
 	$hoursTotal = $hours[0];
