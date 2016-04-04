@@ -180,10 +180,10 @@ if ($staffID == 'ALL') {
 } else {
 	$sqljoin = "AND j.StaffID = $staffID";
 	$sqlgroup = "INNER JOIN (
-	  		SELECT MAX(created) as MaxDate, ClientID
+	  		SELECT MAX(Date) as MaxDate, ClientID
 	  		FROM journal GROUP BY ClientID
 		) j2 ON j.ClientID = j2.ClientID
-		AND j.created = j2.MaxDate";
+		AND j.Date = j2.MaxDate";
 	$single = False;
 }
 $yearQ = mysql_query("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
