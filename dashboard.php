@@ -192,7 +192,7 @@ $yearR = mysql_fetch_row($yearQ);
 $year = $yearR[0];
 
 $query = "SELECT j.created AS created,
- 		j.Date AS date,
+ 		j.Date AS tdate,
 		c.code AS code,
 		c.name AS coopname,
 		j.Category AS cat, 
@@ -304,18 +304,18 @@ if(mysql_num_rows($result)>0){
 			$totalhours = (!$row['totalhours']) ? 15 : $row['totalhours'];
 			if (!is_numeric($totalhours) || $totalhours == 0) $totalhours = 15;
 //			$yrmark = '2011-01-01';
-			// if ((date('Y',strtotime($row['date'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
+			// if ((date('Y',strtotime($row['tdate'])) != date('Y',strtotime('Y',$yrmark))) && $single == True)
 			// 	echo "<tr><td colspan=7 class='year-marker'><span>"
-			// 		. date('Y',strtotime($row['date'])) . "</span></td><td>" 
-			// 		. date('Y',strtotime($row['date'])) . "-01-01</td><td>&nbsp;</td></tr>";
-			// $yrmark = $row['date'];
+			// 		. date('Y',strtotime($row['tdate'])) . "</span></td><td>" 
+			// 		. date('Y',strtotime($row['tdate'])) . "-01-01</td><td>&nbsp;</td></tr>";
+			// $yrmark = $row['tdate'];
 			
 			if($single) {
 				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
-					AND YEAR(Date) = YEAR(NOW()) AND Date <= '" . $row['date'] . "'";
+					AND YEAR(Date) = YEAR(NOW()) AND Date <= '" . $row['tdate'] . "'";
 //			if ($single == True)
 //				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
-//					AND Date <= '". $row['date'] ."'";
+//					AND Date <= '". $row['tdate'] ."'";
 			} else {
 				$query1 = "SELECT ROUND(SUM(j.Hours),2) FROM journal j WHERE j.ClientID = " . $row['clientID'] . " $sqlyear";
 			}
@@ -427,7 +427,7 @@ if(mysql_num_rows($result)>0){
 
 
 
-			echo "<td align='center'>" . date('n/j/y', strtotime($row['date'])) . "</td>\n";
+			echo "<td align='center'>" . date('n/j/y', strtotime($row['tdate'])) . "</td>\n";
 			echo "<td>";
 			if ((($userinfo['admin'] == 1) || ($row['staffID'] == $userinfo['id'])))
 				echo "<p style='font-size:0.85em;'>
