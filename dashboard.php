@@ -336,24 +336,24 @@ if(mysql_num_rows($result)>0){
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
-                        if ($admin) {
-                                $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> ''
-                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-                                $cblR = mysql_query($cblQ);
-                                $attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
-                                $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
-                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-                                $ltR = mysql_query($ltQ);
-                                $attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
-                                $scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
-                                        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-                                $scsR = mysql_query($scsQ);
-                                $attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);
-                         	$attTOT = $attCBL + $attLT + $attSCS;
+			if ($admin) {
+				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> ''
+			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+				$cblR = mysql_query($cblQ);
+				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
+				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
+			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+				$ltR = mysql_query($ltQ);
+				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
+				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
+			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
+				$scsR = mysql_query($scsQ);
+				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);
+				$attTOT = $attCBL + $attLT + $attSCS;
 				echo "<td align='center'>";
-                                echo "<a href='#' title='CBL 101: $attCBL | LT: $attLT | Co-op Cafe: $attSCS'>$attTOT</a>";
-                                echo "</td>\n";
-                        }
+				echo "<a href='#' title='CBL 101: $attCBL | LT: $attLT | Co-op Cafe: $attSCS'>$attTOT</a>";
+				echo "</td>\n";
+			}
 
 			echo "<td><p class='textblock'>";
 			$col = 60;
@@ -397,15 +397,15 @@ if(mysql_num_rows($result)>0){
 				$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $row['clientID'];
 				$prdateR = mysql_query($prdateQ);
 				list($prdate) = mysql_fetch_row($prdateR);
-				if ($prdate != '0000-00-00') {
-					$spit = "&#10004; ".date('m/d', strtotime($prdate));
+				if ($prdate != '0000-00-00' && strftime('%Y',strtotime($prdate)) == date('Y')) {
+					$spit = "&#10004; ".date('n/j/y', strtotime($prdate));
 					$color = 'green';
 				} else {
-					$spit = '<b>&times;</b>';
+					$spit = '<b>&times;</b> ' . date('n/j/y', strtotime($prdate));
 					$color = 'red';
 				}
 			} elseif($rdate1 != '0000-00-00') {
-				$spit = "&#10004; ".date('m/d', strtotime($rdate1));
+				$spit = "&#10004; ".date('n/j/y', strtotime($rdate1));
 				$color = 'green';
 			} else {
 				$spit = '<b>&times;</b>';
@@ -415,7 +415,7 @@ if(mysql_num_rows($result)>0){
 
 
 
-			echo "<td align='center'>" . date('m/d/y', strtotime($row['date'])) . "</td>\n";
+			echo "<td align='center'>" . date('n/j/y', strtotime($row['date'])) . "</td>\n";
 			echo "<td>";
 			if ((($userinfo['admin'] == 1) || ($row['staffID'] == $userinfo['id'])))
 				echo "<p style='font-size:0.85em;'>
