@@ -295,8 +295,8 @@ if(mysql_num_rows($result)>0){
 			<!-- <th class='sortable-text'>cat</th> -->\n";
 	echo ($admin) ? "<th class='sortable-numeric'>att</th>" : "";
 	echo "		<th>Client Notes</th>\n
-			<th class='sortable-numeric'>Retreat</th>\n			
-			<th class='sortable-numeric'>Date</th>\n
+			<th class='sortable-date'>Retreat</th>\n			
+			<th class='sortable-date'>Date</th>\n
 			<th></th>\n
 		</tr>\n
 	</thead>\n<tbody>\n";
