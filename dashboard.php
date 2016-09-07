@@ -344,7 +344,7 @@ if(mysql_num_rows($result)>0){
 			echo " (". floatval($totalhours) .")</td>";
 			$rem = $totalhours - $tot0;
 			$left = ((($totalhours - $tot0) / $totalhours) * 100);
-			echo "<td align='center'>" . number_format($left,0) ."%</td>";			
+			echo "<td align='center'>" . number_format($left,0) ."% (" . $rem . ")</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
