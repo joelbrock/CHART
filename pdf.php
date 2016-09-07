@@ -468,7 +468,7 @@ function Report($client,$filename,$dest='I')
 			$hours_tyr = mysql_query($hours_ty);
 			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
-			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) ORDER BY Category='quarterly' DESC, Date DESC ";
+			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND Billable = 1 ORDER BY Category='quarterly' DESC, Date DESC ";
 			$hoursr = mysql_query($hoursq);
 			if(mysql_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
