@@ -68,6 +68,10 @@ if (!empty($clientID)){
 		}
 	}
 		
+	function popOut() {
+	    var myWindow = window.open(document.URL, "CHART Track", "width=1060,height=650");
+	}
+		
 //	$('textarea').autoResize();
 
 </script>
@@ -223,6 +227,7 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	$code = (!$row['code']) ? '' : $row['code'];
 	$page_head = ($code=='') ? $row['name'] : $code . " &mdash; " . $row['name']; 
 	echo "<td colspan=2 valign='bottom'><span class='cname'>$page_head</span>&nbsp;&nbsp;" . client_health_dots($clientID,20);
+	echo "<a href='#' class='glyphicon glyphicon-new-window' onclick='popOut()' style='float:right;font-size: 14px;'>&uarr; pop-out</a>";
 	echo "</td></tr><tr><td colspan=2>";
 	echo "<table border=0 width=360 align='left' valign='top'><tr><td>";
 	echo "<p class='info'><span class='label'>Consultant:</span>";
