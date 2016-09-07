@@ -183,7 +183,8 @@ if ($staffID == 'ALL') {
 	  		SELECT MAX(Date) as MaxDate, ClientID
 	  		FROM journal GROUP BY ClientID
 		) j2 ON j.ClientID = j2.ClientID
-		AND j.Date = j2.MaxDate";
+		AND j.Date = j2.MaxDate
+		GROUP BY j2.MaxDate";
 	$single = False;
 }
 $yearQ = mysql_query("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
