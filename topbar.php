@@ -5,17 +5,22 @@ require_once('mysql_connect.php');
 <HTML>
 <head>
 <title>CHART</title>
-<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"></link>
+<!-- CSS -->
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css" charset="utf-8"></link>
 <link rel="stylesheet" href="css/jquery-ui.css" type="text/css" charset="utf-8"></link>
+<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" charset="utf-8"></link>
+<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"></link>
+
+<!-- JAVASCRIPT -->
 <!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script> -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
 <script src="js/jquery.dropdown.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jquery.fixedheadertable.min.js"></script>
-
+<script src="js/jquery.fixedheadertable.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.qtip.min.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" charset="utf-8">
+
 
 <style>
 iframe#externalSite.externalSite {

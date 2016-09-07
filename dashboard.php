@@ -232,10 +232,22 @@ $result = mysql_query($query) or die(mysql_error());
 	<a href="#" class='btn-slide'>Track</a>
 </p> -->
 <?php
-echo "<div id='journal_output'>";	
+echo "<div id='journal_output' class='container'>";	
 
+echo "<div class='row'>";
 
-echo "<div id='datebar'><a onClick='remove' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=today'>
+if ($staffID && !$clientID) {
+	$res = mysql_query("SELECT firstname, lastname FROM staff WHERE id = $staffID");
+	$row = mysql_fetch_row($res);
+	$name = $row[0] . ' ' . $row[1];
+} elseif ($clientID && !$staffID) {
+	$res = mysql_query("SELECT name FROM clients WHERE id = $clientID");
+	$row = mysql_fetch_row($res);
+	$name = $row[0];
+}
+echo "<div id='grouptitle' class='col-md-4'>Results for: <span>" . $name . "</span></div>";
+
+echo "<div id='datebar' class='col-md-4'><a onClick='remove' href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=today'>
 	today</a>";
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_week'>this week</a>";
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_month'>this month</a>";
@@ -254,15 +266,15 @@ $tags = array(
 	'clientID' => ($clientID) ? 'client' : 0
 );
 
-echo "<div id='grouped'>";
+echo "<div id='grouped' class='col-md-3'>";
 
 // print_r($tags); 
 foreach ($tags as $p => $v) {
-	if ($v != 0 || $v != '')
-		echo "<div class='sorttag'><a href='dashboard.php?$p='><span class='ex'>x</span> $v</a></div>";
+	if ($v != 0 || $v != '') echo "<div class='sorttag'><a href='dashboard.php?$p='><span class='ex'>x</span> $v</a></div>";
 }
 
 echo "</div>";
+echo "</div>"; // close div row
 
 if(mysql_num_rows($result)>0){
 	// echo "<div id='quickfindbox'>Quick Find: <input type='text' id='quickfind' />&nbsp;&nbsp;<a id='cleanfilters' href='#'>Clear Filters</a></div>";

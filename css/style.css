@@ -259,11 +259,12 @@ div.banner h4 {
 }
 
 #datebar {
-	position: absolute;
-	top: 50px;
-	left:10%;
+/*	position: absolute;*/
+/*	top: 50px;*/
+/*	left:10%;*/
 	text-transform: uppercase;
-	float:left;
+/*	float:left;*/
+	text-align: center;
 
 }
 #datebar a {
@@ -284,14 +285,26 @@ div.banner h4 {
 	color: #ffffff;
 }
 
+#grouptitle {
+	text-transform: uppercase;
+	margin-left: 1%;
+}
+
+#grouptitle span {
+	font-size: 1.2em;
+	font-weight: bolder;
+	text-transform: capitalize;
+}
+
 #grouped {
 	float:right;
-	display:block;
-	position:relative;
-	top:-20px;
-	right: 5%;
+/*	display:block;*/
+/*	position:relative;*/
+/*	top:-20px;*/
+/*	right: 5%;*/
 /*	border:1px #666 dotted;
 	padding: 6px;*/
+	margin-right: 1%;
 }
 
 #grouped .sorttag {
