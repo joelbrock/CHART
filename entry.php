@@ -36,38 +36,39 @@ if (!empty($clientID)){
 <!-- <script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js" type="text/javascript"></script> -->
 <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+
 <script>
 
 	$(function() {
 		$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 	});
 
-	var c=0;
-	var t;
-	var timer_is_on=0;
+    var c=0;
+    var t;
+    var timer_is_on= false;
 
-	function timedCount()
+    function timedCount() 
 	{
-		document.getElementById('timer').value=c;
-		c=c+1;
-		t=setTimeout("timedCount()",21600);
-	}
-
-	function doTimer()
-	{
-		if (!timer_is_on)
-		{
-			timer_is_on=1;
-			timedCount();
+		document.getElementById('timer').value=numeral(c).format('00:00:00');
+		c++;
+		if (timer_is_on) {
+			t= setTimeout(timedCount,1000);
 		}
 	}
-	function stopCount()
-	{
-		clearTimeout(t);
-		timer_is_on=0;
-	}
 
-	$('textarea').autoResize();
+	function doTimer() 
+	{
+		if (!timer_is_on) {
+			timer_is_on=true;
+			timedCount();
+		} else {
+			clearTimeout(t);
+			timer_is_on=false;
+		}
+	}
+		
+//	$('textarea').autoResize();
 
 </script>
 
@@ -90,6 +91,12 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	$report = mysql_fetch_row($reportR);
 	
 	$Billable = ($Billable == 'on') ? 1 : 0;
+	if (strpos($Hours,':')) {
+		$str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $Hours);
+		sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+		$time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+		$Hours = number_format(($time_seconds / 60) / 60, 2);
+	}
 	
 	if ($_GET['jid']) {
 		$update = "UPDATE journal SET Hours = '$Hours', 
@@ -107,7 +114,6 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 			created = NOW()
 		WHERE id = $jid";
 	} else {
-//		$Hours = round(($Hours / 60) / 60, 2);//timer (minutes to hours)
 		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES
 			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysql_real_escape_string($TeamNote) . "', '". mysql_real_escape_string($ClientNote)."', '". mysql_real_escape_string($RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysql_real_escape_string($Quarterly)."', '".mysql_real_escape_string($Intro)."', '$Date', '$Category', NOW())";
 	}
@@ -266,7 +272,9 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	</td></tr>
 	
 	<tr><td colspan=2><span class='label'>Date: </span><input type='text' name='Date' class='datepicker' value="<?php echo  ($fill['Date']) ? $fill['Date'] : date("Y-m-d")?>" size=12 />
-	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' value='<?php echo  ($jid) ? $fill['Hours'] : 0; ?>' /></td>
+	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' id="timer" value='<?php echo  ($jid) ? $fill['Hours'] : 0; ?>' />
+	<input type="button" value="Start/Stop Timer" onclick="doTimer();" />
+	</td>
 	</tr>
 	<tr>
 		<td class='label'>Category: </td><td>
@@ -357,5 +365,6 @@ function switchType(type){
 $(function(){
 	switchType('<?php echo  $fill['Category'] ?>');
 });
+
 </script>
 </body>
