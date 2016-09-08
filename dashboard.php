@@ -184,7 +184,7 @@ if ($staffID == 'ALL') {
 	  		FROM journal GROUP BY ClientID
 		) j2 ON j.ClientID = j2.ClientID
 		AND j.Date = j2.MaxDate
-		GROUP BY j2.MaxDate";
+		GROUP BY j2.MaxDate, coopname";
 	$single = False;
 }
 $yearQ = mysql_query("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
@@ -344,7 +344,7 @@ if(mysql_num_rows($result)>0){
 			echo " (". floatval($totalhours) .")</td>";
 			$rem = $totalhours - $tot0;
 			$left = ((($totalhours - $tot0) / $totalhours) * 100);
-			echo "<td align='center'>" . number_format($left,0) ."% (" . $rem . ")</td>";			
+			echo "<td align='center'>" . number_format($left,0) ."% (" . number_format($rem,2) . ")</td>";			
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
