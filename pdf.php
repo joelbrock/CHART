@@ -123,23 +123,23 @@ function content_filter($rc) {
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/tag/roundups/", "Quilts and Pics from this Springs Co-op Cafe Series");
+		$this->PutLink("http://library.cdsconsulting.coop/policy-register-template-users-guide/", "Policy Register Template Users' Guide");
 		$this->Ln(7);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/board-decisions-between-meetings/", "Board Decisions Between Meetings");
+		$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-membership-growth/", "Video Field Guide on Membership Growth"); 
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/when-and-who-to-hire-or-contract-for-startups/", "When and Who to Hire (or Contract) for Startups");
+		$this->PutLink("http://library.cdsconsulting.coop/strategic-alliances-and-consolidations-exploring-cooperation-among-cooperatives/", "Strategic Alliances and Consolidations");
 		$this->Ln(7);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
 		$this->Write(11,"And ");
-		$this->PutLink("http://library.cdsconsulting.coop/category/cooperative-cafe/", "over 150 short video recordings");
+		$this->PutLink("http://library.cdsconsulting.coop/category/cooperative-cafe/", "over 200 short video recordings");
 		$this->Write(11," from the Cooperative Cafes");
 		$this->Ln(3);
 		$this->Cell(8);
-		$this->Write(11," focused on thriving in the new competitive landscape.");
+		$this->Write(11," focused on Courageous Leadership.");
 		$this->Ln(7);
 
 	} elseif (preg_match($pattern3, $rc)) {
@@ -149,39 +149,39 @@ function content_filter($rc) {
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/260-people-explore-embracing-change-with-courageous-leadership/", "260 People Explore Embracing Change with Courageous Leadership");
+		$this->PutLink("http://library.cdsconsulting.coop/so-our-co-ops-are-mostly-white-now-what/", "So Our Co-ops are Mostly White, Now What?");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"April, 2016");
+		$this->Write(10,"August, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/governance-considerations-in-multi-store-co-ops/", "Governance Considerations in Multi-Store Co-ops");
+		$this->PutLink("http://library.cdsconsulting.coop/what-is-board-holism-or-speaking-with-one-voice/", "What is Board Holism Or Speaking with One Voice?");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"May, 2016");
+		$this->Write(10,"October, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/stakeholder-engagement-is-vital-to-co-op-alignment/", "Stakeholder Engagement is Vital to Co-op Alignment");
+		$this->PutLink("http://library.cdsconsulting.coop/including-members-in-the-ends-dialogues/", "Including Members in the Ends Dialogues");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"March, 2016");
+		$this->Write(10,"November, 2016");
 		$this->Ln(6);
 		$this->SetFont('Arial','B',10);
 		$this->Cell(8);
-		$this->PutLink("http://library.cdsconsulting.coop/board-leadership-development-starts-with-commitment-to-good-governance/", "Board Leadership Development Starts with Commitment to Good Governance");
+		$this->PutLink("http://library.cdsconsulting.coop/co-op-fair-brings-community-together/", "Co-op Fair Brings Community Together");
 		$this->Ln(4);
 		$this->Cell(8);
 		$this->SetFont('Arial','I',9);
-		$this->Write(10,"February, 2016");
+		$this->Write(10,"November, 2016");
 
 
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2016_events_grid.png',12,145,180);
+		$this->Image('images/CBLD-2017-events-grid.png',12,145,180);
 
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
@@ -470,7 +470,7 @@ function Report($client,$filename,$dest='I')
 			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 			//$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND Billable = 1 ORDER BY Category='quarterly' DESC, Date DESC ";
-			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND Billable = 1 ORDER BY Category='quarterly' DESC, Date DESC ";
+			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND (Billable = 1 OR Category = 'quarterly') ORDER BY Category='quarterly' DESC, Date DESC ";
 			$hoursr = mysql_query($hoursq);
 			if(mysql_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
@@ -489,7 +489,7 @@ function Report($client,$filename,$dest='I')
 				$pdf=new PDF();
 				$pdf->Report($client,$filename,($action=='batch'?'F':'I'));
 
-			}
+		}
 			if($action=='batch'){
 			require_once($_SERVER['DOCUMENT_ROOT'].'/library/pclzip.lib.php');
 			$zname='CBLD-Q'.$thisQ.'-all.zip'; $zname_full=($action=='batch'?$_SERVER['DOCUMENT_ROOT'].'/reports/':'').$zname;
