@@ -297,7 +297,7 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 				</select></td>
 				<td style='border:none;'>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type='hidden' name='Billable' value='0' />
-					<input type='checkbox' id='Billable' name='Billable' checked='<?php echo  ($fill['Billable']==0) ? "no" : "yes"; ?>' /></td>
+					<input type='checkbox' id='Billable' name='Billable' checked='<?php echo ($fill['Billable']==1) ? "yes" : "no"; ?>' /></td>
 				<td class='label' style='border:none;'><label for='Billable'>Billable</label></td>
 			</tr>
 		</table>
