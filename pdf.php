@@ -181,7 +181,7 @@ function content_filter($rc) {
 
 
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/CBLD-2017-events-grid.png',12,145,180);
+		$this->Image('images/2017_events_grid.png',12,145,180);
 
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
