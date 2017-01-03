@@ -144,6 +144,7 @@ switch ($_GET['range']) {
 		break;
 	case 'this_month':
 		$sqlrange = "AND MONTH(j.Date) = MONTH(CURDATE())";
+		$sdate = date('m');
 		break;
 	case 'this_quarter':
 		$sqlrange = "AND QUARTER(j.Date) = QUARTER(CURDATE())";
@@ -153,13 +154,16 @@ switch ($_GET['range']) {
 		break;
 	case 'prev_year':
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
+		$sdate = date('Y') - 1;
 		break;
 	case 'this_year':
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";
+		$sdate = date('Y');
 		break;
 	default: 
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
-		// $sqlyear = "";
+		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
+		$sdate = date('Y') - 1;
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
@@ -237,9 +241,13 @@ echo "<div id='journal_output' class='container'>";
 echo "<div class='row'>";
 
 if ($staffID && !$clientID) {
-	$res = mysql_query("SELECT firstname, lastname FROM staff WHERE id = $staffID");
-	$row = mysql_fetch_row($res);
-	$name = $row[0] . ' ' . $row[1];
+	if (!is_numeric($staffID)) {
+		$name = 'ALL';
+	} else {
+		$res = mysql_query("SELECT firstname, lastname FROM staff WHERE id = $staffID");
+		$row = mysql_fetch_row($res);
+		$name = $row[0] . ' ' . $row[1];
+	}
 } elseif ($clientID && !$staffID) {
 	$res = mysql_query("SELECT name FROM clients WHERE id = $clientID");
 	$row = mysql_fetch_row($res);
@@ -259,7 +267,7 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$group_on = ($_GET['range']) ? $_GET['range'] : 'this_year';
+$group_on = ($_GET['range']) ? $_GET['range'] : 'prev_year';
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
@@ -312,7 +320,7 @@ if(mysql_num_rows($result)>0){
 			
 			if($single) {
 				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
-					AND YEAR(Date) = YEAR(NOW()) AND Date <= '" . $row['tdate'] . "'";
+					AND YEAR(Date) = $sdate AND Date <= '" . $row['tdate'] . "'";
 //			if ($single == True)
 //				$query1 = "SELECT ROUND(SUM(Hours),2) FROM journal WHERE ClientID = " . $row['clientID'] . "
 //					AND Date <= '". $row['tdate'] ."'";
@@ -349,15 +357,15 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
 			if ($admin) {
-				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $year AND a.att <> ''
+				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$cblR = mysql_query($cblQ);
 				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
-				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $year AND a.att <> ''
+				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$ltR = mysql_query($ltQ);
 				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
-				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $year AND a.att <> ''
+				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$scsR = mysql_query($scsQ);
 				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);
