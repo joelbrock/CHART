@@ -485,7 +485,7 @@ function Report($client,$filename,$dest='I')
 			if($client['hrs']['total'] > $client['total_hours'] || ($client['hrs']['total'] == $client['total_hours'] && $thisQ<4))$client['hrs']['alert']='med';
 			elseif ($thisQ<4 && $client['hrs']['total'] > ($row['q_hours']*$thisQ) && $client['hrs']['total'] < (2*$row['q_hours']/3)) $client['hrs']['alert']='high';
 			else $client['hrs']['alert']='low';
-				$filename=($action=='batch'?$_SERVER['DOCUMENT_ROOT'].'/reports/':'').'CBLD_'.$thatY.'_Q'.thisQ().'-'.getSlug($client['name']).'.pdf'; if($action=='batch')$filenames[]=$filename;
+				$filename=($action=='batch'?$_SERVER['DOCUMENT_ROOT'].'/reports/':'').'CBLD_'.$thatY.'_Q'.$thisQ.'-'.getSlug($client['name']).'.pdf'; if($action=='batch')$filenames[]=$filename;
 				$pdf=new PDF();
 				$pdf->Report($client,$filename,($action=='batch'?'F':'I'));
 
