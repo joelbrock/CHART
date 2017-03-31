@@ -161,8 +161,8 @@ switch ($_GET['range']) {
 		$sdate = date('Y');
 		break;
 	default: 
-		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
+		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
 		$sdate = date('Y') - 1;
 }
 if ($staffID == 'ALL') {
@@ -267,7 +267,8 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$group_on = ($_GET['range']) ? $_GET['range'] : 'prev_year';
+$default_group = 'this_year';
+$group_on = ($_GET['range']) ? $_GET['range'] : $default_group;
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
