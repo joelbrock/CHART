@@ -1,7 +1,7 @@
 <?php
 require("mysql_connect.php");
 // require($_SERVER['DOCUMENT_ROOT'].'/library/fpdf/fpdf.php');
-require('../library/fpdf/fpdf.php');
+require('fpdf/fpdf.php');
 $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 $reportID=1;
@@ -19,7 +19,7 @@ function Header()
 {
 	global $client,$thisQ;
 	//Logo
-	$this->Image('../images/pdf_header.png',5,5,200);
+	$this->Image('images/pdf_header.png',5,5,200);
 	$this->Ln(32);
 }
 
@@ -181,7 +181,7 @@ function content_filter($rc) {
 
 
 	} elseif (preg_match($pattern1, $rc)) {
-		$this->Image('images/2017_events_grid.png',12,145,180);
+		$this->Image('images/2017_events_grid_v2.png',12,145,180);
 
 	} elseif (preg_match($pattern2,$rc)) {
 		$this->SetFont('Arial','B',11);
@@ -415,9 +415,9 @@ function Report($client,$filename,$dest='I')
 	$this->Line( 10, $this->GetY() ,190 ,$this->GetY() );
 	$this->Ln(2);
 
-	$this->Image( '../images/CBLD_logo_full.gif', 152, $this->GetY(), 40 );
-	$this->Image( '../images/findus.jpg', 152, $this->GetY() + 68, 40, 0, 'jpg', 'https://www.facebook.com/CDSConsultingCoop' );
-	$this->Image( '../images/theCooperativeCafe-title.jpg', 152, $this->GetY() + 82, 40, 0, 'jpg', 'http://www.cdsconsulting.coop/co-op_cafe' );
+	$this->Image( 'images/CBLD_logo_full.gif', 152, $this->GetY(), 40 );
+	$this->Image( 'images/findus.jpg', 152, $this->GetY() + 68, 40, 0, 'jpg', 'https://www.facebook.com/CDSConsultingCoop' );
+	$this->Image( 'images/theCooperativeCafe-title.jpg', 152, $this->GetY() + 82, 40, 0, 'jpg', 'http://www.cdsconsulting.coop/co-op_cafe' );
 
 	// $this->SetFont('Arial','',11);
 	// $this->MultiCell(200, 6, $this->content_filter($rc['content-1']), 0, 'L');
