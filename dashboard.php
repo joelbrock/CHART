@@ -422,7 +422,8 @@ if(mysql_num_rows($result)>0){
 					$spit = "&#10004; ".date('n/j/y', strtotime($prdate));
 					$color = 'green';
 				} else {
-					$spit = '<b>&times;</b> ' . date('n/j/y', strtotime($prdate));
+					$spit = '<b>&times;</b> ';
+					//$spit .= date('n/j/y', strtotime($prdate));
 					$color = 'red';
 				}
 			} elseif($rdate1 != '0000-00-00') {
