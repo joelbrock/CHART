@@ -163,7 +163,7 @@ switch ($_GET['range']) {
 	default: 
 		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
 		//$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
-		$sdate = date('Y') - 1;
+		$sdate = date('Y');
 }
 if ($staffID == 'ALL') {
 	$sqljoin = "";
