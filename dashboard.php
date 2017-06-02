@@ -358,7 +358,7 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
 			if ($admin) {
-				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $sdate AND a.att <> ''
+				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$cblR = mysql_query($cblQ);
 				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
