@@ -9,6 +9,7 @@ $reportID=1;
 
 $thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : thisQ();
 $thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
+if (date('z') < 14) $thatY--;
 
 $query = "SELECT * FROM clients c ORDER BY c.name";
 // echo $query;
@@ -25,13 +26,13 @@ while($row=mysql_fetch_assoc($result)){
 	<option value=3<?php echo $thisQ == 3 ? ' SELECTED' : ''; ?>>Q3</option>
 	<option value=4<?php echo $thisQ == 4 ? ' SELECTED' : ''; ?>>Q4</option>
 </select>
-<select name="thatY">
+<select name="thatY" id="thatY">
 <?php
 $yearR = mysql_query("SELECT YEAR(MIN(Date)), YEAR(MAX(Date)) FROM journal");
 list($yr1, $yr2) = mysql_fetch_row($yearR);
 for ($i = $yr1; $i <= $yr2; $i++) {
 	echo "<option value='" . $i . "'";
-	echo ($i == date('Y')) ? " SELECTED" : "";
+	echo ($i == $thatY) ? " SELECTED" : "";
 	echo ">" . $i . "</option>";
 }
 ?>
@@ -65,3 +66,4 @@ echo "<br><b><a href='pdf.php?clientID=all' target='_blank'>Print All Reports</a
 //print checkbox for ALL
 
 ?>
+

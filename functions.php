@@ -8,7 +8,8 @@
 function thisQ() {
 	if (is_int(date('n')/3)) $qtr = date('n')/3;
 	else $qtr = floor(date('n')/3);
-	
+	if (date('z') < 14) $qtr = 4;	
+
 	return $qtr;
 }
  
