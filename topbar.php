@@ -13,7 +13,7 @@ require_once('mysql_connect.php');
 
 <!-- JAVASCRIPT -->
 <!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script> -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="js/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
 <script src="js/jquery.dropdown.js" type="text/javascript" charset="utf-8"></script>
