@@ -1,21 +1,20 @@
-3/22/2017;Co-op Cafe - Durham, NC - 2017;Co-op Cafe;http://library.cdsconsulting.coop/co-op-cafe-durham-nc-2017;
-3/17/2017;Board Communication: Engagement & Participation;Rebecca Torpie;http://library.cdsconsulting.coop/board-communication-using-the-boards-unique-perspective-to-increase-owner-engagement-and-participation;
-3/9/2017;What Drives Co-op Employee Engagement;Patricia Cumbie;http://library.cdsconsulting.coop/what-drives-co-op-employee-engagement;
-3/9/2017;Staff Engagement Key to Success;Patricia Cumbie;http://library.cdsconsulting.coop/staff-engagement-key-to-success;
-3/8/2017;Growing Leaders from Within;Melanie Reid;http://library.cdsconsulting.coop/growing-leaders-from-within;
-3/7/2017;Co-op Cafe - St. Paul - 2017;Co-op Cafe;http://library.cdsconsulting.coop/co-op-cafe-st-paul-2017;
-2/28/2017;Co-op Cafe - Sacramento - 2017;Co-op Cafe;http://library.cdsconsulting.coop/co-op-cafe-sacramento-2017;
-2/27/2017;Location, Location, Location, part 2;Debbie Suassuna;http://library.cdsconsulting.coop/location-location-location-part-2;
-2/22/2017;Key Financial Indicators;Michael Healy;http://library.cdsconsulting.coop/key-financial-indicators;
-2/8/2017;Compete to Thrive;Patricia Cumbie;http://library.cdsconsulting.coop/compete-to-thrive;
-2/8/2017;Experiencing Competition Head-On;Patricia Cumbie;http://library.cdsconsulting.coop/experiencing-competition-head-on;
-1/26/2017;Creating Accountability;Carolee Colter;http://library.cdsconsulting.coop/creating-accountability;
-1/26/2017;Location, Location, Location;Debbie Suassuna;http://library.cdsconsulting.coop/location-location-location-2;
-1/12/2017;Self-Assessment Tool: GM Success Profile;Connections;http://library.cdsconsulting.coop/self-assessment-tool-general-manager-success-profile;
-1/10/2017;Retail Food Co-ops as Servant Leaders;Thane Joyal;http://library.cdsconsulting.coop/retail-food-co-ops-as-servant-leaders;
-1/10/2017;In Service to Community in Pensacola;Connections;http://library.cdsconsulting.coop/in-service-to-community-in-pensacola;
-1/4/2017;Personalities & Performance: Myers-Briggs;Joel Kopischke;http://library.cdsconsulting.coop/personalities-and-performance-appreciating-differences-with-help-from-myers-briggs-assessments;
-1/4/2017;Creating Cooperative Resiliency;Thane Joyal;http://library.cdsconsulting.coop/creating-cooperative-resiliency;
-1/4/2017;Two Sides of Accountability;Sarah Dahl;http://library.cdsconsulting.coop/two-sides-of-accountability;
-1/2/2017;Videography Tips for Recording Live Presentations;Joel Brock;http://library.cdsconsulting.coop/videography-tips-for-recording-live-presentations;
-
+12/28/2017;What's Up with Principle Four?;Ben Sandel;http://library.cdsconsulting.coop/autonomy-and-independence-whats-up-with-principle-four/
+12/7/2017;Starting the Conversation: Org. Racial Equity;Pat Cumbie;http://library.cdsconsulting.coop/starting-the-conversation-what-does-it-take-to-achieve-organizational-racial-equity/
+12/7/2017;Leading Co-op Operations with an Equity Lens;Solutions;http://library.cdsconsulting.coop/leading-coop-operations-with-an-equity-lens/
+11/8/2017;Safety Training that Works;Carolee Colter;http://library.cdsconsulting.coop/safety-training-that-works/
+10/26/2017;Pro Formas and the New Competitive Challenges;Don Moffitt;http://library.cdsconsulting.coop/pro-formas-and-the-new-competitive-challenges/
+9/1/2017;Emotional Intelligence in the Workplace;Carolee Colter;http://library.cdsconsulting.coop/emotional-intelligence-in-the-workplace/
+8/30/2017;Everyone Welcome? Personal Narratives about Race;Jade Barker;http://library.cdsconsulting.coop/everyone-welcome-personal-narratives/
+8/9/2017;Skills for Building the Board-GM Relationship;Rose Marie Klee;http://library.cdsconsulting.coop/skills-for-building-the-board-general-manager-relationship/
+7/27/2017;New GM Establishes Strong Board Relationship;Solutions;http://library.cdsconsulting.coop/new-general-manager-establishes-strong-board-relationship/
+7/12/2017;Everyone Welcome? Race & Food Co-ops;Jade Barker;http://library.cdsconsulting.coop/everyone-welcome-considering-race-and-food-co-ops/
+7/12/2017;Reflecting Ends & Implementing Inclusivity Practices;Solutions;http://library.cdsconsulting.coop/reflecting-ends-and-implementing-inclusivity-practices/
+7/1/2017;Telling the Board Story Through the Marketing Dept;Rebecca Torpie;http://library.cdsconsulting.coop/telling-the-board-story-through-the-co-op-marketing-department/
+6/15/2017;The Power of Board Perpetuation Planning;Martha Whitman;http://library.cdsconsulting.coop/the-power-of-board-perpetuation-planning/
+6/2/2017;Relax! You Are Linked;Rebecca Torpie;http://library.cdsconsulting.coop/relax-you-are-linked/
+5/24/2107;Responding to Employee Concerns;Marilyn Scholl;http://library.cdsconsulting.coop/responding-to-employee-concerns/
+5/6/2017;Understanding 'Speaking With One Voice';Michael Healy;http://library.cdsconsulting.coop/understanding-the-meaning-of-speaking-with-one-voice/
+4/12/2017;Cooperative Ends, Impact, and Telling the Story;Michael Healy;http://library.cdsconsulting.coop/cooperative-ends-impact-and-telling-the-story/
+4/1/2017;Striking the Balance for Co-op Success;Mark Goehring;http://library.cdsconsulting.coop/striking-the-balance-for-co-op-success/
+3/28/2017;Grow Your Impact!;Sheila Ongie (NCG);http://library.cdsconsulting.coop/grow-your-impact/
+3/17/2017;Board Communication: Engagement & Participation;Rebecca Torpie;http://library.cdsconsulting.coop/board-communication-using-the-boards-unique-perspective-to-increase-owner-engagement-and-participation

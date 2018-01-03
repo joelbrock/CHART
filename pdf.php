@@ -474,21 +474,27 @@ class PDF extends FPDF
 		
 		
 		$this->SetXY(152,54);
-		$this->SetFont('Arial','',12);
+		$this->SetFont('Arial','',10);
 		
 		$this->MultiCell(50,6,'See pictures and quilts from recent Cooperative Cafes in ',0,'L');
-		$this->SetXY(152,69);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-sacramento-2017/','Sacramento, CA',12);
-		$this->SetXY(152,75);
-		// $this->Write(12,', ');
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-st-paul-2017/','St. Paul, MN',12);
-		$this->SetXY(152,81);
-		// $this->Write(12,', and ');
+		$this->SetXY(154,67);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-greenfield-2017/','Greenfield, MA',12);
+		$this->SetXY(154,73);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-madison-2017/','Madison, WI',12);
+		$this->SetXY(154,79);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-ann-arbor-2017/','Ann Arbor, MI',12);
+		$this->SetXY(154,85);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-hood-river-2017/','Hood River, OR',12);
+		$this->SetXY(154,91);
 		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-durham-nc-2017/','Durham, NC',12);
-		// $this->MultiCell(50,6,$recent_quilts);
-		// $this->Ln(12);
+		$this->SetXY(154,97);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-st-paul-2017/','St. Paul, MN',12);
+		$this->SetXY(154,103);
+		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-sacramento-2017/','Sacramento, CA',12);
 
+		$this->Image('images/cafe-pic-3.jpg',152,118,47);
 
+		/** TESTIMONIAL
 		$testimonial1 = 'I love events like this!  Not only does it allow you to hear what your board members and customers really care about, but it also allows you to bring the reality of what it takes to run a successful co-op into the conversation.  Don\'t miss this opportunity to engage with your board and owners in a day of strategic thinking.';
 		$testimonial2 = '--John Lacaria, Interim General Manager, Eastside Food Co-op';
 		$this->SetTextColor(255,255,255);
@@ -500,13 +506,11 @@ class PDF extends FPDF
 		$this->SetX(152);		
 		$this->MultiCell(50,5,$testimonial2,0,'R',true);	
 		$this->SetTextColor(0);
-		
-		
-		
+				
 		$this->SetFont('Arial','B',18);
 		$this->Cell(0,20,'Library Resource Highlights',0,0,'C');
 		$this->Ln(4);
-		
+		*/
 		
 		$this->Image('images/quilt002.png',10,186,45);
 		$this->Image('images/quilt004.png',10,231,45);
@@ -636,14 +640,34 @@ class PDF extends FPDF
 		// $this->SetXY(144,108);
 		// $this->MultiCell(45,4,$pop_text2,0,'L');
 		
-		$this->Image('images/quilt001.png',150,15,45);
+		// $this->Image('images/quilt001.png',150,15,45);
+		// $this->Image('images/quilt003.png',150,70,45);
+		
+		// PAGE 3 - EVENT DESCRIPTIONS
+		$this->SetXY(145,10);
+		// $this->SetFont('Arial','B',9);
+		// $this->MultiCell(54,4,'CBL 101: Foundation for Board Leadership',0,'C');
 
-		$this->Image('images/quilt003.png',150,70,45);
+		$this->Image('images/CBL-logo.JPG',160,6,25,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cbl_101/');	
+		$this->SetXY(145,29);
+		$this->SetFont('Arial','I',8);
+		$this->MultiCell(57,3,'This class provides a strong foundation for directors by covering these topics: Co-op principles, values & history, legal roles & responsibilities, co-op governance & financial understanding.',0,'C');
+		
+		$this->Image('images/AG-logo.jpg',158,45,28,0,'jpg','http://cdsconsulting.coop/cooperative_governance/building_a_great_relationship_workshop/');
+		$this->SetXY(145,70);
+		$this->SetFont('Arial','I',8);
+		$this->MultiCell(57,3,'2018 Theme: Building a great relationship with your GM. Experienced directors will learn about creating & maintaining a highly productive & successful relationship with their co-op\'s GM.',0,'C');
+
+		$this->Image('images/cafe-logo.jpg',161,86,27,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cooperative_cafe/');
+		$this->SetXY(145,112);
+		$this->SetFont('Arial','I',8);
+		$this->MultiCell(57,3,'This event provides a day of highly interactive & engaging strategic conversations designed to build shared understanding and alignment at your co-op & among co-ops.',0,'C');
+				
 		
 		// ---------------------------
 		
 		// EVENTS GRID ---------------
-		$this->Image('images/2017_events_grid_v2.png',10,130,180);
+		$this->Image('images/2018_events_grid.png',14,130,180);
 		// ---------------------------
 		
 		
