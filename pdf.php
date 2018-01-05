@@ -371,19 +371,20 @@ class PDF extends FPDF
 		$this->Cell( 45, 12, "Board Retreat:  ", 0, 0, 'L' );
 		$this->SetFont('Arial','',12);
 
-		$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
+		$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = '" . $printY . "' AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
 		// echo $retQ;
 		$retR = mysql_query($retQ);
 		$ret = mysql_fetch_row($retR);
 
-		if (mysql_num_rows($retR) == 1) {
+		//if (mysql_num_rows($retR) == 1) {
+		if ($ret) {
 			//($ret[0] != '0000-00-00' || $client['RetreatDate'] != '0000-00-00') {
 			$ret_date = $ret[0];
 			if($ret_date == "0000-00-00")
-				$longdate = "to be decded";
+				$longdate = "to be decided.";
 			else
 				$longdate = strftime('%A %B %e, %Y',strtotime($ret_date));
-			$this->Cell( 20, 12, $longdate, 0, 0, 'B');
+			$this->Cell( 20, 12, $longdate, 0, 0, 'L');
 		} else {
 			$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
 			$prdateR = mysql_query($prdateQ);
