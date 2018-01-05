@@ -217,9 +217,13 @@ function contact_pattern_dots($client,$size) {
 
 function mini_dash($client,$align) {
 	$thisQ = ceil(date('n')/3);
-
+	$thisY = date('Y');
+	if (date('z') < 15) {
+		$thisQ = 4;
+		$thisY = $thisY - 1;
+	}
 	$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $client . " 
-		AND YEAR(Date) = YEAR(curdate())";
+		AND YEAR(Date) = " . $thisY;
 	$hoursr = mysql_query($hoursq);
 	$hours = mysql_fetch_row($hoursr);
 	$hoursTotal = $hours[0];
@@ -232,7 +236,7 @@ function mini_dash($client,$align) {
 	$hoursleft = $tot - $hoursTotal;
 	// echo $tot . " - " . $hoursTotal;
 	echo "<table border=0 align='$align' width=350 valign='top'><tr>";
-	echo "<td align='$align'><span class='label'>Hrs. Used: </span><span class='resp' style='color: $fcolor;'><b>" . round($hoursTotal,2) . 
+	echo "<td align='$align'><span class='label'>$thisY (Q$thisQ YTD) Hrs. Used: </span><span class='resp' style='color: $fcolor;'><b>" . round($hoursTotal,2) . 
 		"</b></span><span class='label'> of </span><span class='resp'><b>" . round($tot,2) . "</b></span> / <span class='resp' style='color: $fcolor;'><b>"
 		 . round($hoursleft,2) . "</b></span> <span class='label'>remain</span></td>";
 	echo "</tr><tr>";
