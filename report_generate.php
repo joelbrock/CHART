@@ -45,15 +45,15 @@ for ($i = $yr1; $i <= $yr2; $i++) {
 echo "<ul>";
 foreach($c as $client) {
 	$clientID=$client['id'];
-	$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(created) = $thatY AND (MONTH(created) <= (".(3*($thisQ)+1)."))";//hours used this year prior to Q
+	$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) <= (".(3*($thisQ)+1)."))";//hours used this year prior to Q
 	// echo $hours_ty;
 	$hours_tyr = mysql_query($hours_ty);
 	$client['hours_ty'] = mysql_fetch_row($hours_tyr);
 	$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 	$hoursq = "SELECT *, DATE_FORMAT(`created`,'%c/%e/%Y') as created_fmt FROM journal
-		WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(created) = $thatY
-		AND (MONTH(created) >= (".(3*($thisQ-1)+1).") AND MONTH(created)<=(".((3*$thisQ)+1)."))
-		ORDER BY Category='quarterly' DESC, created DESC ";
+		WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY
+		AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".((3*$thisQ)+1)."))
+		ORDER BY Category='quarterly' DESC, Date DESC ";
 	// echo $hoursq;
 	$hoursr = mysql_query($hoursq);
 	if(mysql_num_rows($hoursr)==0)continue;///YOU ARE HERE!!!!!!!!
@@ -62,7 +62,7 @@ foreach($c as $client) {
 }
 echo "</ul>";
 //print_r($hours);
-echo "<br><b><a href='pdf.php?clientID=all' target='_blank'>Print All Reports</a></b>";
+// echo "<br><b><a href='pdf.php?clientID=all' target='_blank'>Print All Reports</a></b>";
 //print checkbox for ALL
 
 ?>
