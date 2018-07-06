@@ -161,8 +161,8 @@ switch ($_GET['range']) {
 		$sdate = date('Y');
 		break;
 	default: 
-//		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
-		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
+		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE())";  //this_year
+//		$sqlyear = "AND YEAR(j.Date) = YEAR(CURDATE()) - 1";
 		$sdate = date('Y');
 }
 if ($staffID == 'ALL') {
@@ -205,6 +205,7 @@ $query = "SELECT j.created AS created,
 		j.RetreatNote AS retreatnote,
 		j.Quarterly AS quarterly,
 		j.Hours AS hours,
+		j.Billable as billable,
 		c.total_hours AS totalhours,
 		CONCAT(s.firstname,\" \",s.lastname) AS consultant, 
 		j.StaffID AS staffID, 
@@ -267,7 +268,8 @@ echo "<a style='margin-right:0' href='dashboard.php?staffID=".$staffID."&clientI
 echo "<a href='dashboard.php?staffID=".$staffID."&clientID=".$clientID."&range=this_year'>this year</a>";
 echo "</div>";
 
-$default_group = 'prev_year';
+//$default_group = 'prev_year';
+$default_group = 'this_year';
 $group_on = ($_GET['range']) ? $_GET['range'] : $default_group;
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
@@ -345,12 +347,18 @@ if(mysql_num_rows($result)>0){
 			// echo "<td align='right'>" . $rem ."</td>";
 
 			if($single == True) {
-				echo "<td align='center'>" . $row['hours'];
+				echo "<td align='center'>";
+				if($row['billable']) {
+					echo $row['hours'];
+				} else {
+					echo "<span style='font-style:italic;font-weight:600'>" . $row['hours'] . "</span>";
+				}
 			} else {
 				$hrs = ($tot0==0) ? 0 : rtrim($tot0,'.0');
 				echo "<td align='center'>" . $hrs;
 			}
-			echo " (". floatval($totalhours) .")</td>";
+//			echo " (". floatval($totalhours) .")</td>";
+			echo "</td>";
 			$rem = $totalhours - $tot0;
 			$left = ((($totalhours - $tot0) / $totalhours) * 100);
 			echo "<td align='center'>" . number_format($left,0) ."% (" . number_format($rem,2) . ")</td>";			
@@ -362,7 +370,7 @@ if(mysql_num_rows($result)>0){
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$cblR = mysql_query($cblQ);
 				$attCBL = (mysql_num_rows($cblR)==0) ? "X" : mysql_num_rows($cblR);
-				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $sdate AND a.att <> ''
+				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'AG' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$ltR = mysql_query($ltQ);
 				$attLT = (mysql_num_rows($ltR)==0) ? "X" : mysql_num_rows($ltR);
@@ -372,7 +380,7 @@ if(mysql_num_rows($result)>0){
 				$attSCS = (mysql_num_rows($scsR)==0) ? "X" : mysql_num_rows($scsR);
 				$attTOT = $attCBL + $attLT + $attSCS;
 				echo "<td align='center'>";
-				echo "<a href='#' title='CBL 101: $attCBL | LT: $attLT | Co-op Cafe: $attSCS'>$attTOT</a>";
+				echo "<a href='#' title='CBL 101: $attCBL | Appld. Gov.: $attLT | Co-op Cafe: $attSCS'>$attTOT</a>";
 				echo "</td>\n";
 			}
 
