@@ -223,7 +223,7 @@ function mini_dash($client,$align) {
 		$thisY = $thisY - 1;
 	}
 	$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $client . " 
-		AND YEAR(Date) = " . $thisY;
+		AND Billable = 1 AND YEAR(Date) = " . $thisY;
 	$hoursr = mysql_query($hoursq);
 	$hours = mysql_fetch_row($hoursr);
 	$hoursTotal = $hours[0];
