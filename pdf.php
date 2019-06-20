@@ -221,17 +221,17 @@ class PDF extends FPDF
 		$cblR = mysql_query($cblQ);
 		$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
 		$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
-//		$this->Ln(6);
-//		$this->SetFont('Arial','',12);
-//		$this->Cell( 50, 12, "Leadership Training: ", 0, 0, 'L' );
-//		$this->SetFont('Arial','B',12);
-		// $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
-		// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
-//		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
-//			AND a.clientID = $clientID GROUP BY a.id";
-//		$ltR = mysql_query($ltQ);
-//		$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
-//		$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
+		$this->Ln(6);
+		$this->SetFont('Arial','',12);
+		$this->Cell( 50, 12, "Applied Governance: ", 0, 0, 'L' );
+		$this->SetFont('Arial','B',12);
+		// $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'AG' AND a.year = $printY AND a.att <> ''
+			// AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
+		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'AG' AND a.year = $printY AND a.att <> ''
+			AND a.clientID = $clientID GROUP BY a.id";
+		$ltR = mysql_query($ltQ);
+		$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
+		$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 		$this->Ln(6);
 		$this->SetFont('Arial','',12);
 		$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
@@ -478,20 +478,22 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',10);
 		
 		$this->MultiCell(50,6,'See pictures and quilts from recent Cooperative Cafes in ',0,'L');
-		$this->SetXY(154,67);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-greenfield-2017/','Greenfield, MA',12);
-		$this->SetXY(154,73);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-madison-2017/','Madison, WI',12);
-		$this->SetXY(154,79);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-ann-arbor-2017/','Ann Arbor, MI',12);
-		$this->SetXY(154,85);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-hood-river-2017/','Hood River, OR',12);
-		$this->SetXY(154,91);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-durham-nc-2017/','Durham, NC',12);
-		$this->SetXY(154,97);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-st-paul-2017/','St. Paul, MN',12);
-		$this->SetXY(154,103);
-		$this->PutLink('http://library.cdsconsulting.coop/co-op-cafe-sacramento-2017/','Sacramento, CA',12);
+		$this->SetXY(154,62);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-durham-2019/','Durham, NC, 2019',12);
+		$this->SetXY(154,68);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-sacramento-2109/','Sacramento, CA, 2019',12);
+		$this->SetXY(154,74);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-madison-2018/','Madison, WI, 2018',12);
+		$this->SetXY(154,80);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-philadelphia-2018/','Philadelphia, PA, 2018',12);
+		$this->SetXY(154,86);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-keene-2018/','Keene, NH, 2018',12);
+		$this->SetXY(154,92);
+		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-portland-2018/','Portland, OR, 2018',12);
+		$this->SetXY(154,98);
+		$this->PutLink('#',' ',12);
+		$this->SetXY(154,104);
+		$this->PutLink('https://library.cdsconsulting.coop/expand-the-vision-of-we/','Best of Co-op Cafe 2018!',12);
 
 		$this->Image('images/cafe-pic-3.jpg',152,118,47);
 
@@ -522,58 +524,29 @@ class PDF extends FPDF
 		$this->SetLineWidth(0.1);
 		$this->MultiCell(130,88,'',1,'C');
 		$this->SetXY(72,186);
-		$this->MultiCell(128,12,'Owner Engagement & Participation',0,'C');
+		$this->MultiCell(128,12,'Being Amazing: Resources',0,'C');
 		
-		$engagement = 'Working on your approach for engaging owners? Thinking about how to follow up from conversations at the Co-op Cafes? Great! Here are some recently published resources that might be helpful:';
+		$para1 = 'This seasons focus of \'Being Amazing\' has many facets to it.  We\'d like to highlight just a few key resources that you can find in our free online resource library that we think really get at the root of operations excellence.  Co-ops with a strong foundation of mutual trust and respect between Management and Board are far liklier to succeed at their goals which is why we encourage you to review these resources and make sure that your Board is utilizing these tools.';
 
 		$this->SetXY(72,196);
 		$this->SetFont('Arial','',10);
-		$this->MultiCell(125,4,$engagement,0,'L');
-		$this->SetXY(72,208);
-		$this->PutLink('http://library.cdsconsulting.coop/board-communication-using-the-boards-unique-perspective-to-increase-owner-engagement-and-participation','Board Communication: Using the Board\'s Unique Perspective to Increase Owner',10);
-		$this->Ln(4);
-		$this->SetXY(72,212);
-		$this->PutLink('http://library.cdsconsulting.coop/board-communication-using-the-boards-unique-perspective-to-increase-owner-engagement-and-participation','Engagement and Participation');
-		$this->SetXY(74,216);
-		$this->Write(10,'By Rebecca Torpie');
-		$this->Ln(4);
-		$this->SetXY(72,221);
-		$this->PutLink('http://library.cdsconsulting.coop/retail-food-co-ops-as-servant-leaders/','Retail Food Co-ops as Servant Leaders',10);
-		$this->Ln(4);
-		$this->SetXY(74,225);
-		$this->Write(10,'By Thane Joyal');
-		$this->Ln(4);
-		$this->SetXY(72,230);
-		$this->PutLink('http://library.cdsconsulting.coop/creating-cooperative-resiliency/','Creating Cooperative Resiliency',10);
-		$this->Ln(4);
-		$this->SetXY(74,234);
-		$this->Write(10,'By Thane Joyal');
-		$this->Ln(4);
+		$this->MultiCell(125,4,$para1,0,'L');
+		$this->SetXY(72,225);
+		$this->PutLink('https://library.cdsconsulting.coop/gain-sales-and-impact-from-great-storytelling/ ','Gain Sales and Impact through Great Storytelling',10);
+		$this->SetXY(72,232);
+		$this->PutLink('https://library.cdsconsulting.coop/cooperative-ends-impact-and-telling-the-story/','Cooperative Ends, Impact, and Telling the Story');
 		$this->SetXY(72,239);
-		$this->PutLink('http://library.cdsconsulting.coop/who-decides-owner-participation-in-cooperative-decisions/','Who Decides? Owner Participation in Cooperative Decisions',10);
-		$this->Ln(4);
-		$this->SetXY(74,243);
-		$this->Write(10,'By Patricia Cumbie');
-		$this->Ln(4);
-		$this->SetXY(72,248);
-		$this->PutLink('http://library.cdsconsulting.coop/including-members-in-the-ends-dialogues/','Including Members in the Ends Dialogues',10);
-		$this->Ln(4);
-		$this->SetXY(74,252);
-		$this->Write(10,'By Rebecca Torpie');
-		$this->Ln(4);
-		$this->SetXY(72,257);
-		$this->PutLink('http://library.cdsconsulting.coop/a-boards-quick-guide-to-communicating-decisions-to-owners/','A Board\'s Quick Guide to Communicating Decisions to Owners',10);
-		$this->Ln(4);
-		$this->SetXY(74,261);
-		$this->Write(10,'By Patricia Cumbie');
-		$this->Ln(4);
-		$this->SetXY(72,266);
-		$this->PutLink('http://library.cdsconsulting.coop/on-board-with-participation/','On Board with Participation',10);
-		// $this->Ln(4);
-		// $this->SetXY(74,270);
-		$this->Write(10,' By Rebecca Torpie');
+		$this->PutLink('https://library.cdsconsulting.coop/customers-the-heart-of-the-co-op/','Customers: The Heart of the Co-op - Dave Olson');		
+		$this->SetXY(72,246);
+		$this->PutLink('https://library.cdsconsulting.coop/how-to-be-an-effective-board-president/','How to be a Great Board President');
+		$this->SetXY(72,253);
+		$this->PutLink('https://library.cdsconsulting.coop/participation-own-use-serve-and-belong/','Own, Use, Serve, Belong: A new paradigm for Participation');
+		$this->SetXY(72,260);
+		$this->PutLink('https://library.cdsconsulting.coop/the-magic-of-commitment/','The Magic of Commitment',10);
+		$this->Write(10,' ');
 		
 		
+
 		
 		// ---------------------------
 
@@ -591,45 +564,43 @@ class PDF extends FPDF
 		$this->SetLineWidth(0.1);
 		$this->MultiCell(132,114,'',1,'C');
 		$this->SetXY(10,10);
-		$this->MultiCell(130,12,'Board Recruitment and Nominating',0,'C');
+		$this->MultiCell(130,12,'Being Amazing: Tools',0,'C');
 		
-		$nominating = 'Is your board working on its recruitment and nominating process?  If so, we\'ve included links to a few resources that may be helpful. In the Nominating Board Candidates Field Guide, Leslie Watson and Joel Kopischke provide a set of steps and discussion questions to help your board consider what\'s best for your co-op. For example:
-			- What are the qualities of a fair election?
-			- How can a board take an active role in perpetuating good leadership for the co-op?
-			- When we look at our current board roster, and then consider future board turnover, how might we describe the opportunity for people leaving and joining the board?
-			- How important is it that we can look at our co-op community and easily identify qualified member-owners who are ready to serve on the board, whether as an appointee or an elected candidate?';
+		$para2 = 'Now that you\'ve read up on some key resources on \'Being Amazing\' we have some critical tools to share that no Board should do without.  These include the CBLD Policy Register template, a complete starting point for any Co-op board looking to get up and running using Policy Governance.  As well as the GM Report Support resources, a complete guide for GMs to understanding and composing great monitoring reports!  We\'ve done all the hard work and compiled all the nitty-gritty.  Just download and adapt to meet the unique needs of your own unique cooperative.';
 
 		$this->SetX(12);
 		$this->SetFont('Arial','',10);
-		$this->MultiCell(125,4,$nominating,0,'L');
+		$this->MultiCell(125,4,$para2,0,'L');
 		$this->SetX(12);
 		$this->SetFont('Arial','B',10);
-		$this->MultiCell(125,8,'Here are readings to fuel your board\'s thinking:',0,'L');
+		$this->MultiCell(125,8,'Here are some essential tools:',0,'L');
 		$this->SetFont('Arial','',10);
 		$this->Ln(0);
 		$this->SetX(12);
-		$this->PutLink('http://library.cdsconsulting.coop/nominating-board-candidates/','Field Guide: Nominating Board Candidates',10);
+		$this->PutLink('http://library.cdsconsulting.coop/gm-report-support-page/','GM Report Support',10);
 		$this->Ln(4);
 		$this->SetX(14);
-		$this->Write(10,'By Leslie Watson & Joel Kopischke');
-		$this->Ln(4);
+		$this->Write(10,'A complete guide to monitoring reporting');
+		$this->Ln(7);
 		$this->SetX(12);
-		$this->PutLink('http://library.cdsconsulting.coop/streamline-nominations-and-elections-process-to-ensure-future-governance','Streamline Nominations & Elections Process to Ensure Future Governance',10);
-		$this->Ln(4);
-		$this->SetX(14);
-		$this->Write(10,'By Patricia Cumbie');
-		$this->Ln(4);
+		$this->PutLink('https://library.cdsconsulting.coop/gm-report-support-02-intro-to-limitations-monitoring-financial-conditions-and-activities/','Monitoring Report Support: Financial Conditions Sample Monitoring Report',10);
+		$this->Ln(7);
 		$this->SetX(12);
-		$this->PutLink('http://library.cdsconsulting.coop/perpetuating-a-strong-board/','Online Recorded Workshop: Perpetuating a Strong Board',10);
-		$this->Ln(4);
-		$this->SetX(14);
-		$this->Write(10,'By Marilyn Scholl & Michael Healy');
-		$this->Ln(4);
+		$this->PutLink('https://library.cdsconsulting.coop/gm-report-support-03-asset-protection-planning-and-budgeting/','Monitoring Report Support: Planning and Budgeting',10);
+		$this->Ln(7);
 		$this->SetX(12);
-		$this->PutLink('http://library.cdsconsulting.coop/developing-a-pool-of-candidates/','SNIPPET: Developing a Pool of Candidates',10);
-		$this->Ln(4);
-		$this->SetX(14);
-		$this->Write(10,'By Michael Healy');
+		$this->PutLink('https://library.cdsconsulting.coop/4-pillars-of-cooperative-governance-self-assessment-tool/','Cooperative Governance Self Assessment',10);
+		$this->Ln(7);
+		$this->SetX(12);
+		$this->PutLink('https://library.cdsconsulting.coop/annual-planning-calendar/','Annual Planning Calendar',10);
+		$this->Ln(7);
+		$this->SetX(12);
+		$this->PutLink('https://library.cdsconsulting.coop/board-agenda-template/','Board Agenda Template',10);
+		$this->Ln(7);
+		$this->SetX(12);
+		$this->PutLink('https://library.cdsconsulting.coop/cultivating-a-culture-of-appreciation/','Cultivating a Culture of Appreciation',10);
+ 
+		
 		// ---------------------------		
 		
 		// PAGE 3 - COLUMN 2 (RIGHT) -
@@ -657,10 +628,10 @@ class PDF extends FPDF
 		$this->Image('images/AG-logo.jpg',158,45,28,0,'jpg','http://cdsconsulting.coop/cooperative_governance/building_a_great_relationship_workshop/');
 		$this->SetXY(145,70);
 		$this->SetFont('Arial','I',8);
-		$this->MultiCell(57,3,'2018 Theme: Building a great relationship with your GM. Experienced directors will learn about creating & maintaining a highly productive & successful relationship with their co-op\'s GM.',0,'C');
+		$this->MultiCell(57,3,'2019 Themes: Building a great relationship with your GM. And Everyone Welcome.',0,'C');
 
-		$this->Image('images/cafe-logo.jpg',161,86,27,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cooperative_cafe/');
-		$this->SetXY(145,112);
+		$this->Image('images/cafe-logo.jpg',161,78,27,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cooperative_cafe/');
+		$this->SetXY(145,104);
 		$this->SetFont('Arial','I',8);
 		$this->MultiCell(57,3,'This event provides a day of highly interactive & engaging strategic conversations designed to build shared understanding and alignment at your co-op & among co-ops.',0,'C');
 				
@@ -668,13 +639,13 @@ class PDF extends FPDF
 		// ---------------------------
 		
 		// EVENTS GRID ---------------
-		$this->Image('images/2018_events_grid.png',14,130,180);
+		$this->Image('images/2019_events_grid_q1.png',22,125,164);
 		// ---------------------------
 		
 		
 		// PAGE 3 FOOTER -------------
 		$this->SetFont('Arial','',10);
-		$this->SetXY(45,258);
+		$this->SetXY(45,264);
 		$this->Write(10,'CDS Consulting Co-op | ');
 		$this->SetTextColor(0,0,255);
 		$this->Write(10,"www.cdsconsulting.coop", "http://www.cdsconsulting.coop/");
