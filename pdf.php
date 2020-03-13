@@ -1,6 +1,7 @@
 <?php
 require("mysql_connect.php");
 require('fpdf/fpdf.php');
+
 $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 $reportID=1;
@@ -117,23 +118,23 @@ class PDF extends FPDF
 			// $this->Write( 2, $replace);
 			$this->SetFont('Arial','B',11);
 			$this->Write(11,"The Newest Resources Available to You on the ");
-			$this->PutLink("http://library.cdsconsulting.coop/", "CDS CC Library");
+			$this->PutLink("http://library.columinate.coop/", "CDS CC Library");
 			$this->Ln(7);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/policy-register-template-users-guide/", "Policy Register Template Users' Guide");
+			$this->PutLink("http://library.columinate.coop/policy-register-template-users-guide/", "Policy Register Template Users' Guide");
 			$this->Ln(7);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/video-field-guide-membership-growth/", "Video Field Guide on Membership Growth"); 
+			$this->PutLink("http://library.columinate.coop/video-field-guide-membership-growth/", "Video Field Guide on Membership Growth"); 
 			$this->Ln(7);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/strategic-alliances-and-consolidations-exploring-cooperation-among-cooperatives/", "Strategic Alliances and Consolidations");
+			$this->PutLink("http://library.columinate.coop/strategic-alliances-and-consolidations-exploring-cooperation-among-cooperatives/", "Strategic Alliances and Consolidations");
 			$this->Ln(7);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
 			$this->Write(11,"And ");
-			$this->PutLink("http://library.cdsconsulting.coop/category/cooperative-cafe/", "over 200 short video recordings");
+			$this->PutLink("http://library.columinate.coop/category/cooperative-cafe/", "over 200 short video recordings");
 			$this->Write(11," from the Cooperative Cafes");
 			$this->Ln(3);
 			$this->Cell(8);
@@ -143,11 +144,11 @@ class PDF extends FPDF
 		} elseif (preg_match($pattern3, $rc)) {
 			$this->SetFont('Arial','B',11);
 			$this->Write(11,"New Connections Articles -- from the ");
-			$this->PutLink("http://library.cdsconsulting.coop/category/articles/connections/", "Connections Archive");
+			$this->PutLink("http://library.columinate.coop/category/articles/connections/", "Connections Archive");
 			$this->Ln(6);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/so-our-co-ops-are-mostly-white-now-what/", "So Our Co-ops are Mostly White, Now What?");
+			$this->PutLink("http://library.columinate.coop/so-our-co-ops-are-mostly-white-now-what/", "So Our Co-ops are Mostly White, Now What?");
 			$this->Ln(4);
 			$this->Cell(8);
 			$this->SetFont('Arial','I',9);
@@ -155,7 +156,7 @@ class PDF extends FPDF
 			$this->Ln(6);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/what-is-board-holism-or-speaking-with-one-voice/", "What is Board Holism Or Speaking with One Voice?");
+			$this->PutLink("http://library.columinate.coop/what-is-board-holism-or-speaking-with-one-voice/", "What is Board Holism Or Speaking with One Voice?");
 			$this->Ln(4);
 			$this->Cell(8);
 			$this->SetFont('Arial','I',9);
@@ -163,7 +164,7 @@ class PDF extends FPDF
 			$this->Ln(6);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/including-members-in-the-ends-dialogues/", "Including Members in the Ends Dialogues");
+			$this->PutLink("http://library.columinate.coop/including-members-in-the-ends-dialogues/", "Including Members in the Ends Dialogues");
 			$this->Ln(4);
 			$this->Cell(8);
 			$this->SetFont('Arial','I',9);
@@ -171,7 +172,7 @@ class PDF extends FPDF
 			$this->Ln(6);
 			$this->SetFont('Arial','B',10);
 			$this->Cell(8);
-			$this->PutLink("http://library.cdsconsulting.coop/co-op-fair-brings-community-together/", "Co-op Fair Brings Community Together");
+			$this->PutLink("http://library.columinate.coop/co-op-fair-brings-community-together/", "Co-op Fair Brings Community Together");
 			$this->Ln(4);
 			$this->Cell(8);
 			$this->SetFont('Arial','I',9);
@@ -210,6 +211,10 @@ class PDF extends FPDF
 
 		$this->SetFont('Arial','B',12);
 		$this->Cell( 45, 12, "In-Person Event Attendance", 0, 0, 'L' );
+		// $this->Ln(6);
+		// $this->SetFont('Arial','I',10);
+		// $this->Write(12, "NOTE: Q3 event attendance data will be available on the Q4 report.");
+		
 		$this->SetFont('Arial','',12);
 		$this->Ln(6);
 		$this->Cell( 50, 12, "CBL 101: ", 0, 0, 'L' );
@@ -304,26 +309,21 @@ class PDF extends FPDF
 		$in = 6;
 		$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
 		$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
+		$nolimit = $client['program'] == "CBLD Unlimited" ? TRUE : FALSE;
 
-		$this->Image('images/pdf_header.png',5,5,200);
+		$this->Image('images/columinate-letterhead-v2.png',5,3,200);
 		$this->Ln(32);
-
+		$this->SetY(46);
 		$this->SetFont('Arial','B',14);
 		$this->Cell( 120, 12, $client['name'], 0, 0, 'L' );
 		$this->SetFont('Arial','',12);
 		$this->Cell( 40, 12, "Q".$printQ."-".$printY, 0, 0, 'L' );
 		$this->Cell( 40, 12, date('n/j/Y'), 0, 0, 'L' );
 		$this->SetLineWidth(0.8);
-		$this->Line( 10, 52 ,190 ,52 );
+		$this->Line( 11, 56 ,192 ,56 );
 		$this->Ln(8);
 
-		// $this->SetFont('Arial','',11);
-		// $this->MultiCell(200, 6, $rc['content-1'], 0, 'L');
-		// // $this->Ln(10);
-
 		$this->SetFont('Arial','',12);
-		// $this->Write(20, $rc['intro_default']);
-		// $this->Write(20, $client['Intro']);
 		$this->jEntryIntro($client,$rc,$in);
 
 		$this->SetFont('Arial','B',12);
@@ -331,19 +331,25 @@ class PDF extends FPDF
 		$this->Ln(8);
 		$this->Cell($in);
 		$this->SetFont('Arial','',12);
-		$this->Cell( 55, 12, "Hours Utilized (of ".$client['total_hours'].")", 0, 0, 'L' );
+		if ($nolimit === TRUE) {
+			$this->Cell( 55, 12, "Hours Utilized", 0, 0, 'L' );
+		} else {
+			$this->Cell( 55, 12, "Hours Utilized (of ".$client['total_hours'].")", 0, 0, 'L' );
+		}
 		$this->SetFont('Arial','B',14);
 		$this->Cell( 40, 12, $client['hrs']['total'], 0, 0, 'L' );
-		$this->SetFont('Arial','',12);
-		$this->Cell( 40, 12, "Hours Remaining", 0, 0, 'L' );
-		$this->SetFont('Arial','B',14);
-		if ($client['hrs']['alert']=='med') { $fcolor = '#cc0033';
-			$this->SetTextColor(204,0,51);
-		}//if we are over hours
-		elseif ($client['hrs']['alert']=='high') { $fcolor = '#ff9900';
-			$this->SetTextColor(255,153,0);
-		}//if
-		$this->Cell( 30, 12, number_format($client['hrs']['R'],2), 0, 0, 'L' );
+		if ($nolimit === FALSE) {
+			$this->SetFont('Arial','',12);
+			$this->Cell( 40, 12, "Hours Remaining", 0, 0, 'L' );
+			$this->SetFont('Arial','B',14);
+			if ($client['hrs']['alert']=='med') { $fcolor = '#cc0033';
+				$this->SetTextColor(204,0,51);
+			}//if we are over hours
+			elseif ($client['hrs']['alert']=='high') { $fcolor = '#ff9900';
+				$this->SetTextColor(255,153,0);
+			}//if
+			$this->Cell( 30, 12, number_format($client['hrs']['R'],2), 0, 0, 'L' );
+		}
 		$this->SetFont('Arial','',14);
 		$this->SetTextColor(0,0,0);
 		$this->Ln(6);
@@ -357,9 +363,11 @@ class PDF extends FPDF
 		$this->Ln(6);
 
 		$this->Cell($in);
-		$this->Cell( 94, 12, "On track for balanced use of hours for the year? ", 0, 0, 'L' );
-		$this->SetFont('Arial','B',12);
-		$this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'yes':'no'), 0, 0, 'L');
+		if ($nolimit === FALSE) {
+			$this->Cell( 94, 12, "On track for balanced use of hours for the year? ", 0, 0, 'L' );
+			$this->SetFont('Arial','B',12);
+			$this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'yes':'no'), 0, 0, 'L');
+		}
 		$this->SetFont('Arial','B',12);
 		$this->Ln(6);
 
@@ -434,22 +442,24 @@ class PDF extends FPDF
 		$this->Ln(7);
 		$this->SetFont('Arial','B',12);
 		$this->Cell( 90, 12, '', 0, 0, 'L' );
-		$this->PutLink('http://cdsconsulting.coop','CDS Consulting Co-op');
+		$this->PutLink('http://columinate.coop','Columinate');
 		$this->Write( 10,' | ');
-		$this->PutLink('http://cdsconsulting.coop/cbld','CBLD Program');
+		$this->PutLink('http://columinate.coop/cbld','CBLD Program');
 		$this->Ln(10);
+		
+		// $this->Image('images/columinate-footer.png',0,248,50);
 		// END PAGE 1 --------------------
 
 		//
 		//	PAGE 2
 		//
-		$this->AddPage();
+/**		$this->AddPage();
 		
 		$this->SetFont('Arial','B',16);
 		$library = '';
 		$library .= $this->Cell(130,14,'What\'s New in the',0,0,'C');
 		$library .= $this->Ln(2);
-		$library .= $this->Image('images/CDS-CC-Library-Header.png',20,20,108,18,'png', 'http://library.cdsconsulting.coop');
+		$library .= $this->Image('images/columinate-library-header.png',20,20,108,18,'png', 'http://library.columinate.coop');
 			
 		$this->MultiCell(130,24,$library,0,'C');
 		$this->Ln(5);
@@ -459,65 +469,28 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',10);
 		$this->ImprovedTable($header,$data);
 		
-		// $this->Image('images/testimonial-chris-dilley.png',150,28,50,0);
-		// $this->Image('images/testimonial-molly-obrien.png',150,92,50,0);
-		// $this->Image('images/quilt001.png',155,10,40);
-		// $this->Image('images/quilt002.png',155,50,40);
-		// $this->Image('images/quilt003.png',155,90,40);
-		// $this->Image('images/quilt004.png',155,130,40);
-		// $this->Image('images/quilt005.png',165,174,40);
 		$this->SetLineWidth(0.1);
 		$this->Line(150,10,150,173);
 		$this->Line(10,173,200,173);
 		
 		$this->Image('images/Coop-Cafe-logo.png',155,13,40,0);
-		// $this->Image('images/cafe-best-of-2016-banner.png',10,174,190,0,'png','http://library.cdsconsulting.coop/best-of-cooperative-cafe-2016/');
-		
 		
 		$this->SetXY(152,54);
 		$this->SetFont('Arial','',10);
 		
 		$this->MultiCell(50,6,'See pictures and quilts from recent Cooperative Cafes in ',0,'L');
-		$this->SetXY(154,62);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-durham-2019/','Durham, NC, 2019',12);
-		$this->SetXY(154,68);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-sacramento-2109/','Sacramento, CA, 2019',12);
-		$this->SetXY(154,74);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-madison-2018/','Madison, WI, 2018',12);
-		$this->SetXY(154,80);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-philadelphia-2018/','Philadelphia, PA, 2018',12);
-		$this->SetXY(154,86);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-keene-2018/','Keene, NH, 2018',12);
-		$this->SetXY(154,92);
-		$this->PutLink('https://library.cdsconsulting.coop/co-op-cafe-portland-2018/','Portland, OR, 2018',12);
-		$this->SetXY(154,98);
-		$this->PutLink('#',' ',12);
-		$this->SetXY(154,104);
-		$this->PutLink('https://library.cdsconsulting.coop/expand-the-vision-of-we/','Best of Co-op Cafe 2018!',12);
+		$this->SetXY(154,66);
+		$this->PutLink('https://columinate.coop/co-op-cafe-philadelphia-2019/','Philadelphia, PA, 2019',12);
+		$this->SetXY(154,72);
+		$this->PutLink('https://columinate.coop/co-op-cafe-greenfield-2019/','Greenfield, MA, 2019',12);
+		$this->SetXY(154,78);
+		$this->PutLink('https://columinate.coop/co-op-cafe-madison-2019/','Madison, WI, 2019',12);
+		$this->SetXY(154,84);
+		$this->PutLink('https://columinate.coop/co-op-cafe-portland-2019/','Portland, OR, 2019',12);
 
 		$this->Image('images/cafe-pic-3.jpg',152,118,47);
-
-		/** TESTIMONIAL
-		$testimonial1 = 'I love events like this!  Not only does it allow you to hear what your board members and customers really care about, but it also allows you to bring the reality of what it takes to run a successful co-op into the conversation.  Don\'t miss this opportunity to engage with your board and owners in a day of strategic thinking.';
-		$testimonial2 = '--John Lacaria, Interim General Manager, Eastside Food Co-op';
-		$this->SetTextColor(255,255,255);
-		$this->SetFont('Arial','B',10);
-		$this->SetFillColor(242,137,0);
-		$this->SetXY(152,90);
-		$this->MultiCell(50,5,$testimonial1,0,'L',true);
-		$this->SetFont('Arial','',10);
-		$this->SetX(152);		
-		$this->MultiCell(50,5,$testimonial2,0,'R',true);	
-		$this->SetTextColor(0);
-				
-		$this->SetFont('Arial','B',18);
-		$this->Cell(0,20,'Library Resource Highlights',0,0,'C');
-		$this->Ln(4);
-		*/
-		
 		$this->Image('images/quilt002.png',10,186,45);
 		$this->Image('images/quilt004.png',10,231,45);
-		// $this->Image('images/quilt005.png',165,174,40);
 		
 		$this->SetXY(70,188);
 		$this->SetFont('Arial','B',12);
@@ -532,133 +505,25 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',10);
 		$this->MultiCell(125,4,$para1,0,'L');
 		$this->SetXY(72,225);
-		$this->PutLink('https://library.cdsconsulting.coop/gain-sales-and-impact-from-great-storytelling/ ','Gain Sales and Impact through Great Storytelling',10);
+		$this->PutLink('https://library.columinate.coop/gain-sales-and-impact-from-great-storytelling/ ','Gain Sales and Impact through Great Storytelling',10);
 		$this->SetXY(72,232);
-		$this->PutLink('https://library.cdsconsulting.coop/cooperative-ends-impact-and-telling-the-story/','Cooperative Ends, Impact, and Telling the Story');
+		$this->PutLink('https://library.columinate.coop/cooperative-ends-impact-and-telling-the-story/','Cooperative Ends, Impact, and Telling the Story');
 		$this->SetXY(72,239);
-		$this->PutLink('https://library.cdsconsulting.coop/customers-the-heart-of-the-co-op/','Customers: The Heart of the Co-op - Dave Olson');		
+		$this->PutLink('https://library.columinate.coop/customers-the-heart-of-the-co-op/','Customers: The Heart of the Co-op - Dave Olson');		
 		$this->SetXY(72,246);
-		$this->PutLink('https://library.cdsconsulting.coop/how-to-be-an-effective-board-president/','How to be a Great Board President');
+		$this->PutLink('https://library.columinate.coop/how-to-be-an-effective-board-president/','How to be a Great Board President');
 		$this->SetXY(72,253);
-		$this->PutLink('https://library.cdsconsulting.coop/participation-own-use-serve-and-belong/','Own, Use, Serve, Belong: A new paradigm for Participation');
+		$this->PutLink('https://library.columinate.coop/participation-own-use-serve-and-belong/','Own, Use, Serve, Belong: A new paradigm for Participation');
 		$this->SetXY(72,260);
-		$this->PutLink('https://library.cdsconsulting.coop/the-magic-of-commitment/','The Magic of Commitment',10);
+		$this->PutLink('https://library.columinate.coop/the-magic-of-commitment/','The Magic of Commitment',10);
 		$this->Write(10,' ');
-		
-		
+*/		
+		// 2020 2-pager --------------
 
-		
-		// ---------------------------
-
-		//
-		//	PAGE 3
-		//
 		$this->AddPage();
-		
-		// PAGE 3 COLUMN 1 (LEFT) --
-		// $this->SetFont('Arial','B',18);
-		// $this->Cell(0,20,'Library Resource Highlights',0,0,'C');
-		// $this->Ln(4);
-		// $this->SetY(26);
-		$this->SetFont('Arial','B',12);
-		$this->SetLineWidth(0.1);
-		$this->MultiCell(132,114,'',1,'C');
-		$this->SetXY(10,10);
-		$this->MultiCell(130,12,'Being Amazing: Tools',0,'C');
-		
-		$para2 = 'Now that you\'ve read up on some key resources on \'Being Amazing\' we have some critical tools to share that no Board should do without.  These include the CBLD Policy Register template, a complete starting point for any Co-op board looking to get up and running using Policy Governance.  As well as the GM Report Support resources, a complete guide for GMs to understanding and composing great monitoring reports!  We\'ve done all the hard work and compiled all the nitty-gritty.  Just download and adapt to meet the unique needs of your own unique cooperative.';
-
-		$this->SetX(12);
-		$this->SetFont('Arial','',10);
-		$this->MultiCell(125,4,$para2,0,'L');
-		$this->SetX(12);
-		$this->SetFont('Arial','B',10);
-		$this->MultiCell(125,8,'Here are some essential tools:',0,'L');
-		$this->SetFont('Arial','',10);
-		$this->Ln(0);
-		$this->SetX(12);
-		$this->PutLink('http://library.cdsconsulting.coop/gm-report-support-page/','GM Report Support',10);
-		$this->Ln(4);
-		$this->SetX(14);
-		$this->Write(10,'A complete guide to monitoring reporting');
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/gm-report-support-02-intro-to-limitations-monitoring-financial-conditions-and-activities/','Monitoring Report Support: Financial Conditions Sample Monitoring Report',10);
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/gm-report-support-03-asset-protection-planning-and-budgeting/','Monitoring Report Support: Planning and Budgeting',10);
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/4-pillars-of-cooperative-governance-self-assessment-tool/','Cooperative Governance Self Assessment',10);
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/annual-planning-calendar/','Annual Planning Calendar',10);
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/board-agenda-template/','Board Agenda Template',10);
-		$this->Ln(7);
-		$this->SetX(12);
-		$this->PutLink('https://library.cdsconsulting.coop/cultivating-a-culture-of-appreciation/','Cultivating a Culture of Appreciation',10);
- 
-		
-		// ---------------------------		
-		
-		// PAGE 3 - COLUMN 2 (RIGHT) -
-		// $this->Image('images/pop-logo-stacked.png',144,24,44,0,'png','http://cdsconsulting.coop/participation/power_of_participation/');
-		// $this->SetXY(144,54);
-		// $pop_text = 'CDS Consulting Co-op is now piloting the Power of Participation (POP!) Program to give co-ops the support they need to enhance owner and customer engagement, invigorate staff commitment to co-op outcomes, and positively impact their competitive position in the marketplace.';
-		// $this->MultiCell(45,4,$pop_text,0,'L');
-		// $pop_text2 = 'For more information contact: 802-380-3824 or MarkGoehring@cdsconsulting.coop.';
-		// $this->SetXY(144,108);
-		// $this->MultiCell(45,4,$pop_text2,0,'L');
-		
-		// $this->Image('images/quilt001.png',150,15,45);
-		// $this->Image('images/quilt003.png',150,70,45);
-		
-		// PAGE 3 - EVENT DESCRIPTIONS
-		$this->SetXY(145,10);
-		// $this->SetFont('Arial','B',9);
-		// $this->MultiCell(54,4,'CBL 101: Foundation for Board Leadership',0,'C');
-
-		$this->Image('images/CBL-logo.JPG',160,6,25,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cbl_101/');	
-		$this->SetXY(145,29);
-		$this->SetFont('Arial','I',8);
-		$this->MultiCell(57,3,'This class provides a strong foundation for directors by covering these topics: Co-op principles, values & history, legal roles & responsibilities, co-op governance & financial understanding.',0,'C');
-		
-		$this->Image('images/AG-logo.jpg',158,45,28,0,'jpg','http://cdsconsulting.coop/cooperative_governance/building_a_great_relationship_workshop/');
-		$this->SetXY(145,70);
-		$this->SetFont('Arial','I',8);
-		$this->MultiCell(57,3,'2019 Themes: Building a great relationship with your GM. And Everyone Welcome.',0,'C');
-
-		$this->Image('images/cafe-logo.jpg',161,78,27,0,'jpg','http://cdsconsulting.coop/cooperative_governance/cooperative_cafe/');
-		$this->SetXY(145,104);
-		$this->SetFont('Arial','I',8);
-		$this->MultiCell(57,3,'This event provides a day of highly interactive & engaging strategic conversations designed to build shared understanding and alignment at your co-op & among co-ops.',0,'C');
-				
-		
-		// ---------------------------
-		
-		// EVENTS GRID ---------------
-		$this->Image('images/2019_events_grid_q1.png',22,125,164);
-		// ---------------------------
-		
-		
-		// PAGE 3 FOOTER -------------
-		$this->SetFont('Arial','',10);
-		$this->SetXY(45,264);
-		$this->Write(10,'CDS Consulting Co-op | ');
-		$this->SetTextColor(0,0,255);
-		$this->Write(10,"www.cdsconsulting.coop", "http://www.cdsconsulting.coop/");
-		$this->SetTextColor(0);
-		$this->Write(10,' | (802) 387-6013');
-
-		$this->Ln(10);
-		$this->SetX(80);
-		$this->Image( 'images/circle-f.png', $this->GetX(), $this->GetY(), 8, 8, 'png', 'https://www.facebook.com/CDSConsultingCoop' );
-		$this->Image( 'images/circle-t.png', $this->GetX() + 10, $this->GetY(), 8, 8, 'png', 'https://www.twitter.com/CDS_CC' );
-		$this->Image( 'images/circle-li.png', $this->GetX() + 20, $this->GetY(), 8, 8, 'png', 'https://www.linkedin.com/company-beta/394986/' );
-		$this->Image( 'images/circle-yt.png', $this->GetX() + 30, $this->GetY(), 8, 8, 'png', 'https://www.youtube.com/channel/UCSxZK1K5-cemEO1DB5hPigw' );	
-		// ---------------------------
+		$this->Image('images/2020-pg-3.jpg',2,2,205);
+		$this->AddPage();
+		$this->Image('images/2020-pg-4.jpg',2,2,205);
 
 		// PRINT IT!
 		$this->Output($filename,$dest);
