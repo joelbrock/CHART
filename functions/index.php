@@ -37,14 +37,14 @@ function db_send($cols,$vals,$table,$type,$where='',$display='')
 	}
 	
 	if($display==1) echo $sql;
-	return mysql_query($sql);
+	return mysqli_query($dbc, ($sql);
 }
 
 function client_health($client) {
 	
 	$query = "SELECT j.ClientID as cID, SUM(j.Hours) as hours, c.total_hours AS total FROM journal j, clients c WHERE j.ClientID = c.id AND j.ClientID = $client  AND YEAR(j.Date) = " . date('Y') . "GROUP BY cID";
-	$result = mysql_query($query);
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($dbc, ($query);
+	$row = mysqli_fetch_array($result);
 	
 	$hours = $row['hours'];
 	$total = ($row['total'] / 4) * $thisQ;

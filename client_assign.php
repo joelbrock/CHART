@@ -2,30 +2,30 @@
 require("mysql_connect.php");
 
 //who is assigned already?
-	$get_s=mysql_query("SELECT * FROM staff ORDER BY lastname ASC,firstname ASC");
-		while($s=mysql_fetch_assoc($get_s))
+	$get_s=mysqli_query($dbc, ("SELECT * FROM staff ORDER BY lastname ASC,firstname ASC");
+		while($s=mysqli_fetch_assoc($get_s))
 			$s_meta[$s['id']]=$s;
-	$get_c=mysql_query("SELECT * FROM clients ORDER BY name ASC");
-		while($c=mysql_fetch_assoc($get_c))
+	$get_c=mysqli_query($dbc, ("SELECT * FROM clients ORDER BY name ASC");
+		while($c=mysqli_fetch_assoc($get_c))
 			$c_meta[$c['id']]=$c;
-	$get_assign=mysql_query("SELECT * FROM staff_clients");
-		while($sc=mysql_fetch_assoc($get_assign))
+	$get_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients");
+		while($sc=mysqli_fetch_assoc($get_assign))
 			$c_assign[$sc['clientID']][]=$sc['staffID'];
-	$get_s_assign=mysql_query("SELECT * FROM staff_clients ORDER BY clientID");
-		while($cs=mysql_fetch_assoc($get_s_assign))
+	$get_s_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients ORDER BY clientID");
+		while($cs=mysqli_fetch_assoc($get_s_assign))
 			$s_assign[$cs['staffID']][]=$cs['clientID'];
 			// print_r($c_assign);
 //			print_r($_POST);
 
 if ($_POST['submit']) {
 	if($_POST['remove']==1){
-		$del=mysql_query("DELETE FROM staff_clients WHERE staffID='{$_POST['staffID']}' AND clientID='{$_POST['clientID']}'");
+		$del=mysqli_query($dbc, ("DELETE FROM staff_clients WHERE staffID='{$_POST['staffID']}' AND clientID='{$_POST['clientID']}'");
 		if($del) $msg='success'; else $msg='error';
 		die($msg);
 	} else {
 		//is this already assigned?
 		if(!isset($c_assign[$_POST['codemenu']]) || !in_array($_POST['staffmenu'],$c_assign[$_POST['codemenu']])){
-			$ins=mysql_query("INSERT INTO staff_clients (`staffID`,`clientID`) VALUES ('".$_POST['staffmenu']."','".$_POST['codemenu']."')");
+			$ins=mysqli_query($dbc, ("INSERT INTO staff_clients (`staffID`,`clientID`) VALUES ('".$_POST['staffmenu']."','".$_POST['codemenu']."')");
 			$c_assign[$_POST['codemenu']][]=$_POST['staffmenu'];
 		}
 		if (in_array($_POST['staffmenu'],$c_assign[$_POST['codemenu']]) || $ins) {		

@@ -3,22 +3,22 @@ require("mysql_connect.php");
 $staffID = $_REQUEST['staffID'];
 $staffID = $_REQUEST['staffID'];
 if(!empty($staffID))	{
-	$s = mysql_query("SELECT * FROM staff WHERE id='".$staffID."'") or die(mysql_error());
-	if(mysql_num_rows($s)>0)$staff=mysql_fetch_array($s);
+	$s = mysqli_query($dbc, ("SELECT * FROM staff WHERE id='".$staffID."'") or die(mysql_error());
+	if(mysqli_num_rows($s)>0)$staff=mysqli_fetch_array($s);
 }
 
 if (($_POST['submit'])) {
-	$cols[]='firstname';$vals[]=mysql_real_escape_string($_REQUEST['firstname']);
-	$cols[]='lastname';$vals[]=mysql_real_escape_string($_REQUEST['lastname']);
-	$cols[]='email';$vals[]=mysql_real_escape_string($_REQUEST['email']);
-	$cols[]='title';$vals[]=mysql_real_escape_string($_REQUEST['title']);
+	$cols[]='firstname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['firstname']);
+	$cols[]='lastname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['lastname']);
+	$cols[]='email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['email']);
+	$cols[]='title';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['title']);
 	if(!empty($_REQUEST['staff_password'])){$cols[]='password';$vals[]=sha1($_REQUEST['staff_password']);}
-	$cols[]='phone';$vals[]=mysql_real_escape_string($_REQUEST['phone']);
-	$cols[]='admin';$vals[]=mysql_real_escape_string($_REQUEST['admin']);
-	$cols[]='address';$vals[]=mysql_real_escape_string($_REQUEST['address']);
-	$cols[]='city';$vals[]=mysql_real_escape_string($_REQUEST['city']);
-	$cols[]='state';$vals[]=mysql_real_escape_string($_REQUEST['state']);
-	$cols[]='zip';$vals[]=mysql_real_escape_string($_REQUEST['zip']);
+	$cols[]='phone';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['phone']);
+	$cols[]='admin';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['admin']);
+	$cols[]='address';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['address']);
+	$cols[]='city';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['city']);
+	$cols[]='state';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['state']);
+	$cols[]='zip';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['zip']);
 	if(!empty($staffID)){
 		$upd=db_send($cols,$vals,'staff','update',"id='$staffID'",1);//die();
 	} else {
@@ -107,14 +107,14 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 </div> <!-- end right col -->
 <div id="other">
 <?php
-	$get_s=mysql_query("SELECT * FROM staff WHERE id=$staffID");
-		while($s=mysql_fetch_assoc($get_s))
+	$get_s=mysqli_query($dbc, ("SELECT * FROM staff WHERE id=$staffID");
+		while($s=mysqli_fetch_assoc($get_s))
 			$s_meta[$s['id']]=$s;
-	$get_c=mysql_query("SELECT * FROM clients ORDER BY name ASC");
-		while($c=mysql_fetch_assoc($get_c))
+	$get_c=mysqli_query($dbc, ("SELECT * FROM clients ORDER BY name ASC");
+		while($c=mysqli_fetch_assoc($get_c))
 			$c_meta[$c['id']]=$c;
-	$get_assign=mysql_query("SELECT * FROM staff_clients WHERE staffID=$staffID");
-		while($sc=mysql_fetch_assoc($get_assign))
+	$get_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients WHERE staffID=$staffID");
+		while($sc=mysqli_fetch_assoc($get_assign))
 			$c_assign[$sc['clientID']][]=$sc['staffID'];
 
 	echo "<h2>".(!empty($c_assign)?"Current Assignments":"No Assigments");

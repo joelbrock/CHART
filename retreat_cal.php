@@ -6,11 +6,11 @@ $arrowBack="<img src=\"images/back.png\" border=\"0\" alt=\"&lt;&lt;\" />"; // u
 $arrowForw="<img src=\"images/forward.png\" border=\"0\" alt=\"&gt;&gt;\" />"; // use png arrow forward
 extract($_GET);
 $Q = "SELECT j.RetreatDate1, j.RetreatDate2, c.name FROM journal j LEFT JOIN clients c ON j.clientID = c.id WHERE YEAR(j.RetreatDate1) = $yearID AND j.Category = 'retreat' ORDER BY j.RetreatDate1 ASC";
-$R = mysql_query($Q);
+$R = mysqli_query($dbc, ($Q);
 $cal=new activeCalendar($yearID);
 $cal->enableYearNav($myurl,$arrowBack,$arrowForw); // enables navigation controls
 $cal->enableDayLinks($myurl);
-while($row = mysql_fetch_array($R)) {
+while($row = mysqli_fetch_array($R)) {
 	$year = date('Y', strtotime($row[0]));
 	$month = date('m', strtotime($row[0]));
 	$day = date('d', strtotime($row[0]));
@@ -34,8 +34,8 @@ include("topbar.php");
 </center>
 <table style="margin-left:150px;">
 <?php
-$R = mysql_query($Q);
-while($row = mysql_fetch_array($R)) {
+$R = mysqli_query($dbc, ($Q);
+while($row = mysqli_fetch_array($R)) {
 	echo "<tr><td>".date("m/d",strtotime($row[0]))."</td>";
 	echo "<td>". $row[2]."</td></tr>";
 } ?>

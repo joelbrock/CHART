@@ -3,42 +3,42 @@ require("mysql_connect.php");
 $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 if(!empty($clientID))	{
-	$c = mysql_query("SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
-	if(mysql_num_rows($c)>0)$client=mysql_fetch_array($c);
+	$c = mysqli_query($dbc, ("SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
+	if(mysqli_num_rows($c)>0)$client=mysqli_fetch_array($c);
 	
-	$y = mysql_query("SELECT SUM(Hours) as hoursYTD FROM journal WHERE ClientID = $clientID AND YEAR(Date) = YEAR(CURDATE()) GROUP BY ClientID") or die(mysql_error());
-	if(mysql_num_rows($y)>0)$hoursYTD=mysql_fetch_array($y);
+	$y = mysqli_query($dbc, ("SELECT SUM(Hours) as hoursYTD FROM journal WHERE ClientID = $clientID AND YEAR(Date) = YEAR(CURDATE()) GROUP BY ClientID") or die(mysql_error());
+	if(mysqli_num_rows($y)>0)$hoursYTD=mysqli_fetch_array($y);
 	
-	$q = mysql_query("SELECT SUM(Hours) as hoursQ FROM journal WHERE ClientID = $clientID AND QUARTER(Date) = QUARTER(CURDATE()) GROUP BY ClientID") or die(mysql_error());
-	if(mysql_num_rows($q)>0)$hoursQ=mysql_fetch_array($q);
+	$q = mysqli_query($dbc, ("SELECT SUM(Hours) as hoursQ FROM journal WHERE ClientID = $clientID AND QUARTER(Date) = QUARTER(CURDATE()) GROUP BY ClientID") or die(mysql_error());
+	if(mysqli_num_rows($q)>0)$hoursQ=mysqli_fetch_array($q);
 }
 
 if (($_POST['submit']) || ($_POST['addnew'])) {
-	if(!empty($_REQUEST['code'])){$cols[]='code';$vals[]=mysql_real_escape_string($_REQUEST['code']);}
-	if(!empty($_REQUEST['name'])){$cols[]='name';$vals[]=mysql_real_escape_string($_REQUEST['name']);}
-	$cols[]='total_hours';$vals[]=mysql_real_escape_string($_REQUEST['total_hours']);
-	$cols[]='address';$vals[]=mysql_real_escape_string($_REQUEST['address']);
-	$cols[]='city';$vals[]=mysql_real_escape_string($_REQUEST['city']);
-	$cols[]='state';$vals[]=mysql_real_escape_string($_REQUEST['state']);
-	$cols[]='zip';$vals[]=mysql_real_escape_string($_REQUEST['zip']);
-	$cols[]='url';$vals[]=mysql_real_escape_string($_REQUEST['url']);
-	$cols[]='contact_details';$vals[]=mysql_real_escape_string($_REQUEST['contact_details']);
-	$cols[]='gm_name';$vals[]=mysql_real_escape_string($_REQUEST['gm_name']);
-	$cols[]='gm_contact';$vals[]=mysql_real_escape_string($_REQUEST['gm_contact']);
-	$cols[]='gm_email';$vals[]=mysql_real_escape_string($_REQUEST['gm_email']);
-	$cols[]='chair_name';$vals[]=mysql_real_escape_string($_REQUEST['chair_name']);
-	$cols[]='chair_contact';$vals[]=mysql_real_escape_string($_REQUEST['chair_contact']);
-	$cols[]='board_name';$vals[]=mysql_real_escape_string($_REQUEST['board_name']);
-	$cols[]='board_contact';$vals[]=mysql_real_escape_string($_REQUEST['board_contact']);
-	$cols[]='chair_email';$vals[]=mysql_real_escape_string($_REQUEST['chair_email']);
-	$cols[]='RetreatDate';$vals[]=mysql_real_escape_string($_REQUEST['RetreatDate']);
-	$cols[]='ExpireDate';$vals[]=mysql_real_escape_string($_REQUEST['ExpireDate']);
-	$cols[]='RetreatDesc';$vals[]=mysql_real_escape_string($_REQUEST['RetreatDesc']);
-	$cols[]='UsingPG';$vals[]=mysql_real_escape_string($_REQUEST['UsingPG']);
-	$cols[]='Expansion';$vals[]=mysql_real_escape_string($_REQUEST['Expansion']);
-	$cols[]='NewGM';$vals[]=mysql_real_escape_string($_REQUEST['NewGM']);
-	$cols[]='Retain';$vals[]=mysql_real_escape_string($_REQUEST['Retain']);
-	$cols[]='board_email';$vals[]=mysql_real_escape_string($_REQUEST['board_email']);
+	if(!empty($_REQUEST['code'])){$cols[]='code';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['code']);}
+	if(!empty($_REQUEST['name'])){$cols[]='name';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['name']);}
+	$cols[]='total_hours';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['total_hours']);
+	$cols[]='address';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['address']);
+	$cols[]='city';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['city']);
+	$cols[]='state';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['state']);
+	$cols[]='zip';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['zip']);
+	$cols[]='url';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['url']);
+	$cols[]='contact_details';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['contact_details']);
+	$cols[]='gm_name';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['gm_name']);
+	$cols[]='gm_contact';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['gm_contact']);
+	$cols[]='gm_email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['gm_email']);
+	$cols[]='chair_name';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['chair_name']);
+	$cols[]='chair_contact';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['chair_contact']);
+	$cols[]='board_name';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['board_name']);
+	$cols[]='board_contact';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['board_contact']);
+	$cols[]='chair_email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['chair_email']);
+	$cols[]='RetreatDate';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['RetreatDate']);
+	$cols[]='ExpireDate';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['ExpireDate']);
+	$cols[]='RetreatDesc';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['RetreatDesc']);
+	$cols[]='UsingPG';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['UsingPG']);
+	$cols[]='Expansion';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['Expansion']);
+	$cols[]='NewGM';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['NewGM']);
+	$cols[]='Retain';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['Retain']);
+	$cols[]='board_email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['board_email']);
 	if ($_POST['Expansion'] == 0) { $Expansion = 0; } else { $Expansion = 1; }
 	$cols[]='Expansion';$vals[]="$Expansion";
 	if ($_POST['NewGM'] == 0) { $NewGM = 0; } else { $NewGM = 1; }

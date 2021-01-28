@@ -22,7 +22,7 @@ function escape_data ($data) {
 		$data = stripslashes($data);
 	}
 	
-	// Check for mysql_real_escape_string() support.
+	// Check for mysqli_real_escape_string($dbc, ) support.
 	if (function_exists('mysql_real_escape_string')) {
 		global $dbc; // Need the connection.
 		$data = mysqli_real_escape_string (trim($data), $dbc);

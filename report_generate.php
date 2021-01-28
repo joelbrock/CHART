@@ -13,8 +13,8 @@ if (date('z') < 14) $thatY--;
 
 $query = "SELECT * FROM clients c ORDER BY c.name";
 // echo $query;
-$result = mysql_query($query);
-while($row=mysql_fetch_assoc($result)){
+$result = mysqli_query($dbc, ($query);
+while($row=mysqli_fetch_assoc($result)){
 	$c[]=$row;
 }
 //print_r($c);
@@ -28,8 +28,8 @@ while($row=mysql_fetch_assoc($result)){
 </select>
 <select name="thatY" id="thatY">
 <?php
-$yearR = mysql_query("SELECT YEAR(MIN(Date)), YEAR(MAX(Date)) FROM journal");
-list($yr1, $yr2) = mysql_fetch_row($yearR);
+$yearR = mysqli_query($dbc, ("SELECT YEAR(MIN(Date)), YEAR(MAX(Date)) FROM journal");
+list($yr1, $yr2) = mysqli_fetch_row($yearR);
 for ($i = $yr1; $i <= $yr2; $i++) {
 	echo "<option value='" . $i . "'";
 	echo ($i == $thatY) ? " SELECTED" : "";
@@ -47,16 +47,16 @@ foreach($c as $client) {
 	$clientID=$client['id'];
 	$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) <= (".(3*($thisQ)+1)."))";//hours used this year prior to Q
 	// echo $hours_ty;
-	$hours_tyr = mysql_query($hours_ty);
-	$client['hours_ty'] = mysql_fetch_row($hours_tyr);
+	$hours_tyr = mysqli_query($dbc, ($hours_ty);
+	$client['hours_ty'] = mysqli_fetch_row($hours_tyr);
 	$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 	$hoursq = "SELECT *, DATE_FORMAT(`created`,'%c/%e/%Y') as created_fmt FROM journal
 		WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY
 		AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".((3*$thisQ)+1)."))
 		ORDER BY Category='quarterly' DESC, Date DESC ";
 	// echo $hoursq;
-	$hoursr = mysql_query($hoursq);
-	if(mysql_num_rows($hoursr)==0)continue;///YOU ARE HERE!!!!!!!!
+	$hoursr = mysqli_query($dbc, ($hoursq);
+	if(mysqli_num_rows($hoursr)==0)continue;///YOU ARE HERE!!!!!!!!
 	echo "<li><a href='pdf.php?clientID={$client['id']}&thatQ=$thisQ&thatY=$thatY' target='_blank'>{$client['name']}</a></li>";
 	//print checkbox for this client
 }

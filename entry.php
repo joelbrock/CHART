@@ -197,12 +197,12 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 // else {
 	$clientID = ($_POST['clientID']) ? $_POST['clientID'] : $_GET['clientID'];
 	// echo "<br /><br /><br /><br />ClientID: " . $clientID;
-	// $c = mysql_query("SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
-	// if(mysql_num_rows($c)>0)$client=mysql_fetch_array($c);
+	// $c = mysqli_query($dbc, ("SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
+	// if(mysqli_num_rows($c)>0)$client=mysqli_fetch_array($c);
 	// // $hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . " AND YEAR(created) = YEAR(curdate())";
 	// // echo $hoursq;
-	// $hoursr = @mysql_query($hoursq);
-	// if(mysql_num_rows($hoursr)>0)$hours = mysql_fetch_row($hoursr);
+	// $hoursr = @mysqli_query($dbc, ($hoursq);
+	// if(mysqli_num_rows($hoursr)>0)$hours = mysqli_fetch_row($hoursr);
 	// 
 	// $hoursTotal = $hours['0'];
 	// if ($hoursTotal >= 15 && $hoursTotal < 18) { $fcolor = '#ff9900'; }
@@ -257,14 +257,14 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	mini_dash($clientID,'right');
 	// $align = 'right';
 	// $hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . " AND YEAR(created) = YEAR(curdate()) AND (MONTH(created) >= (".(3*($thisQ-1)+1).") AND MONTH(created)<=(".(3*$thisQ)."))";
-	// $hoursr = mysql_query($hoursq);
-	// $hours = mysql_fetch_row($hoursr);
+	// $hoursr = mysqli_query($dbc, ($hoursq);
+	// $hours = mysqli_fetch_row($hoursr);
 	// $hoursTotal = $hours['0'];
 	// // if ($hoursTotal >= ($row['q_hours']/3) && $hoursTotal < (2*$row['q_hours']/3)) { $fcolor = '#ff9900'; }
 	// // if ($hoursTotal >= (2*$row['q_hours']/3)) { $fcolor = '#cc0033'; }
 	// $fcolor = client_health_color($clientID);
-	// $totr = mysql_query("SELECT * FROM clients WHERE ID = $clientID");
-	// $client = mysql_fetch_assoc($totr);
+	// $totr = mysqli_query($dbc, ("SELECT * FROM clients WHERE ID = $clientID");
+	// $client = mysqli_fetch_assoc($totr);
 	// $tot = $client['total_hours'];
 	// $hoursleft = $tot - $hoursTotal;
 	// echo "<table border=0 align='$align' width=280 valign='top'><tr>";

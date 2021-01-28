@@ -6,8 +6,8 @@ $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 $reportID=1;
 
-$rptquery = mysql_query("SELECT * FROM report_content c WHERE c.id = " . $reportID . " LIMIT 1");
-$rc=mysql_fetch_assoc($rptquery);
+$rptquery = mysqli_query($dbc, ("SELECT * FROM report_content c WHERE c.id = " . $reportID . " LIMIT 1");
+$rc=mysqli_fetch_assoc($rptquery);
 
 // $thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 // $thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
@@ -42,9 +42,9 @@ function jEntryIntro($data,$rc,$in){
 	$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . "
 		AND YEAR(Date) = '".$_GET['thatY']."' AND QUARTER(Date) = '".$_GET['thatQ']."'
 		ORDER BY Date DESC LIMIT 1";
-	$intror = mysql_query($introq);
+	$intror = mysqli_query($dbc, ($introq);
 	// echo $introq;
-	$row = mysql_fetch_row($intror);
+	$row = mysqli_fetch_row($intror);
 
 	$this->Ln(6);
 
@@ -220,8 +220,8 @@ function event_attendance($client) {
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $printY AND a.att <> ''
 		AND a.clientID = $clientID GROUP BY a.id";
-	$cblR = mysql_query($cblQ);
-	$attCBL = (mysql_num_rows($cblR)==0) ? "None" : mysql_num_rows($cblR);
+	$cblR = mysqli_query($dbc, ($cblQ);
+	$attCBL = (mysqli_num_rows($cblR)==0) ? "None" : mysqli_num_rows($cblR);
 	$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
 	$this->Ln(6);
 	$this->SetFont('Arial','',12);
@@ -231,8 +231,8 @@ function event_attendance($client) {
 	// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $printY AND a.att <> ''
 		AND a.clientID = $clientID GROUP BY a.id";
-	$ltR = mysql_query($ltQ);
-	$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
+	$ltR = mysqli_query($dbc, ($ltQ);
+	$attLT = (mysqli_num_rows($ltR)==0) ? "None" : mysqli_num_rows($ltR);
 	$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 	$this->Ln(6);
 	$this->SetFont('Arial','',12);
@@ -242,8 +242,8 @@ function event_attendance($client) {
 //		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
 		AND a.clientID = $clientID GROUP BY a.id";
-	$scsR = mysql_query($scsQ);
-	$attSCS = (mysql_num_rows($scsR)==0) ? "None" : mysql_num_rows($scsR);
+	$scsR = mysqli_query($dbc, ($scsQ);
+	$attSCS = (mysqli_num_rows($scsR)==0) ? "None" : mysqli_num_rows($scsR);
 	$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
 	$this->Ln(6);
 
@@ -334,10 +334,10 @@ function Report($client,$filename,$dest='I')
 
 	$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
 	// echo $retQ;
-	$retR = mysql_query($retQ);
-	$ret = mysql_fetch_row($retR);
+	$retR = mysqli_query($dbc, ($retQ);
+	$ret = mysqli_fetch_row($retR);
 
-	if (mysql_num_rows($retR) == 1) {
+	if (mysqli_num_rows($retR) == 1) {
 		//($ret[0] != '0000-00-00' || $client['RetreatDate'] != '0000-00-00') {
 		$ret_date = $ret[0];
 		if($ret_date == "0000-00-00")
@@ -347,8 +347,8 @@ function Report($client,$filename,$dest='I')
 		$this->Cell( 20, 12, $longdate, 0, 0, 'B');
 	} else {
 		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
-		$prdateR = mysql_query($prdateQ);
-		list($prdate) = mysql_fetch_row($prdateR);
+		$prdateR = mysqli_query($dbc, ($prdateQ);
+		list($prdate) = mysqli_fetch_row($prdateR);
 		if ($prdate != '0000-00-00') {
 			$longdate = strftime('%A %B %e, %Y',strtotime($prdate));
 			$this->Cell( 20, 12, $longdate, 0, 0, 'B');
@@ -381,12 +381,12 @@ function Report($client,$filename,$dest='I')
 	$this->SetFont('Arial','B',12);
 	$this->Cell( 90, 12, '', 0, 0, 'L' );
 
-	$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
-	$cons_ct = mysql_num_rows($staffnameR);
+	$staffnameR = mysqli_query($dbc, ("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
+	$cons_ct = mysqli_num_rows($staffnameR);
 	if ($cons_ct > 1) {
 		$staffnames = "";
 		$i = 1;
-		while($names=mysql_fetch_row($staffnameR)) {
+		while($names=mysqli_fetch_row($staffnameR)) {
 	        $sep = ($i < $cons_ct) ? " & " : "";
 	        $staffnames .= $names[0]." ".$names[1].$sep;
 	        $i++;
@@ -397,7 +397,7 @@ function Report($client,$filename,$dest='I')
 		$this->SetFont('Arial','I',12);
 		$this->Cell( 35, 12, "CBLD Consultants", 0, 0, 'I');
 	} else {
-		$staffname = mysql_fetch_row($staffnameR);
+		$staffname = mysqli_fetch_row($staffnameR);
 		$this->Cell( 35, 12, $staffname[0]." ".$staffname[1].", CBLD Consultant", 0, 0, 'L' );
 	}
 
@@ -440,8 +440,8 @@ function Report($client,$filename,$dest='I')
 			$action='batch';
 			$query = "SELECT * FROM clients c";
 			// echo $query;
-			$result = mysql_query($query);
-			while($row=mysql_fetch_assoc($result)){
+			$result = mysqli_query($dbc, ($query);
+			while($row=mysqli_fetch_assoc($result)){
 				$c[]=$row;
 			}
 			//print_r($c);
@@ -450,8 +450,8 @@ function Report($client,$filename,$dest='I')
 			$query = "SELECT * FROM clients c WHERE c.id = " . $clientID . " LIMIT 1";
 			// echo $query;
 			$action='single';
-			$result = mysql_query($query);
-			$c[]=$row=mysql_fetch_assoc($result);
+			$result = mysqli_query($dbc, ($query);
+			$c[]=$row=mysqli_fetch_assoc($result);
 			//print_r($c);
 			if (!$row['id']) {
 				empty($clientID);
@@ -462,19 +462,19 @@ function Report($client,$filename,$dest='I')
 			$clientID=$client['id'];
 			$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 			$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
-			$staffnameR = mysql_query("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
-			$cons_ct = mysql_num_rows($staffnameR);
+			$staffnameR = mysqli_query($dbc, ("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
+			$cons_ct = mysqli_num_rows($staffnameR);
 			//$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . (($admin==false||$cons_ct==1)?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) < (".(3*($thisQ-1)+1).")) AND Category <> 'reset' AND Billable <> 0";//hours used this year prior to Q
 			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . " AND YEAR(Date) = $thatY AND (MONTH(Date) < (".(3*($thisQ-1)+1).")) AND Category <> 'reset' AND Billable <> 0";//hours used this year prior to Q			
-			$hours_tyr = mysql_query($hours_ty);
-			$client['hours_ty'] = mysql_fetch_row($hours_tyr);
+			$hours_tyr = mysqli_query($dbc, ($hours_ty);
+			$client['hours_ty'] = mysqli_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 			//$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND Billable = 1 ORDER BY Category='quarterly' DESC, Date DESC ";
 			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . " AND YEAR(Date) = $thatY AND (MONTH(Date) >= (".(3*($thisQ-1)+1).") AND MONTH(Date)<=(".(3*$thisQ).")) AND (Billable = 1 OR Category = 'quarterly') ORDER BY Category='quarterly' DESC, Date DESC ";
-			$hoursr = mysql_query($hoursq);
-			if(mysql_num_rows($hoursr)==0)continue;
+			$hoursr = mysqli_query($dbc, ($hoursq);
+			if(mysqli_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
-			while($h=mysql_fetch_assoc($hoursr)){
+			while($h=mysqli_fetch_assoc($hoursr)){
 				$h['Hours']=round($h['Hours'],2);
 				$client['hours'][] = $h; $client['hrs']['total']+=$h['Hours']; $hoursQ+=$h['Hours'];
 				$client['hrs']['cat'][$h['Category']]=(isset($client['hrs']['cat'][$h['Category']])?$client['hrs']['cat'][$h['Category']]:0)+1;
