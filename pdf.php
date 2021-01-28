@@ -39,7 +39,7 @@ class PDF extends FPDF
 		$clientID = $_REQUEST['clientID'];
 		$intro_default = "Here is your CBLD quarterly report.  Please have a look and let me know if you have any questions.  And keep up the great work!";
 
-		global $client,$thisQ;
+		global $dbc,$client,$thisQ;
 		$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . "
 			AND YEAR(Date) = '".$_GET['thatY']."' AND QUARTER(Date) = '".$_GET['thatQ']."'
 			ORDER BY Date DESC LIMIT 1";
@@ -205,7 +205,7 @@ class PDF extends FPDF
 		}
 	}
 	function event_attendance($client) {
-		global $userinfo;
+		global $dbc,$userinfo;
 		$clientID = $_REQUEST['clientID'];
 		$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 
@@ -308,7 +308,7 @@ class PDF extends FPDF
 	//Report
 	function Report($client,$filename,$dest='I')
 	{
-		global $userinfo,$thisQ,$rc;
+		global $dbc,$userinfo,$thisQ,$rc;
 		$clientID = $_REQUEST['clientID'];
 		$this->AliasNbPages();
 		$this->AddPage();
