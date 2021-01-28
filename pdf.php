@@ -6,7 +6,7 @@ $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 $reportID=1;
 
-$rptquery = mysqli_query($dbc, ("SELECT * FROM report_content c WHERE c.id = " . $reportID . " LIMIT 1");
+$rptquery = mysqli_query($dbc, "SELECT * FROM report_content c WHERE c.id = " . $reportID . " LIMIT 1");
 $rc=mysqli_fetch_assoc($rptquery);
 
 // $thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
@@ -43,7 +43,7 @@ class PDF extends FPDF
 		$introq = "SELECT Intro FROM journal WHERE Category = 'quarterly' AND ClientID = " . $clientID . "
 			AND YEAR(Date) = '".$_GET['thatY']."' AND QUARTER(Date) = '".$_GET['thatQ']."'
 			ORDER BY Date DESC LIMIT 1";
-		$intror = mysqli_query($dbc, ($introq);
+		$intror = mysqli_query($dbc, $introq);
 		// echo $introq;
 		$row = mysqli_fetch_row($intror);
 
@@ -223,7 +223,7 @@ class PDF extends FPDF
 		// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 		$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $printY AND a.att <> ''
 			AND a.clientID = $clientID GROUP BY a.id";
-		$cblR = mysqli_query($dbc, ($cblQ);
+		$cblR = mysqli_query($dbc, $cblQ);
 		$attCBL = (mysqli_num_rows($cblR)==0) ? "None" : mysqli_num_rows($cblR);
 		$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
 		$this->Ln(6);
@@ -232,7 +232,7 @@ class PDF extends FPDF
 		$this->SetFont('Arial','B',12);
 		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'TOP' OR a.event = 'WEB') AND a.year = $printY AND a.att <> ''
 			AND a.clientID = $clientID GROUP BY a.id";
-		$ltR = mysqli_query($dbc, ($ltQ);
+		$ltR = mysqli_query($dbc, $ltQ);
 		$attLT = (mysqli_num_rows($ltR)==0) ? "None" : mysqli_num_rows($ltR);
 		$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 		$this->Ln(6);
@@ -241,7 +241,7 @@ class PDF extends FPDF
 		// $this->SetFont('Arial','B',12);
 		// $webQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'WEB' AND a.year = $printY AND a.att <> ''
 		// 	AND a.clientID = $clientID GROUP BY a.id";
-		// $webR = mysqli_query($dbc, ($webQ);
+		// $webR = mysqli_query($dbc, $webQ);
 		// $attWEB = (mysqli_num_rows($webR)==0) ? "None" : mysqli_num_rows($webR);
 		// $this->Cell( 20, 12, "$attWEB", 0, 0, 'L');
 		// $this->Ln(6);
@@ -252,7 +252,7 @@ class PDF extends FPDF
 	//		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
 		$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
 			AND a.clientID = $clientID GROUP BY a.id";
-		$scsR = mysqli_query($dbc, ($scsQ);
+		$scsR = mysqli_query($dbc, $scsQ);
 		$attSCS = (mysqli_num_rows($scsR)==0) ? "None" : mysqli_num_rows($scsR);
 		$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
 		$this->Ln(6);
@@ -388,7 +388,7 @@ class PDF extends FPDF
 
 		$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = '" . $printY . "' AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
 		// echo $retQ;
-		$retR = mysqli_query($dbc, ($retQ);
+		$retR = mysqli_query($dbc, $retQ);
 		$ret = mysqli_fetch_row($retR);
 
 		//if (mysqli_num_rows($retR) == 1) {
@@ -402,7 +402,7 @@ class PDF extends FPDF
 			$this->Cell( 20, 12, $longdate, 0, 0, 'L');
 		} else {
 			$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
-			$prdateR = mysqli_query($dbc, ($prdateQ);
+			$prdateR = mysqli_query($dbc, $prdateQ);
 			list($prdate) = mysqli_fetch_row($prdateR);
 			if ($prdate != '0000-00-00') {
 				$longdate = strftime('%A %B %e, %Y',strtotime($prdate));
@@ -425,7 +425,7 @@ class PDF extends FPDF
 		$this->SetFont('Arial','B',12);
 		$this->Cell( 90, 12, '', 0, 0, 'L' );
 
-		$staffnameR = mysqli_query($dbc, ("SELECT s.firstname, s.lastname FROM staff s, staff_clients c 
+		$staffnameR = mysqli_query($dbc, "SELECT s.firstname, s.lastname FROM staff s, staff_clients c 
 			WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 		$cons_ct = mysqli_num_rows($staffnameR);
 		if ($cons_ct > 1) {
@@ -553,7 +553,7 @@ if(!empty($clientID)){
 		$action='batch';
 		$query = "SELECT * FROM clients c";
 		// echo $query;
-		$result = mysqli_query($dbc, ($query);
+		$result = mysqli_query($dbc, $query);
 		while($row=mysqli_fetch_assoc($result)){
 			$c[]=$row;
 		}
@@ -563,7 +563,7 @@ if(!empty($clientID)){
 		$query = "SELECT * FROM clients c WHERE c.id = " . $clientID . " LIMIT 1";
 		// echo $query;
 		$action='single';
-		$result = mysqli_query($dbc, ($query);
+		$result = mysqli_query($dbc, $query);
 		$c[]=$row=mysqli_fetch_assoc($result);
 		//print_r($c);
 		if (!$row['id']) {
@@ -575,7 +575,7 @@ if(!empty($clientID)){
 		$clientID=$client['id'];
 		$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 		$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
-		$staffnameR = mysqli_query($dbc, ("SELECT s.firstname, s.lastname FROM staff s, staff_clients c 
+		$staffnameR = mysqli_query($dbc, "SELECT s.firstname, s.lastname FROM staff s, staff_clients c 
 			WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 		$cons_ct = mysqli_num_rows($staffnameR);
 		// $hours_ty = "SELECT SUM(Hours) FROM journal
@@ -589,7 +589,7 @@ if(!empty($clientID)){
 			AND (MONTH(Date) < (".(3*($thisQ-1)+1).")) 
 			AND Category <> 'reset' 
 			AND Billable <> 0";
-		$hours_tyr = mysqli_query($dbc, ($hours_ty);
+		$hours_tyr = mysqli_query($dbc, $hours_ty);
 		$client['hours_ty'] = mysqli_fetch_row($hours_tyr);
 		$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 		// $hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal
@@ -605,7 +605,7 @@ if(!empty($clientID)){
 			AND MONTH(Date)<=(".(3*$thisQ).")) 
 			AND (Billable = 1 OR Category = 'quarterly') 
 			ORDER BY Category='quarterly' DESC, Date DESC ";
-		$hoursr = mysqli_query($dbc, ($hoursq);
+		$hoursr = mysqli_query($dbc, $hoursq);
 		if(mysqli_num_rows($hoursr)==0)continue;
 		$hoursQ=0;
 		while($h=mysqli_fetch_assoc($hoursr)){

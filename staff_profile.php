@@ -3,7 +3,7 @@ require("mysql_connect.php");
 $staffID = $_REQUEST['staffID'];
 $staffID = $_REQUEST['staffID'];
 if(!empty($staffID))	{
-	$s = mysqli_query($dbc, ("SELECT * FROM staff WHERE id='".$staffID."'") or die(mysql_error());
+	$s = mysqli_query($dbc, "SELECT * FROM staff WHERE id='".$staffID."'") or die(mysql_error());
 	if(mysqli_num_rows($s)>0)$staff=mysqli_fetch_array($s);
 }
 
@@ -107,13 +107,13 @@ echo "<h2>" . $staff['firstname'] . " " . $staff['lastname'] . " &mdash; Staff P
 </div> <!-- end right col -->
 <div id="other">
 <?php
-	$get_s=mysqli_query($dbc, ("SELECT * FROM staff WHERE id=$staffID");
+	$get_s=mysqli_query($dbc, "SELECT * FROM staff WHERE id=$staffID");
 		while($s=mysqli_fetch_assoc($get_s))
 			$s_meta[$s['id']]=$s;
-	$get_c=mysqli_query($dbc, ("SELECT * FROM clients ORDER BY name ASC");
+	$get_c=mysqli_query($dbc, "SELECT * FROM clients ORDER BY name ASC");
 		while($c=mysqli_fetch_assoc($get_c))
 			$c_meta[$c['id']]=$c;
-	$get_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients WHERE staffID=$staffID");
+	$get_assign=mysqli_query($dbc, "SELECT * FROM staff_clients WHERE staffID=$staffID");
 		while($sc=mysqli_fetch_assoc($get_assign))
 			$c_assign[$sc['clientID']][]=$sc['staffID'];
 

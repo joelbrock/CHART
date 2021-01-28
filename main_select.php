@@ -1,6 +1,6 @@
 <?php
 echo "<div id='main_select'>\n";
-$coder = mysqli_query($dbc, ("SELECT * FROM clients ".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}'":''));
+$coder = mysqli_query($dbc, "SELECT * FROM clients ".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}'":''));
 	
 		 // -- CODEMENU START
 		 if(mysqli_num_rows($coder)>0){
@@ -21,7 +21,7 @@ $coder = mysqli_query($dbc, ("SELECT * FROM clients ".($userinfo['admin']!='1'?"
 		 // -- CODEMENU ENDS
 		 
 		if($userinfo['admin']==1){
-			$staffr = mysqli_query($dbc, ("SELECT * FROM staff");
+			$staffr = mysqli_query($dbc, "SELECT * FROM staff");
 			 
 		 if(mysqli_num_rows($staffr)>0){
 			 // -- STAFFMENU START

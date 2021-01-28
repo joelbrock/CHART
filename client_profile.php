@@ -3,13 +3,13 @@ require("mysql_connect.php");
 $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
 if(!empty($clientID))	{
-	$c = mysqli_query($dbc, ("SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
+	$c = mysqli_query($dbc, "SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
 	if(mysqli_num_rows($c)>0)$client=mysqli_fetch_array($c);
 	
-	$y = mysqli_query($dbc, ("SELECT SUM(Hours) as hoursYTD FROM journal WHERE ClientID = $clientID AND YEAR(Date) = YEAR(CURDATE()) GROUP BY ClientID") or die(mysql_error());
+	$y = mysqli_query($dbc, "SELECT SUM(Hours) as hoursYTD FROM journal WHERE ClientID = $clientID AND YEAR(Date) = YEAR(CURDATE()) GROUP BY ClientID") or die(mysql_error());
 	if(mysqli_num_rows($y)>0)$hoursYTD=mysqli_fetch_array($y);
 	
-	$q = mysqli_query($dbc, ("SELECT SUM(Hours) as hoursQ FROM journal WHERE ClientID = $clientID AND QUARTER(Date) = QUARTER(CURDATE()) GROUP BY ClientID") or die(mysql_error());
+	$q = mysqli_query($dbc, "SELECT SUM(Hours) as hoursQ FROM journal WHERE ClientID = $clientID AND QUARTER(Date) = QUARTER(CURDATE()) GROUP BY ClientID") or die(mysql_error());
 	if(mysqli_num_rows($q)>0)$hoursQ=mysqli_fetch_array($q);
 }
 

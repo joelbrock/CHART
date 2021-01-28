@@ -70,7 +70,7 @@ function Report($client,$filename,$dest='I')
 	$this->Ln(8);
 	
 	$this->SetFont('Arial','',12);
-	$staffnameR = mysqli_query($dbc, ("SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
+	$staffnameR = mysqli_query($dbc, "SELECT s.firstname, s.lastname FROM staff s, staff_clients c WHERE s.id = c.StaffID AND c.ClientID = ".$clientID);
 	$staffname = mysqli_fetch_row($staffnameR);
 	$this->Cell( 55, 12, "CBLD Consultant: ".$staffname[0]." ".$staffname[1], 0, 0, 'L' );
 	$this->Ln(8);	
@@ -118,7 +118,7 @@ function Report($client,$filename,$dest='I')
 
 	$retQ = "SELECT RetreatDate1, RetreatDate2, RetreatNote FROM journal WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $clientID . " ORDER BY Date DESC LIMIT 1";
 	// echo $retQ;
-	$retR = mysqli_query($dbc, ($retQ);
+	$retR = mysqli_query($dbc, $retQ);
 	$ret = mysqli_fetch_row($retR);
 
 	if (mysqli_num_rows($retR) == 1) {
@@ -128,7 +128,7 @@ function Report($client,$filename,$dest='I')
 		$this->Cell( 20, 12, $longdate, 0, 0, 'B');
 	} else {
 		$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $clientID;
-		$prdateR = mysqli_query($dbc, ($prdateQ);
+		$prdateR = mysqli_query($dbc, $prdateQ);
 		list($prdate) = mysqli_fetch_row($prdateR);
 		if ($prdate != '0000-00-00') {
 			$longdate = strftime('%A %B %e, %Y',strtotime($prdate));
@@ -162,7 +162,7 @@ function Report($client,$filename,$dest='I')
 			$action='batch';
 			$query = "SELECT * FROM clients c";
 			// echo $query;
-			$result = mysqli_query($dbc, ($query);
+			$result = mysqli_query($dbc, $query);
 			while($row=mysqli_fetch_assoc($result)){
 				$c[]=$row; 
 			}
@@ -172,7 +172,7 @@ function Report($client,$filename,$dest='I')
 			$query = "SELECT * FROM clients c WHERE c.id = " . $clientID . " LIMIT 1";
 			// echo $query;
 			$action='single';
-			$result = mysqli_query($dbc, ($query);
+			$result = mysqli_query($dbc, $query);
 			$c[]=$row=mysqli_fetch_assoc($result); 
 			//print_r($c);
 			if (!$row['id']) {
@@ -185,11 +185,11 @@ function Report($client,$filename,$dest='I')
 			$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
 			$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
 			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY";
-			$hours_tyr = mysqli_query($dbc, ($hours_ty);
+			$hours_tyr = mysqli_query($dbc, $hours_ty);
 			$client['hours_ty'] = mysqli_fetch_row($hours_tyr);
 			$client['hrs']['total'] = round($client['hours_ty']['0'],2);
 			$hoursq = "SELECT *, DATE_FORMAT(`Date`,'%c/%e/%Y') as created_fmt FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY ORDER BY Date";
-			$hoursr = mysqli_query($dbc, ($hoursq); 
+			$hoursr = mysqli_query($dbc, $hoursq); 
 			if(mysqli_num_rows($hoursr)==0)continue;
 			$hoursQ=0;
 			while($h=mysqli_fetch_assoc($hoursr)){

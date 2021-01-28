@@ -2,7 +2,7 @@
 require("mysql_connect.php");
 
 // $autocompletedata = "";
-// $results = mysqli_query($dbc, ("SELECT name FROM clients");
+// $results = mysqli_query($dbc, "SELECT name FROM clients");
 // while ($row = mysqli_fetch_row($results)) {
 // 	$autocompletedata .= $row[0] . " ";
 // }

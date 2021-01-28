@@ -2,14 +2,14 @@
 require("mysql_connect.php");
 
 // $autocompletedata = "";
-// $results = mysqli_query($dbc, ("SELECT name FROM clients");
+// $results = mysqli_query($dbc, "SELECT name FROM clients");
 // while ($row = mysqli_fetch_row($results)) {
 // 	$autocompletedata .= $row[0] . " ";
 // }
 
 if ($_GET['delete'] == 'delete') 
 	$jid = $_GET['jid'];
-	$delR = mysqli_query($dbc, ("DELETE FROM journal WHERE id = $jid");
+	$delR = mysqli_query($dbc, "DELETE FROM journal WHERE id = $jid");
 ?>
 
 <html>
@@ -191,7 +191,7 @@ if ($staffID == 'ALL') {
 		GROUP BY j2.MaxDate, coopname";
 	$single = False;
 }
-$yearQ = mysqli_query($dbc, ("SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
+$yearQ = mysqli_query($dbc, "SELECT YEAR(MAX(j.Date)) FROM journal j WHERE 1=1 " . $sqlyear);
 $yearR = mysqli_fetch_row($yearQ);
 $year = $yearR[0];
 
@@ -222,7 +222,7 @@ $query = "SELECT j.created AS created,
 
 echo str_repeat("<br />", 4) . $query;
 
-$result = mysqli_query($dbc, ($query) or die(mysql_error());
+$result = mysqli_query($dbc, $query) or die(mysql_error());
 
 // include ('main_select.php');
 
@@ -244,12 +244,12 @@ if ($staffID && !$clientID) {
 	if (!is_numeric($staffID)) {
 		$name = 'ALL';
 	} else {
-		$res = mysqli_query($dbc, ("SELECT firstname, lastname FROM staff WHERE id = $staffID");
+		$res = mysqli_query($dbc, "SELECT firstname, lastname FROM staff WHERE id = $staffID");
 		$row = mysqli_fetch_row($res);
 		$name = $row[0] . ' ' . $row[1];
 	}
 } elseif ($clientID && !$staffID) {
-	$res = mysqli_query($dbc, ("SELECT name FROM clients WHERE id = $clientID");
+	$res = mysqli_query($dbc, "SELECT name FROM clients WHERE id = $clientID");
 	$row = mysqli_fetch_row($res);
 	$name = $row[0];
 }
@@ -332,7 +332,7 @@ if(mysqli_num_rows($result)>0){
 			
 			echo "<br /><font style='font-size:0.75em'>HOURS QUERY: " . $query1;
 			
-			$result1 = mysqli_query($dbc, ($query1);
+			$result1 = mysqli_query($dbc, $query1);
 			$tot = mysqli_fetch_row($result1);
 			$tot0 = (!$tot[0] || $tot[0] == '0') ? 0 : $tot[0];
 			
@@ -366,15 +366,15 @@ if(mysqli_num_rows($result)>0){
 			if ($admin) {
 				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-				$cblR = mysqli_query($dbc, ($cblQ);
+				$cblR = mysqli_query($dbc, $cblQ);
 				$attCBL = (mysqli_num_rows($cblR)==0) ? "X" : mysqli_num_rows($cblR);
 				$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'LT' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-				$ltR = mysqli_query($dbc, ($ltQ);
+				$ltR = mysqli_query($dbc, $ltQ);
 				$attLT = (mysqli_num_rows($ltR)==0) ? "X" : mysqli_num_rows($ltR);
 				$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
-				$scsR = mysqli_query($dbc, ($scsQ);
+				$scsR = mysqli_query($dbc, $scsQ);
 				$attSCS = (mysqli_num_rows($scsR)==0) ? "X" : mysqli_num_rows($scsR);
 				$attTOT = $attCBL + $attLT + $attSCS;
 				echo "<td align='center'>";
@@ -417,12 +417,12 @@ if(mysqli_num_rows($result)>0){
 			$rdateQ = "SELECT MAX(RetreatDate1), MAX(RetreatDate2) FROM journal 
 				WHERE YEAR(Date) = YEAR(CURDATE()) AND Category = 'retreat' AND ClientID = " . $row['clientID'];
 			// echo $rdateQ;
-			$rdateR = mysqli_query($dbc, ($rdateQ);
+			$rdateR = mysqli_query($dbc, $rdateQ);
 			list($rdate1, $rdate2) = mysqli_fetch_row($rdateR);
 			
 			if ($rdate1 == NULL || $rdate1 == '0000-00-00') {  
 				$prdateQ = "SELECT RetreatDate FROM clients WHERE id = " . $row['clientID'];
-				$prdateR = mysqli_query($dbc, ($prdateQ);
+				$prdateR = mysqli_query($dbc, $prdateQ);
 				list($prdate) = mysqli_fetch_row($prdateR);
 				if ($prdate != '0000-00-00' && strftime('%Y',strtotime($prdate)) == date('Y')) {
 					$spit = "&#10004; ".date('n/j/y', strtotime($prdate));

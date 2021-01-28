@@ -1,7 +1,7 @@
 <?php
 require("mysql_connect.php");
 $reportID=1;
-$get_r=mysqli_query($dbc, ("SELECT * FROM report_content WHERE id='$reportID'");
+$get_r=mysqli_query($dbc, "SELECT * FROM report_content WHERE id='$reportID'");
 $report=mysqli_fetch_assoc($get_r);
 if (($_POST['submit'])) {
 	$cols[]='`content-1`';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['content-1']);
