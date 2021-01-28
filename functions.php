@@ -15,6 +15,7 @@ function thisQ() {
  
 // Create a function for escaping the data.
 function escape_data ($data) {
+	global $dbc;
 	
 	// Address Magic Quotes.
 	if (ini_get('magic_quotes_gpc')) {
@@ -24,15 +25,16 @@ function escape_data ($data) {
 	// Check for mysql_real_escape_string() support.
 	if (function_exists('mysql_real_escape_string')) {
 		global $dbc; // Need the connection.
-		$data = mysql_real_escape_string (trim($data), $dbc);
+		$data = mysqli_real_escape_string (trim($data), $dbc);
 	} else {
-		$data = mysql_escape_string (trim($data));
+		$data = mysqli_escape_string (trim($data));
 	}
 	
 	// Return the escaped value.
 	return $data;
 } // End of function.
 function db_send($cols,$vals,$table,$type,$where='',$display='') {
+	global $dbc;
 	if($type=='insert'){
 		$c_sql=implode(',',$cols);
 		$v_sql='';
@@ -69,7 +71,7 @@ function db_send($cols,$vals,$table,$type,$where='',$display='') {
 	}
 	
 	if($display==1) echo $sql;
-	return mysql_query($sql);
+	return mysqli_query($dbc, $sql);
 }
 
 
@@ -98,13 +100,15 @@ function getSlug($text)
 }
 
 function client_health($client) {
+	global $dbc;
+	
 	$thisQ = ceil(date('n')/3);
 	
 	$query = "SELECT j.ClientID as cID, SUM(j.Hours) as hours, (CASE WHEN c.total_hours = 0 THEN 15 ELSE c.total_hours END) AS total, COUNT(*) as count
 		FROM journal j, clients c WHERE j.ClientID = c.id AND j.ClientID = ". $client . " AND YEAR(j.Date) = " . date('Y') . " AND j.Billable = 1 GROUP BY cID";
 	// echo $query;
-	$result = mysql_query($query);
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($dbc, $query);
+	$row = mysqli_fetch_array($result);
 	
 	$hours = (!$row['hours'])?1:$row['hours'];
 	$rtotal = (!$row['total'])?1:$row['total'];
@@ -177,6 +181,7 @@ function client_health_color($client) {
 }
 
 function contact_pattern($client) {
+	global $dbc;
 	// $client = ($client)?$client:$_POST['id'];
 	// print_r($client);
 	// echo $client[0];
@@ -184,8 +189,8 @@ function contact_pattern($client) {
 	$thisQ = ceil(date('n')/3);
 	$countQ = "SELECT SUM(Hours) AS total, COUNT(Hours) AS ct FROM journal WHERE ClientID = " . $client . " AND YEAR(Date) = " . date('Y');
 	// echo $countQ;
-	$countR = mysql_query($countQ);
-	$row = mysql_fetch_assoc($countR);
+	$countR = mysqli_query($dbc, $countQ);
+	$row = mysqli_fetch_assoc($countR);
 	$count = ($row['ct']=='' || $row['ct']==0) ? 1 : $row['ct'];
 	$total = $row['total'];
 	
@@ -216,6 +221,7 @@ function contact_pattern_dots($client,$size) {
 }
 
 function mini_dash($client,$align) {
+	global $dbc;
 	$thisQ = ceil(date('n')/3);
 	$thisY = date('Y');
 	if (date('z') < 15) {
@@ -224,14 +230,14 @@ function mini_dash($client,$align) {
 	}
 	$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $client . " 
 		AND Billable = 1 AND YEAR(Date) = " . $thisY;
-	$hoursr = mysql_query($hoursq);
-	$hours = mysql_fetch_row($hoursr);
+	$hoursr = mysqli_query($dbc, $hoursq);
+	$hours = mysqli_fetch_row($hoursr);
 	$hoursTotal = $hours[0];
 	if ($hoursTotal >= ($row['q_hours']/3) && $hoursTotal < (2*$row['q_hours']/3)) { $fcolor = '#ff9900'; }
 	if ($hoursTotal >= (2*$row['q_hours']/3)) { $fcolor = '#cc0033'; }
 	
-	$totr = mysql_query("SELECT * FROM clients WHERE ID = $client");
-	$tots = mysql_fetch_assoc($totr);
+	$totr = mysqli_query($dbc, "SELECT * FROM clients WHERE ID = $client");
+	$tots = mysqli_fetch_assoc($totr);
 	$tot = $tots['total_hours'];
 	$hoursleft = $tot - $hoursTotal;
 	// echo $tot . " - " . $hoursTotal;

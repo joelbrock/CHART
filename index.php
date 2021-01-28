@@ -13,10 +13,10 @@ require("mysql_connect.php");
 	$password=sha1($_POST['password']);
 	//$password=$_POST['password'];
 	$Sql="Select a.* from staff a where a.email='$username' and password='$password' AND password IS NOT NULL LIMIT 1";
-	$result=mysql_query($Sql); 
-	$row=mysql_fetch_array($result);
+	$result=mysqli_query($dbc, $Sql); 
+	$row=mysqli_fetch_array($result);
 	$userid = $row['id'];
-	$auth=mysql_num_rows($result);
+	$auth=mysqli_num_rows($result);
 		if($auth==1 || $row['id']==1){
 				if(isset($_POST['remember']) && $_COOKIE['remember']!=$_POST['username']){
 					setcookie("remember", $_POST['username'], time()+60*60*24*100, "/");

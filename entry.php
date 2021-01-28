@@ -6,23 +6,23 @@ $staffID = ($admin==false || empty($_REQUEST['staffID'])?$userinfo['id']:$_REQUE
 if ($_GET['jid']) {
 	$jid = $_GET['jid'];
 	$query = "SELECT * FROM journal WHERE id = ".$jid;
-	$result = mysql_query($query);
-	$fill = mysql_fetch_assoc($result);
+	$result = mysqli_query($dbc, $query);
+	$fill = mysqli_fetch_assoc($result);
 	$clientID = $fill['ClientID'];
 }
 if (!empty($clientID)){
 	$query = "SELECT *, c.id as ClientID, c.total_hours AS totalhours FROM clients c LEFT JOIN journal j ON c.id = j.ClientID WHERE c.id = " . $clientID . " ORDER BY created DESC LIMIT 1";
 	// echo "$query";
-	$result = mysql_query($query);
-	$row=mysql_fetch_assoc($result); 
+	$result = mysqli_query($dbc, $query);
+	$row=mysqli_fetch_assoc($result); 
 	
 	if (!$row['ClientID']) {
 		empty($clientID); echo "No client found.";
 //		header('Location: entry.php');
 	} else {
 		$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . " AND YEAR(created) = YEAR(curdate()) AND (MONTH(created) >= (".(3*($thisQ-1)+1).") AND MONTH(created)<=(".(3*$thisQ)."))";
-		$hoursr = mysql_query($hoursq);
-		$hours = mysql_fetch_row($hoursr);
+		$hoursr = mysqli_query($dbc, $hoursq);
+		$hours = mysqli_fetch_row($hoursr);
 		$hoursTotal = $hours['0'];
 		if ($hoursTotal >= ($row['q_hours']/3) && $hoursTotal < (2*$row['q_hours']/3)) { $fcolor = '#ff9900'; }
 		if ($hoursTotal >= (2*$row['q_hours']/3)) { $fcolor = '#cc0033'; }
@@ -91,8 +91,8 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 			$$key = $value;
 	}
 	$clientID = (!$clientID) ? $_POST['clientID'] : $clientID;
-	$reportR = mysql_query("SELECT * FROM report_content");
-	$report = mysql_fetch_row($reportR);
+	$reportR = mysqli_query($dbc, "SELECT * FROM report_content");
+	$report = mysqli_fetch_row($reportR);
 	
 	$Billable = ($Billable == 'on') ? 1 : 0;
 	if (strpos($Hours,':')) {
@@ -105,45 +105,45 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	if ($_GET['jid']) {
 		$update = "UPDATE journal SET Hours = '$Hours', 
 			Billable = '$Billable', 
-			TeamNote = '".mysql_real_escape_string($TeamNote)."', 
-			ClientNote = '".mysql_real_escape_string($ClientNote). "', 
-			RetreatNote = '".mysql_real_escape_string($RetreatNote). "', 
+			TeamNote = '".mysqli_real_escape_string($dbc, $TeamNote)."', 
+			ClientNote = '".mysqli_real_escape_string($dbc, $ClientNote). "', 
+			RetreatNote = '".mysqli_real_escape_string($dbc, $RetreatNote). "', 
 			RetreatDate1 = '$RetreatDate1',
 			RetreatDate2 = '$RetreatDate2',
 			QtrInc = '$QtrInc', 
-			Quarterly = '".mysql_real_escape_string($Quarterly)."', 
-			Intro = '".mysql_real_escape_string($Intro)."',
+			Quarterly = '".mysqli_real_escape_string($dbc, $Quarterly)."', 
+			Intro = '".mysqli_real_escape_string($dbc, $Intro)."',
 			Date = '$Date',
 			Category = '$Category',
 			created = NOW()
 		WHERE id = $jid";
 	} else {
 		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES
-			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysql_real_escape_string($TeamNote) . "', '". mysql_real_escape_string($ClientNote)."', '". mysql_real_escape_string($RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysql_real_escape_string($Quarterly)."', '".mysql_real_escape_string($Intro)."', '$Date', '$Category', NOW())";
+			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysqli_real_escape_string($dbc, $TeamNote) . "', '". mysqli_real_escape_string($dbc, $ClientNote)."', '". mysqli_real_escape_string($dbc, $RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysqli_real_escape_string($dbc, $Quarterly)."', '".mysqli_real_escape_string($dbc, $Intro)."', '$Date', '$Category', NOW())";
 	}
 	// echo $update;
-	if (!mysql_query($update)) {
-		die('Error: ' . mysql_error().$update);
+	if (!mysqli_query($dbc, $update)) {
+		die('Error: ' . mysqli_error($update).$update);
 	}
-	$thisid=mysql_insert_id();
+	$thisid=mysqli_insert_id($dbc);
 			//TAGS
 			$csv_flags=array();
 			$tags=explode(',',$Flags);
 			$i=0;
 			while(!empty($tags[$i])){
 				$tag=trim($tags[$i]);
-				$chk=mysql_query("SELECT * FROM flags WHERE flag_title='$tag'");
-				if(mysql_num_rows($chk)==0){
+				$chk=mysqli_query($dbc, "SELECT * FROM flags WHERE flag_title='$tag'");
+				if(mysqli_num_rows($chk)==0){
 					$cols=array("flag_title");$vals=array("$tag");
 					$ins=db_send($cols,$vals,"flags",'insert');
-					$tagID=mysql_insert_id();
+					$tagID=mysqli_insert_id();
 				} else {
-					$row_t=mysql_fetch_array($chk);
+					$row_t=mysqli_fetch_array($chk);
 					$tagID=$row_t['flag_id'];
 				}
 					$csv_flags[]=$tagID;
-				$chk=mysql_query("SELECT * FROM journal_flags WHERE flag_id='$tagID' AND journal_id='$thisid'");
-				if(mysql_num_rows($chk)==0){
+				$chk=mysqli_query($dbc, "SELECT * FROM journal_flags WHERE flag_id='$tagID' AND journal_id='$thisid'");
+				if(mysqli_num_rows($chk)==0){
 					$cols=array('flag_id','journal_id');$vals=array("$tagID","$thisid");
 					$ins=db_send($cols,$vals,'journal_flags','insert');
 				}
@@ -152,7 +152,7 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 			}
 			$csv_flags=implode(',',$csv_flags);
 			if(empty($csv_flags)) $csv_flags="''";
-			$del=mysql_query("DELETE FROM journal_flags WHERE journal_id='$thisid' AND flag_id NOT IN ($csv_flags)");
+			$del=mysqli_query($dbc, "DELETE FROM journal_flags WHERE journal_id='$thisid' AND flag_id NOT IN ($csv_flags)");
 	echo "<div class='add_entry aligncenter'><h1>1 record added</h1>";
 	echo "<p><a href='".$PHP_SELF ."?clientID=".$clientID." '>Add another entry for ".$row['name']."</a></p>";
 	// echo "<p><a href='".$PHP_SELF."'>Add an entry for another client</a></p>";
@@ -166,11 +166,11 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	
 } elseif (empty($_POST['clientID']) && empty($_GET['clientID'])) {
 
-	$staffr = mysql_query("SELECT * FROM staff");
+	$staffr = mysqli_query($dbc, "SELECT * FROM staff");
 	$codeq = "SELECT * FROM clients".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' AND clients.active = 1":'')." ORDER BY clients.name";
 	// echo $codeq;
-	$coder = mysql_query($codeq);
-	if(mysql_num_rows($coder)==0) echo "<div id='journal_output'><div class='empty'><br /><h2>You have not been assigned to a client.</h2></div></div>";
+	$coder = mysqli_query($dbc, $codeq);
+	if(mysqli_num_rows($coder)==0) echo "<div id='journal_output'><div class='empty'><br /><h2>You have not been assigned to a client.</h2></div></div>";
 	else {
 		
 		echo "<form method='POST' action='$PHP_SELF'>\n";
@@ -179,7 +179,7 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 	
 		// -- CODEMENU START
 		echo "<div class='aligncenter' style='width:400px;'><select name=\"clientID\">\n";
-		while ($code = (mysql_fetch_assoc($coder))) {
+		while ($code = (mysqli_fetch_assoc($coder))) {
 			echo "<option value=\"" . $code['id'] . "\" ".($_REQUEST['clientID']==$code['id']?"selected='selected'":'').">";
 			if ($code['code']) { echo $code['code'] . " &mdash; "; }
 			echo $code['name'];
@@ -211,12 +211,12 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	// $hoursleft = $row['totalhours'] - $hoursTotal;
 	
 	$staffq = "SELECT * FROM staff s, staff_clients c WHERE s.id = c.staffID AND c.clientID = " . $clientID;
-	$staffr = mysql_query($staffq);
+	$staffr = mysqli_query($dbc, $staffq);
 	$clientq = "SELECT * FROM clients WHERE id = " . $clientID;
-	$clientr = mysql_query($clientq);
+	$clientr = mysqli_query($dbc, $clientq);
 	// echo $clientq;
 	// echo $staffq;
-	$staff = mysql_fetch_assoc($staffr);
+	$staff = mysqli_fetch_assoc($staffr);
 
 	$fcolor = client_health_color($clientID);
 	
@@ -231,8 +231,8 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	echo "</td></tr><tr><td colspan=2>";
 	echo "<table border=0 width=360 align='left' valign='top'><tr><td>";
 	echo "<p class='info'><span class='label'>Consultant:</span>";
-	if(mysql_num_rows($staffr)>>1) {
-		while ($staff = mysql_fetch_assoc($staffr)) {
+	if(mysqli_num_rows($staffr)>>1) {
+		while ($staff = mysqli_fetch_assoc($staffr)) {
 			echo $staff['firstname'] . " " . $staff['lastname'] . " & ";
 		}
 	} else {
@@ -240,7 +240,7 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	}
 	echo "</p>";
 	
-	$client = mysql_fetch_assoc($clientr) or DIE (mysql_error());
+	$client = mysqli_fetch_assoc($clientr) or DIE (mysqli_error($clientr));
 	
 	$url = (!$client['url']) ? '#' : $client['url'];
 	

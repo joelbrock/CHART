@@ -73,14 +73,14 @@ $query = "SELECT j.created AS datetime,
 	HAVING staffID = $staffID";
 // echo "<br><br><br><br>" . $query;
 
-$result = mysql_query($query);
+$result = mysqli_query($dbc, $query);
 
 echo "<div class='banner'>\n";
 
 echo "<div class='track_btn'><ul class='dropdown'><li class='narrow'><a href='#'>TRACK!</a><ul class='sub_menu narrow'>";
-$clientr = mysql_query("SELECT * FROM clients LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' ORDER BY clients.name");
+$clientr = mysqli_query($dbc, "SELECT * FROM clients LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' ORDER BY clients.name");
 
-while ($clientRow = mysql_fetch_assoc($clientr)) {
+while ($clientRow = mysqli_fetch_assoc($clientr)) {
 	$ccode = ($clientRow['code'] == '') ? acronymize($clientRow['name']) : $clientRow['code'];
 	$color = ($clientRow['active'] == 0) ? ' inactive' : '';
 	echo "<li class='narrow$color'><a href='entry.php?clientID=".$clientRow['id']."'>$ccode</a></li>";
@@ -109,8 +109,8 @@ if (REPORT_READY) {
 }
 if(!empty($clientID)){
 	if(!$client) {
-		$c = mysql_query("SELECT * FROM clients WHERE id='".$clientID."'");
-		if(mysql_num_rows($c)>0)$client=mysql_fetch_array($c);
+		$c = mysqli_query($dbc, "SELECT * FROM clients WHERE id='".$clientID."'");
+		if(mysqli_num_rows($c)>0)$client=mysqli_fetch_array($c);
 	}
 	if($clientID){
 		// echo "<li><a href='dashboard.php?clientID=".$client['id']."'>View all for $client[name]</a></li>\n";
@@ -134,10 +134,10 @@ echo "<li><a href='logout.php'>Logout.</a>";
 echo "</ul></li>";
 echo "<li><a href='#'>CONSULTANTS</a>
 	<ul class=\"sub_menu\">\n";	
-$staffr = mysql_query("SELECT * FROM staff WHERE active = 1 ORDER BY firstname");
+$staffr = mysqli_query($dbc, "SELECT * FROM staff WHERE active = 1 ORDER BY firstname");
 if ($admin) echo "<li><a href='dashboard.php?staffID=SUPERALL'>--Super ALL --</a></li>\n";
 echo "<li><a href='dashboard.php?staffID=ALL'>-- ALL --</a></li>\n";
-while ($staffRow = mysql_fetch_assoc($staffr)) {
+while ($staffRow = mysqli_fetch_assoc($staffr)) {
 	$fullname = $staffRow['firstname'] . " " . $staffRow['lastname'];
 	echo "<li><a href=dashboard.php?staffID=" . $staffRow['id'] . ">" . $fullname . "</a></li>\n";
 }
@@ -145,9 +145,9 @@ echo "</ul></li>";
 
 echo "<li><a href='#'>CLIENTS</a>
 		<ul class=\"sub_menu\">\n";
-$clientr = mysql_query("SELECT * FROM clients".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' AND active = 1 ORDER BY clients.name":' WHERE active = 1 ORDER BY clients.name'));
+$clientr = mysqli_query($dbc, "SELECT * FROM clients".($userinfo['admin']!='1'?" LEFT JOIN staff_clients ON clients.id=staff_clients.clientID WHERE staff_clients.staffID='{$userinfo['id']}' AND active = 1 ORDER BY clients.name":' WHERE active = 1 ORDER BY clients.name'));
 
-while ($clientRow = mysql_fetch_assoc($clientr)) {
+while ($clientRow = mysqli_fetch_assoc($clientr)) {
 	echo "<li><a href=dashboard.php?clientID=" . $clientRow['id'] . ">" . ucwords($clientRow['name']) . "</a></li>\n";
 }
 echo "</ul></li></ul></div></div>";
