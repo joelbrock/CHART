@@ -210,14 +210,14 @@ class PDF extends FPDF
 		$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 
 		$this->SetFont('Arial','B',12);
-		$this->Cell( 45, 12, "Event Attendance", 0, 0, 'L' );
+		$this->Cell( 45, 12, "In-Person Event Attendance", 0, 0, 'L' );
 		// $this->Ln(6);
 		// $this->SetFont('Arial','I',10);
-		// $this->Write(12, "NOTE: Being a Great Employer 6/30 event attendance data will be available on the Q3 report.");
+		// $this->Write(12, "NOTE: Q3 event attendance data will be available on the Q4 report.");
 		
 		$this->SetFont('Arial','',12);
 		$this->Ln(6);
-		$this->Cell( 60, 12, "CBL 101: ", 0, 0, 'L' );
+		$this->Cell( 50, 12, "CBL 101: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
 		// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
 		// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
@@ -228,25 +228,18 @@ class PDF extends FPDF
 		$this->Cell( 20, 12, "$attCBL", 0, 0, 'L');
 		$this->Ln(6);
 		$this->SetFont('Arial','',12);
-		$this->Cell( 60, 12, "CBLD Topical Webinars: ", 0, 0, 'L' );
+		$this->Cell( 50, 12, "Applied Governance: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
-		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'TOP' OR a.event = 'WEB') AND a.year = $printY AND a.att <> ''
+		// $ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'AG' AND a.year = $printY AND a.att <> ''
+			// AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
+		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'AG' AND a.year = $printY AND a.att <> ''
 			AND a.clientID = $clientID GROUP BY a.id";
 		$ltR = mysql_query($ltQ);
 		$attLT = (mysql_num_rows($ltR)==0) ? "None" : mysql_num_rows($ltR);
 		$this->Cell( 20, 12, "$attLT", 0, 0, 'L');
 		$this->Ln(6);
-		// $this->SetFont('Arial','',12);
-		// $this->Cell( 60, 12, "Cooperate@Home Webinars: ", 0, 0, 'L' );
-		// $this->SetFont('Arial','B',12);
-		// $webQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'WEB' AND a.year = $printY AND a.att <> ''
-		// 	AND a.clientID = $clientID GROUP BY a.id";
-		// $webR = mysql_query($webQ);
-		// $attWEB = (mysql_num_rows($webR)==0) ? "None" : mysql_num_rows($webR);
-		// $this->Cell( 20, 12, "$attWEB", 0, 0, 'L');
-		// $this->Ln(6);
 		$this->SetFont('Arial','',12);
-		$this->Cell( 60, 12, "Cooperative Cafe: ", 0, 0, 'L' );
+		$this->Cell( 50, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
 	//	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
 	//		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
@@ -528,21 +521,10 @@ class PDF extends FPDF
 		// 2020 2-pager --------------
 
 		$this->AddPage();
-		// $this->Image('images/2020-pg-3.jpg',2,2,205);
-		// $this->Image('images/2020-page2-COVID.jpg',2,2,205);
-		// $this->Image('images/CBLDQuarterly_July2020v2.jpg',2,2,205);
-		// $this->Image('images/2021enrollment1.jpg',0,10,210);
-		$this->Image('images/2020_Q4_Page1.png',0,10,210);
+		$this->Image('images/2020-pg-3.jpg',2,2,205);
 		$this->AddPage();
-		// $this->Image('images/2020-pg-4.jpg',2,2,205);
-		// $this->Image('images/2020-page3-COVID.jpg',2,2,205);
-		// $this->Image('images/2021enrollment2.jpg',0,10,210);
-		$this->SetFont('Arial','B',16);
-		$this->SetXY(35,5);
-		$this->PutLink('https://columinate.coop/events/','View All Event Details   |   ',16);
-		$this->PutLink('mailto:events@columinate.coop?subject=CBLD Events - Link Request&body=Please send the private link.  My co-op name is _________','Request Link to Register',16);
-		$this->Image('images/2020_Q4_Page2.png',0,20,210);
-		
+		$this->Image('images/2020-pg-4.jpg',2,2,205);
+
 		// PRINT IT!
 		$this->Output($filename,$dest);
 	}	// END Report
