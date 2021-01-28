@@ -96,7 +96,7 @@ function debug_p($var, $title)
 function getSlug($text)
 {
 	$text=str_replace(' ','-',strtolower(trim($text)));
-	return ereg_replace("[^A-Za-z0-9-]", "", str_replace(' ','-',$text));
+	return preg_replace("[^A-Za-z0-9-]", "", str_replace(' ','-',$text));
 }
 
 function client_health($client) {
