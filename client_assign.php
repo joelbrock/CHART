@@ -25,7 +25,7 @@ if ($_POST['submit']) {
 	} else {
 		//is this already assigned?
 		if(!isset($c_assign[$_POST['codemenu']]) || !in_array($_POST['staffmenu'],$c_assign[$_POST['codemenu']])){
-			$ins=mysqli_query($dbc, ("INSERT INTO staff_clients (`staffID`,`clientID`) VALUES ('".$_POST['staffmenu']."','".$_POST['codemenu']."')");
+			$ins=mysqli_query($dbc, "INSERT INTO staff_clients (`staffID`,`clientID`) VALUES ('".$_POST['staffmenu']."','".$_POST['codemenu']."')");
 			$c_assign[$_POST['codemenu']][]=$_POST['staffmenu'];
 		}
 		if (in_array($_POST['staffmenu'],$c_assign[$_POST['codemenu']]) || $ins) {		
