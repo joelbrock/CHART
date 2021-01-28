@@ -2,16 +2,16 @@
 require("mysql_connect.php");
 
 //who is assigned already?
-	$get_s=mysqli_query($dbc, ("SELECT * FROM staff ORDER BY lastname ASC,firstname ASC");
+	$get_s=mysqli_query($dbc, "SELECT * FROM staff ORDER BY lastname ASC,firstname ASC");
 		while($s=mysqli_fetch_assoc($get_s))
 			$s_meta[$s['id']]=$s;
-	$get_c=mysqli_query($dbc, ("SELECT * FROM clients ORDER BY name ASC");
+	$get_c=mysqli_query($dbc, "SELECT * FROM clients ORDER BY name ASC");
 		while($c=mysqli_fetch_assoc($get_c))
 			$c_meta[$c['id']]=$c;
-	$get_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients");
+	$get_assign=mysqli_query($dbc, "SELECT * FROM staff_clients");
 		while($sc=mysqli_fetch_assoc($get_assign))
 			$c_assign[$sc['clientID']][]=$sc['staffID'];
-	$get_s_assign=mysqli_query($dbc, ("SELECT * FROM staff_clients ORDER BY clientID");
+	$get_s_assign=mysqli_query($dbc, "SELECT * FROM staff_clients ORDER BY clientID");
 		while($cs=mysqli_fetch_assoc($get_s_assign))
 			$s_assign[$cs['staffID']][]=$cs['clientID'];
 			// print_r($c_assign);
@@ -19,7 +19,7 @@ require("mysql_connect.php");
 
 if ($_POST['submit']) {
 	if($_POST['remove']==1){
-		$del=mysqli_query($dbc, ("DELETE FROM staff_clients WHERE staffID='{$_POST['staffID']}' AND clientID='{$_POST['clientID']}'");
+		$del=mysqli_query($dbc, "DELETE FROM staff_clients WHERE staffID='{$_POST['staffID']}' AND clientID='{$_POST['clientID']}'");
 		if($del) $msg='success'; else $msg='error';
 		die($msg);
 	} else {
@@ -35,7 +35,7 @@ if ($_POST['submit']) {
 			// echo $query;
 		} else {
 			echo "<font color=red>ERROR!</font>";
-			print mysql_error();
+			print mysqli_error($ins);
 		}
 	}
 }
