@@ -1,6 +1,10 @@
 <?php
+use setasign\Fpdi\Fpdi;
+
 require("mysql_connect.php");
-require('fpdf/fpdf.php');
+require_once('fpdf/fpdf.php');
+// require_once('fpdf/fpdf_merge/fpdf_merge.php');
+require_once('fpdi/src/autoload.php');
 
 $clientID = $_REQUEST['clientID'];
 $staffID = $_REQUEST['staffID'];
@@ -14,8 +18,10 @@ $rc=mysqli_fetch_assoc($rptquery);
 
 class PDF extends FPDF
 {
-//Page header
-	function Header()
+	protected $_tplIdx;
+
+	//Page header
+	public function Header()
 	{
 		// global $client,$thisQ;
 		//Logo
@@ -24,7 +30,7 @@ class PDF extends FPDF
 	}
 
 	//Page footer
-	function Footer()
+	public function Footer()
 	{
 		//Position at 1.5 cm from bottom
 		// $this->SetY(-15);
@@ -34,7 +40,7 @@ class PDF extends FPDF
 		// $this->Line(10,$this->GetY(), 190, $this->GetY());
 	}
 
-	function jEntryIntro($data,$rc,$in)
+	protected function jEntryIntro($data,$rc,$in)
 	{
 		$clientID = $_REQUEST['clientID'];
 		$intro_default = "Here is your CBLD quarterly report.  Please have a look and let me know if you have any questions.  And keep up the great work!";
@@ -65,7 +71,7 @@ class PDF extends FPDF
 			// }
 		}
 	}
-	function jEntry($k,$data,$in){
+	protected function jEntry($k,$data,$in){
 		global $thisQ;
 		$printQ = (!isset($_GET['thatQ'])) ? thisQ() : $_GET['thatQ'];
 
@@ -102,13 +108,13 @@ class PDF extends FPDF
 		}
 		// $this->Ln(10);
 	}
-	function jEntries($hours,$in){
+	protected function jEntries($hours,$in){
 		foreach($hours as $k=>$h){
 			$this->jEntry($k,$h,$in);
 			// $this->Ln(-3);
 		}
 	}
-	function content_filter($rc) {
+	protected function content_filter($rc) {
 		$pattern0 = '/%LATEST%/';
 		$pattern1 = '/%SCHEDULE%/';
 		$pattern2 = '/%PROGRAM%/';
@@ -204,24 +210,24 @@ class PDF extends FPDF
 			$this->Write( 6, $rc);
 		}
 	}
-	function event_attendance($client) {
+	protected function event_attendance($client) {
 		global $dbc,$userinfo;
 		$clientID = $_REQUEST['clientID'];
 		$printY = (!isset($_GET['thatY'])) ? date('Y') : $_GET['thatY'];
 
 		$this->SetFont('Arial','B',12);
-		$this->Cell( 45, 12, "Event Attendance", 0, 0, 'L' );
+		$this->Cell( 45, 12, "Event Registrations", 0, 0, 'L' );
 		// $this->Ln(6);
 		// $this->SetFont('Arial','I',10);
 		// $this->Write(12, "NOTE: Being a Great Employer 6/30 event attendance data will be available on the Q3 report.");
 		
 		$this->SetFont('Arial','',12);
 		$this->Ln(6);
-		$this->Cell( 60, 12, "CBL 101: ", 0, 0, 'L' );
+		$this->Cell( 60, 12, "Virtual CBL 101: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
 		// $cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CBL' AND a.year = $printY AND a.att <> ''
 		// 	AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
-		$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $printY AND a.att <> ''
+		$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $printY
 			AND a.clientID = $clientID GROUP BY a.id";
 		$cblR = mysqli_query($dbc, $cblQ);
 		$attCBL = (mysqli_num_rows($cblR)==0) ? "None" : mysqli_num_rows($cblR);
@@ -230,7 +236,7 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',12);
 		$this->Cell( 60, 12, "CBLD Topical Webinars: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
-		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'TOP' OR a.event = 'WEB') AND a.year = $printY AND a.att <> ''
+		$ltQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'TOP' OR a.event = 'WEB') AND a.year = $printY 
 			AND a.clientID = $clientID GROUP BY a.id";
 		$ltR = mysqli_query($dbc, $ltQ);
 		$attLT = (mysqli_num_rows($ltR)==0) ? "None" : mysqli_num_rows($ltR);
@@ -248,9 +254,7 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',12);
 		$this->Cell( 60, 12, "Cooperative Cafe: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
-	//	$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
-	//		AND SUBSTR( a.coop, 1, LENGTH( c.name ) ) =  '".$client['name']."' GROUP BY a.id";
-		$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY AND a.att <> ''
+		$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY 
 			AND a.clientID = $clientID GROUP BY a.id";
 		$scsR = mysqli_query($dbc, $scsQ);
 		$attSCS = (mysqli_num_rows($scsR)==0) ? "None" : mysqli_num_rows($scsR);
@@ -260,7 +264,7 @@ class PDF extends FPDF
 	}
 
 
-	function PutLink($URL,$txt,$line=10)
+	protected function PutLink($URL,$txt,$line=10)
 	{
 	    //Put a hyperlink
 	    $this->SetTextColor(0,0,255);
@@ -268,7 +272,7 @@ class PDF extends FPDF
 	    $this->SetTextColor(0);
 	}
 	
-	function LoadData($file)
+	protected function LoadData($file)
 	{
 	    // Read file lines
 	    $lines = file($file);
@@ -278,7 +282,7 @@ class PDF extends FPDF
 	    return $data;
 	}
 	
-	function ImprovedTable($header, $data)
+	protected function ImprovedTable($header, $data)
 	{
 	    // Column widths
 	    $w = array(20, 85, 20);
@@ -306,7 +310,7 @@ class PDF extends FPDF
 	
 	
 	//Report
-	function Report($client,$filename,$dest='I')
+	public function Report($client,$filename,$dest='I')
 	{
 		global $dbc,$userinfo,$thisQ,$rc;
 		$clientID = $_REQUEST['clientID'];
@@ -460,93 +464,27 @@ class PDF extends FPDF
 		//
 		//	PAGE 2
 		//
-/**		$this->AddPage();
-		
-		$this->SetFont('Arial','B',16);
-		$library = '';
-		$library .= $this->Cell(130,14,'What\'s New in the',0,0,'C');
-		$library .= $this->Ln(2);
-		$library .= $this->Image('images/columinate-library-header.png',20,20,108,18,'png', 'http://library.columinate.coop');
-			
-		$this->MultiCell(130,24,$library,0,'C');
-		$this->Ln(5);
-		$this->MultiCell(130,0,'',0,'C');
-		$header = array('Date', 'Title', 'Author');
-		$data = $this->LoadData('library-resources.txt');
-		$this->SetFont('Arial','',10);
-		$this->ImprovedTable($header,$data);
-		
-		$this->SetLineWidth(0.1);
-		$this->Line(150,10,150,173);
-		$this->Line(10,173,200,173);
-		
-		$this->Image('images/Coop-Cafe-logo.png',155,13,40,0);
-		
-		$this->SetXY(152,54);
-		$this->SetFont('Arial','',10);
-		
-		$this->MultiCell(50,6,'See pictures and quilts from recent Cooperative Cafes in ',0,'L');
-		$this->SetXY(154,66);
-		$this->PutLink('https://columinate.coop/co-op-cafe-philadelphia-2019/','Philadelphia, PA, 2019',12);
-		$this->SetXY(154,72);
-		$this->PutLink('https://columinate.coop/co-op-cafe-greenfield-2019/','Greenfield, MA, 2019',12);
-		$this->SetXY(154,78);
-		$this->PutLink('https://columinate.coop/co-op-cafe-madison-2019/','Madison, WI, 2019',12);
-		$this->SetXY(154,84);
-		$this->PutLink('https://columinate.coop/co-op-cafe-portland-2019/','Portland, OR, 2019',12);
 
-		$this->Image('images/cafe-pic-3.jpg',152,118,47);
-		$this->Image('images/quilt002.png',10,186,45);
-		$this->Image('images/quilt004.png',10,231,45);
-		
-		$this->SetXY(70,188);
-		$this->SetFont('Arial','B',12);
-		$this->SetLineWidth(0.1);
-		$this->MultiCell(130,88,'',1,'C');
-		$this->SetXY(72,186);
-		$this->MultiCell(128,12,'Being Amazing: Resources',0,'C');
-		
-		$para1 = 'This seasons focus of \'Being Amazing\' has many facets to it.  We\'d like to highlight just a few key resources that you can find in our free online resource library that we think really get at the root of operations excellence.  Co-ops with a strong foundation of mutual trust and respect between Management and Board are far liklier to succeed at their goals which is why we encourage you to review these resources and make sure that your Board is utilizing these tools.';
-
-		$this->SetXY(72,196);
-		$this->SetFont('Arial','',10);
-		$this->MultiCell(125,4,$para1,0,'L');
-		$this->SetXY(72,225);
-		$this->PutLink('https://library.columinate.coop/gain-sales-and-impact-from-great-storytelling/ ','Gain Sales and Impact through Great Storytelling',10);
-		$this->SetXY(72,232);
-		$this->PutLink('https://library.columinate.coop/cooperative-ends-impact-and-telling-the-story/','Cooperative Ends, Impact, and Telling the Story');
-		$this->SetXY(72,239);
-		$this->PutLink('https://library.columinate.coop/customers-the-heart-of-the-co-op/','Customers: The Heart of the Co-op - Dave Olson');		
-		$this->SetXY(72,246);
-		$this->PutLink('https://library.columinate.coop/how-to-be-an-effective-board-president/','How to be a Great Board President');
-		$this->SetXY(72,253);
-		$this->PutLink('https://library.columinate.coop/participation-own-use-serve-and-belong/','Own, Use, Serve, Belong: A new paradigm for Participation');
-		$this->SetXY(72,260);
-		$this->PutLink('https://library.columinate.coop/the-magic-of-commitment/','The Magic of Commitment',10);
-		$this->Write(10,' ');
-*/		
-		// 2020 2-pager --------------
 
 		$this->AddPage();
-		// $this->Image('images/2020-pg-3.jpg',2,2,205);
-		// $this->Image('images/2020-page2-COVID.jpg',2,2,205);
-		// $this->Image('images/CBLDQuarterly_July2020v2.jpg',2,2,205);
-		// $this->Image('images/2021enrollment1.jpg',0,10,210);
-		$this->Image('images/2020_Q4_Page1.png',0,10,210);
-		$this->AddPage();
-		// $this->Image('images/2020-pg-4.jpg',2,2,205);
-		// $this->Image('images/2020-page3-COVID.jpg',2,2,205);
-		// $this->Image('images/2021enrollment2.jpg',0,10,210);
-		$this->SetFont('Arial','B',16);
-		$this->SetXY(35,5);
-		$this->PutLink('https://columinate.coop/events/','View All Event Details   |   ',16);
-		$this->PutLink('mailto:events@columinate.coop?subject=CBLD Events - Link Request&body=Please send the private link.  My co-op name is _________','Request Link to Register',16);
-		$this->Image('images/2020_Q4_Page2.png',0,20,210);
+		$this->Image('images/2023Q1.jpg',0,10,210);
 		
+		// $this->Link(110,20,98,72,'https://youtu.be/cFlJV4LzI7g');
+
+		$this->Link(2,54,72,14,'https://columinate.coop/events');
+		
+		$this->Link(8,178,88,78,'https://columinate.coop/events');
+
+		$this->Link(110,238,76,9,'mailto:cbld_enrollment@columinate.coop');
+		
+		// $this->Link(2,235,208,32,'https://columinate.coop/library');
+
+
 		// PRINT IT!
 		$this->Output($filename,$dest);
 	}	// END Report
 }	// END PDF
+
 
 if(!empty($clientID)){
 	if($clientID=='all'){

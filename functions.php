@@ -224,7 +224,7 @@ function mini_dash($client,$align) {
 	global $dbc;
 	$thisQ = ceil(date('n')/3);
 	$thisY = date('Y');
-	if (date('z') < 15) {
+	if (date('z') < 14) {
 		$thisQ = 4;
 		$thisY = $thisY - 1;
 	}
