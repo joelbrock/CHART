@@ -467,18 +467,18 @@ class PDF extends FPDF
 
 
 		$this->AddPage();
-		$this->Image('images/2023Q1.jpg',0,10,210);
+		$this->Image('images/2023Q3.jpg',0,10,210);
 		
-		// $this->Link(110,20,98,72,'https://youtu.be/cFlJV4LzI7g');
-
-		$this->Link(2,54,72,14,'https://columinate.coop/events');
+		$this->Link(2,54,88,14,'https://columinate.coop/coopcafe');
 		
-		$this->Link(8,178,88,78,'https://columinate.coop/events');
+		$this->Link(8,120,88,20,'https://columinate.coop/cbld');
 
-		$this->Link(110,238,76,9,'mailto:cbld_enrollment@columinate.coop');
+		$this->Link(110,130,88,14,'https://columinate.coop/upcoming_events/cbl-101-foundations-for-directors-in-person-2/');
 		
-		// $this->Link(2,235,208,32,'https://columinate.coop/library');
-
+		$this->Link(110,218,76,9,'mailto:cbld_enrollment%40columinate.coop?subject=I%27m%20interested%20in%20your%20CBLD%202023%20program');
+		
+		$this->Link(110,240,88,28,'https://columinate.coop/events');
+		
 
 		// PRINT IT!
 		$this->Output($filename,$dest);
