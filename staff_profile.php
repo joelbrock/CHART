@@ -1,31 +1,31 @@
 <?php
 require("mysql_connect.php");
-$staffID = $_REQUEST['staffID'];
-$staffID = $_REQUEST['staffID'];
+$staffID = $_REQUEST['staffID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 if(!empty($staffID))	{
 	$s = mysqli_query($dbc, "SELECT * FROM staff WHERE id='".$staffID."'") or die(mysql_error());
 	if(mysqli_num_rows($s)>0)$staff=mysqli_fetch_array($s);
 }
 
-if (($_POST['submit'])) {
-	$cols[]='firstname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['firstname']);
-	$cols[]='lastname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['lastname']);
-	$cols[]='email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['email']);
-	$cols[]='title';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['title']);
-	if(!empty($_REQUEST['staff_password'])){$cols[]='password';$vals[]=sha1($_REQUEST['staff_password']);}
-	$cols[]='phone';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['phone']);
-	$cols[]='admin';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['admin']);
-	$cols[]='address';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['address']);
-	$cols[]='city';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['city']);
-	$cols[]='state';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['state']);
-	$cols[]='zip';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['zip']);
+if (isset($_POST['submit'])) {
+	$cols[]='firstname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['firstname'] ?? null);
+	$cols[]='lastname';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['lastname'] ?? null);
+	$cols[]='email';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['email'] ?? null);
+	$cols[]='title';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['title'] ?? null);
+	if(!empty($_REQUEST['staff_password'])){$cols[]='password';$vals[]=sha1($_REQUEST['staff_password'] ?? null);}
+	$cols[]='phone';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['phone'] ?? null);
+	$cols[]='admin';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['admin'] ?? null);
+	$cols[]='address';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['address'] ?? null);
+	$cols[]='city';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['city'] ?? null);
+	$cols[]='state';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['state'] ?? null);
+	$cols[]='zip';$vals[]=mysqli_real_escape_string($dbc, $_REQUEST['zip'] ?? null);
 	if(!empty($staffID)){
 		$upd=db_send($cols,$vals,'staff','update',"id='$staffID'",1);//die();
 	} else {
 		$ins=db_send($cols,$vals,'staff','insert');
 		$staffID=mysql_insert_id();
 	}
-	if($staffID==$userinfo['id'] && !empty($_REQUEST['staff_password']))$_SESSION['password']=sha1($_REQUEST['staff_password']);
+	if($staffID==$userinfo['id'] && !empty($_REQUEST['staff_password']))$_SESSION['password']=sha1($_REQUEST['staff_password'] ?? null);
 		header('Location: staff_profile.php?staffID='.$staffID);
 } else{ ?>
 <html>

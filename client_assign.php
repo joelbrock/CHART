@@ -17,8 +17,8 @@ require("mysql_connect.php");
 			// print_r($c_assign);
 //			print_r($_POST);
 
-if ($_POST['submit']) {
-	if($_POST['remove']==1){
+if (isset($_POST['submit'])) {
+	if(isset($_POST['remove']) && $_POST['remove']==1){
 		$del=mysqli_query($dbc, "DELETE FROM staff_clients WHERE staffID='{$_POST['staffID']}' AND clientID='{$_POST['clientID']}'");
 		if($del) $msg='success'; else $msg='error';
 		die($msg);
@@ -80,7 +80,7 @@ echo "<select name=\"staffmenu\">\n<option>Select Staff</option>";
 foreach ($s_meta as $sid=>$staff) { 
 	$fullname = $staff['firstname'] . " " . $staff['lastname'];
 	echo "<option value=\"" . $sid . "\" ";
-	if ($sid == $_POST['staffmenu']) { echo "SELECTED"; }
+	if (isset($_POST['staffmenu']) && $sid == $_POST['staffmenu']) { echo "SELECTED"; }
 	echo ">" . $fullname;
 	echo "</option>\n";
 }
@@ -114,7 +114,10 @@ if(isset($s_assign[$s])) {
 	echo "<hr /><h3>".$s_meta[$s]['firstname'].' '.$s_meta[$s]['lastname']."</h3>";
 	// echo "<div class='client_ct'>".."</div>";
 	foreach($cs as $k=>$c){
-		echo "<div id='s-{$s}_c-{$c}'>".$c_meta[$c]['name'].(!empty($c_meta[$c]['code'])?" - ".$c_meta[$c]['code']:'')." <sup><a href='#' class='remove' onclick='return removeAssignment({$c},{$s})'>x</a></sup></div>";
+		echo "<div id='s-{$s}_c-{$c}'>"
+			.(!empty($c_meta[$c]['name']) ? $c_meta[$c]['name'] : '')
+			.(!empty($c_meta[$c]['code']) ? " - ".$c_meta[$c]['code'] : '')
+			." <sup><a href='#' class='remove' onclick='return removeAssignment({$c},{$s})'>x</a></sup></div>";
 	}
 	echo "<br>";
 	$i++;

@@ -1,10 +1,13 @@
 <?php
+mysqli_report(MYSQLI_REPORT_OFF);
 require("mysql_connect.php");
 $clientID = $_REQUEST['clientID'];
+$fill = "";
+// $jid = "";
 // $clientID = $_POST['clientID'];
 $staffID = ($admin==false || empty($_REQUEST['staffID'])?$userinfo['id']:$_REQUEST['staffID']);
-if ($_GET['jid']) {
-	$jid = $_GET['jid'];
+if ($_GET['jid'] ?? null) {
+	$jid = $_GET['jid'] ?? null;
 	$query = "SELECT * FROM journal WHERE id = ".$jid;
 	$result = mysqli_query($dbc, $query);
 	$fill = mysqli_fetch_assoc($result);
@@ -20,6 +23,7 @@ if (!empty($clientID)){
 		empty($clientID); echo "No client found.";
 //		header('Location: entry.php');
 	} else {
+		$thisQ = $_GET['thisQ'] ?? null;
 		$hoursq = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . " AND YEAR(created) = YEAR(curdate()) AND (MONTH(created) >= (".(3*($thisQ-1)+1).") AND MONTH(created)<=(".(3*$thisQ)."))";
 		$hoursr = mysqli_query($dbc, $hoursq);
 		$hours = mysqli_fetch_row($hoursr);
@@ -85,11 +89,22 @@ if (!empty($clientID)){
 <?php
 include_once('topbar.php');
 echo "<br /><br />";
-if (($_POST['submit']) || ($_POST['addnew'])) {
+if ( ( $_POST['submit'] ?? null ) || ( $_POST['addnew'] ?? null ) ) {
 	foreach ($_POST AS $key => $value) {
 		if(!empty($value) && !isset($$key))
 			$$key = $value;
 	}
+	$Flags = $Flags ?? null;
+	$TeamNote = $TeamNote ?? null;
+	$RetreatDate1 = $RetreatDate1 ?? null;
+	$RetreatDate2 = $RetreatDate2 ?? null;
+	$RetreatNote = $RetreatNote ?? null;
+	$ClientNote = $ClientNote ?? null;
+	$Hours = $Hours ?? null;
+	$Billable = $Billable ?? null;
+	$Quarterly = $Quarterly ?? null;
+	$QtrInc = $QtrInc ?? null;
+	
 	$clientID = (!$clientID) ? $_POST['clientID'] : $clientID;
 	$reportR = mysqli_query($dbc, "SELECT * FROM report_content");
 	$report = mysqli_fetch_row($reportR);
@@ -101,25 +116,29 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 		$time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
 		$Hours = number_format(($time_seconds / 60) / 60, 2);
 	}
-	
-	if ($_GET['jid']) {
+	if ($_GET['jid'] ?? null) {
 		$update = "UPDATE journal SET Hours = '$Hours', 
 			Billable = '$Billable', 
-			TeamNote = '".mysqli_real_escape_string($dbc, $TeamNote)."', 
-			ClientNote = '".mysqli_real_escape_string($dbc, $ClientNote). "', 
-			RetreatNote = '".mysqli_real_escape_string($dbc, $RetreatNote). "', 
+			TeamNote = '".mysqli_real_escape_string($dbc, $TeamNote ?? null)."', 
+			ClientNote = '".mysqli_real_escape_string($dbc, $ClientNote ?? null). "', 
+			RetreatNote = '".mysqli_real_escape_string($dbc, $RetreatNote ?? null). "', 
 			RetreatDate1 = '$RetreatDate1',
 			RetreatDate2 = '$RetreatDate2',
 			QtrInc = '$QtrInc', 
-			Quarterly = '".mysqli_real_escape_string($dbc, $Quarterly)."', 
-			Intro = '".mysqli_real_escape_string($dbc, $Intro)."',
+			Quarterly = '".mysqli_real_escape_string($dbc, $Quarterly ?? null)."', 
+			Intro = '".mysqli_real_escape_string($dbc, $Intro ?? null)."',
 			Date = '$Date',
 			Category = '$Category',
 			created = NOW()
 		WHERE id = $jid";
 	} else {
-		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES
-			($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysqli_real_escape_string($dbc, $TeamNote) . "', '". mysqli_real_escape_string($dbc, $ClientNote)."', '". mysqli_real_escape_string($dbc, $RetreatNote)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysqli_real_escape_string($dbc, $Quarterly)."', '".mysqli_real_escape_string($dbc, $Intro)."', '$Date', '$Category', NOW())";
+
+		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES ($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysqli_real_escape_string($dbc, $TeamNote ?? null) . "', '". mysqli_real_escape_string($dbc, $ClientNote ?? null)."', '". mysqli_real_escape_string($dbc, $RetreatNote ?? null)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysqli_real_escape_string($dbc, $Quarterly ?? null)."', '".mysqli_real_escape_string($dbc, $Intro ?? null)."', '$Date', '$Category', NOW())";
+		
+		// $upQ = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES (?, ?, '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', NOW())";
+		// $update = mysqli_prepare($dbc,$upQ, array($clientID, $staffID, $Flags, $Hours, $Billable,mysqli_real_escape_string($dbc, $TeamNote ?? null), mysqli_real_escape_string($dbc, $ClientNote ?? null), mysqli_real_escape_string($dbc, $RetreatNote ?? null), $RetreatDate1, $RetreatDate2, $QtrInc, mysqli_real_escape_string($dbc, $Quarterly ?? null),  mysqli_real_escape_string($dbc, $Intro ?? null), $Date, $Category));
+		// $update = mysqli_execute($dbc, $upR);
+		
 	}
 	// echo $update;
 	if (!mysqli_query($dbc, $update)) {
@@ -154,14 +173,14 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 			if(empty($csv_flags)) $csv_flags="''";
 			$del=mysqli_query($dbc, "DELETE FROM journal_flags WHERE journal_id='$thisid' AND flag_id NOT IN ($csv_flags)");
 	echo "<div class='add_entry aligncenter'><h1>1 record added</h1>";
-	echo "<p><a href='".$PHP_SELF ."?clientID=".$clientID." '>Add another entry for ".$row['name']."</a></p>";
+	echo "<p><a href='".$_SERVER['PHP_SELF'] ."?clientID=".$clientID." '>Add another entry for ".$row['name']."</a></p>";
 	// echo "<p><a href='".$PHP_SELF."'>Add an entry for another client</a></p>";
 	echo "<p><a href='dashboard.php?staffID=".$staffID."'>View all your clients entries</a></p>";
 	echo "</div>";
-	// debug_p($_REQUEST, "all the data coming in");
-
 	
-} elseif ($_GET['addFirst'] == 1) {
+	// debug_p($_REQUEST, "all the data coming in");
+	
+	// } elseif ($_GET['addFirst'] == 1) {
 	// echo "<br /><br /><br /><br />" . $clientID;
 	
 } elseif (empty($_POST['clientID']) && empty($_GET['clientID'])) {
@@ -195,7 +214,7 @@ if (($_POST['submit']) || ($_POST['addnew'])) {
 } 
 elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 // else {
-	$clientID = ($_POST['clientID']) ? $_POST['clientID'] : $_GET['clientID'];
+	$clientID = ($_POST['clientID'] ?? null) ? $_POST['clientID'] : $_GET['clientID'];
 	// echo "<br /><br /><br /><br />ClientID: " . $clientID;
 	// $c = mysqli_query($dbc, "SELECT * FROM clients WHERE id='".$clientID."'") or die(mysql_error());
 	// if(mysqli_num_rows($c)>0)$client=mysqli_fetch_array($c);
@@ -221,8 +240,10 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	$fcolor = client_health_color($clientID);
 	
 	echo "<div id='wrapper'><div id='client_profile'>";
-	
-	echo "<form method='POST' action='$PHP_SELF'>\n";
+	// $jid = (isset($_GET['jid'])) ? $_GET['jid'] : 0;
+	echo "<form method='POST' action='" . $_SERVER['PHP_SELF']; 
+	echo (isset($_GET['jid'])) ? '?jid=' . $_GET['jid'] : ''; 
+	echo "'>\n";
 	echo "<table border=0 cellspacing=0 id='track' class='aligncenter'><tr>";
 	$code = (!$row['code']) ? '' : $row['code'];
 	$page_head = ($code=='') ? $row['name'] : $code . " &mdash; " . $row['name']; 
@@ -276,8 +297,13 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 ?>
 	</td></tr>
 	
-	<tr><td colspan=2><span class='label'>Date: </span><input type='text' name='Date' class='datepicker' value="<?php echo  ($fill['Date']) ? $fill['Date'] : date("Y-m-d")?>" size=12 />
-	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' id="timer" value='<?php echo  ($jid) ? $fill['Hours'] : 0; ?>' />
+	<tr><td colspan=2><span class='label'>Date: </span><input type='text' name='Date' class='datepicker' value='
+	<?php 
+		echo isset($fill['Date']) ? $fill['Date'] : date("Y-m-d");
+		$fillCat = empty($fill['Category']) ? "" : $fill['Category'];
+	?>
+	' size=14 />
+	&nbsp;&nbsp;&nbsp;&nbsp;<span class='label'>Log Time (Hours): </span><input name='Hours' id="timer" value='<?php echo  isset($jid) ? $fill['Hours'] : 0; ?>' />
 	<input type="button" value="Start/Stop Timer" onclick="doTimer();" />
 	</td>
 	</tr>
@@ -286,18 +312,18 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 		<table class="tbl" border="0" style='height: 25px; padding:0; margin:0; border:none;'>
 			<tr>
 				<td style='border:none;'><select name='Category' onchange='switchType(this.value)'>
-					<option value='call' <?php echo  ($fill['Category'] == 'call') ? "SELECTED" : ""; ?>>Call *</option>
-					<option value='quarterly' <?php echo  ($fill['Category'] == 'quarterly') ? "SELECTED" : ""; ?>>Quarterly *</option>
-					<option value='retreat' <?php echo  ($fill['Category'] == 'retreat') ? "SELECTED" : ""; ?>>Retreat *</option>
-					<option value='research' <?php echo  ($fill['Category'] == 'research') ? "SELECTED" : ""; ?>>Research</option>
-					<option value='email' <?php echo  ($fill['Category'] == 'email') ? "SELECTED" : ""; ?>>Email</option>
-					<option value='consult' <?php echo  ($fill['Category'] == 'consult') ? "SELECTED" : ""; ?>>Consult/Meeting</option>
-					<option value='internal' <?php echo  ($fill['Category'] == 'internal') ? "SELECTED" : ""; ?>>Internal</option>
-					<option value='adjust' <?php echo  ($fill['Category'] == 'adjust') ? "SELECTED" : ""; ?>>Hours Adjustment</option>
+					<option value='call' <?php echo ($fillCat == 'call') ? "SELECTED" : ""; ?>>Call *</option>
+					<option value='quarterly' <?php echo  ($fillCat == 'quarterly') ? "SELECTED" : ""; ?>>Quarterly *</option>
+					<option value='retreat' <?php echo  ($fillCat == 'retreat') ? "SELECTED" : ""; ?>>Retreat *</option>
+					<option value='research' <?php echo  ($fillCat == 'research') ? "SELECTED" : ""; ?>>Research</option>
+					<option value='email' <?php echo  ($fillCat == 'email') ? "SELECTED" : ""; ?>>Email</option>
+					<option value='consult' <?php echo  ($fillCat == 'consult') ? "SELECTED" : ""; ?>>Consult/Meeting</option>
+					<option value='internal' <?php echo  ($fillCat == 'internal') ? "SELECTED" : ""; ?>>Internal</option>
+					<option value='adjust' <?php echo  ($fillCat == 'adjust') ? "SELECTED" : ""; ?>>Hours Adjustment</option>
 				</select></td>
 				<td style='border:none;'>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type='hidden' name='Billable' value='0' />
-					<input type='checkbox' id='Billable' name='Billable' <?php echo ($fill['Billable']==0 && ($jid)) ? "" : "CHECKED"; ?> /></td>
+					<input type='checkbox' id='Billable' name='Billable' <?php echo (empty($fill['Billable']) && isset($jid)) ? "" : "CHECKED"; ?> /></td>
 				<td class='label' style='border:none;'><label for='Billable'>Billable</label>
 					<?php //echo $fill['Billable']; ?>
 				</td>
@@ -307,15 +333,15 @@ elseif (!empty($_POST['clientID']) || !empty($_GET['clientID'])) {
 	</td>
 	</tr>
 <!--<tr><td class='label'>Flags: </td><td><textarea rows=1 cols=110 name='Flags'></textarea></td></tr> -->
-	<tr id='row_nts'><td class='label'>Notes to Self/Team: </td><td><textarea rows=3 cols=80 name='TeamNote'><?php echo  ($jid) ? $fill['TeamNote'] : ''; ?></textarea></td></tr>
-	<tr id='row_ntc'><td class='label'>Notes to Client: </td><td><textarea rows=6 cols=80 name='ClientNote'><?php echo  ($jid) ? $fill['ClientNote'] : ''; ?></textarea>
-		<div id='QtrInc_cont'><input type='checkbox' name='QtrInc' id='QtrInc' value='1' /> 
+	<tr id='row_nts'><td class='label'>Notes to Self/Team: </td><td><textarea rows=3 cols=80 name='TeamNote'><?php echo  isset($jid) ? $fill['TeamNote'] : ''; ?></textarea></td></tr>
+	<tr id='row_ntc'><td class='label'>Notes to Client: </td><td><textarea rows=6 cols=80 name='ClientNote'><?php echo  isset($jid) ? $fill['ClientNote'] : ''; ?></textarea>
+		<div id='QtrInc_cont'><input type='checkbox' name='QtrInc' id='QtrInc' value='1' <?php echo  (isset($fill['QtrInc']) && $fill['QtrInc'] == '1') ? "checked" : ""; ?> /> 
 		<label for='QtrInc'>Include notes on Quarterly Report?</label></div></td></tr>
-	<tr id='row_nq' style='display:none;'><td class='label'>Quarterly Notes: </td><td><textarea rows=6 cols=80 name='Quarterly'><?php echo  ($jid) ? $fill['Quarterly'] : ''; ?></textarea></td></tr>
-	<tr id='row_ni' style='display:none;'><td class='label'>Personal intro note: </td><td><textarea rows=3 cols=80 name='Intro'><?php echo  ($jid) ? $fill['Intro'] : $report['intro_default']; ?></textarea></td></tr>
-	<tr id='row_nr' style='display:none;'><td class='label'>Retreat Notes: </td><td><textarea rows=6 cols=80 name='RetreatNote'><?php echo  ($jid) ? $fill['RetreatNote'] : ''; ?></textarea></td></td></tr>
-	<tr id='row_rd' style='display:none;'><td colspan=2><span class='label'>Retreat Date Start: </span><input type='text' name='RetreatDate1' class='datepicker' value="<?php echo  ($fill['RetreatDate1']) ? $fill['RetreatDate1'] : '' ?>" size=12 />	
-		<span class='label'>Retreat Date End: </span><input type='text' name='RetreatDate2' class='datepicker' value="<?php echo  ($fill['RetreatDate2']) ? $fill['RetreatDate2'] : '' ?>" size=12 /></tr>
+	<tr id='row_nq' style='display:none;'><td class='label'>Quarterly Notes: </td><td><textarea rows=6 cols=80 name='Quarterly'><?php echo  (isset($jid) && $fillCat == "quarterly") ? $fill['Quarterly'] : ''; ?></textarea></td></tr>
+	<tr id='row_ni' style='display:none;'><td class='label'>Personal intro note: </td><td><textarea rows=3 cols=80 name='Intro'><?php echo  isset($jid) ? $fill['Intro'] : ''; ?></textarea></td></tr>	
+	<tr id='row_nr' style='display:none;'><td class='label'>Retreat Notes: </td><td><textarea rows=6 cols=80 name='RetreatNote'><?php echo  isset($jid) ? $fill['RetreatNote'] : ''; ?></textarea></td></td></tr>
+	<tr id='row_rd' style='display:none;'><td colspan=2><span class='label'>Retreat Date Start: </span><input type='text' name='RetreatDate1' class='datepicker' value="<?php echo  isset($fill['RetreatDate1']) ? $fill['RetreatDate1'] : '' ?>" size=12 />	
+		<span class='label'>Retreat Date End: </span><input type='text' name='RetreatDate2' class='datepicker' value="<?php echo  isset($fill['RetreatDate2']) ? $fill['RetreatDate2'] : '' ?>" size=12 /></tr>
 
 	<input type='hidden' name='staffID' value='<?php echo $row['StaffID']?>' />
 	<input type='hidden' name='clientID' value='<?php echo $clientID?>' />
@@ -370,7 +396,7 @@ function switchType(type){
 	}
 }
 $(function(){
-	switchType('<?php echo  $fill['Category'] ?>');
+	switchType('<?php echo isset($fill['Category']) ? $fill['Category'] : "Call *"; ?>');
 });
 
 </script>

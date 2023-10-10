@@ -6,8 +6,8 @@ require_once('fpdf/fpdf.php');
 // require_once('fpdf/fpdf_merge/fpdf_merge.php');
 require_once('fpdi/src/autoload.php');
 
-$clientID = $_REQUEST['clientID'];
-$staffID = $_REQUEST['staffID'];
+$clientID = $_REQUEST['clientID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 $reportID=1;
 
 $rptquery = mysqli_query($dbc, "SELECT * FROM report_content c WHERE c.id = " . $reportID . " LIMIT 1");
@@ -57,7 +57,7 @@ class PDF extends FPDF
 
 		$this->Cell($in);
 		$this->SetFont('Arial','',12);
-		if ($row[0] == '' || (!$row[0])) {
+		if (empty($row[0]) || (!isset($row[0]))) {
 			$this->Write(6, $intro_default);
 			$this->Ln(6);
 		} else {
@@ -323,6 +323,7 @@ class PDF extends FPDF
 		$nolimit = $client['program'] == "CBLD Unlimited" ? TRUE : FALSE;
 
 		$this->Image('images/columinate-letterhead-v2.png',5,3,200);
+		// $this->Image('images/columinate-letterhead-v2.png',5,3,200);
 		$this->Ln(32);
 		$this->SetY(46);
 		$this->SetFont('Arial','B',14);
@@ -416,7 +417,7 @@ class PDF extends FPDF
 			}
 		}
 
-		if ($ret[2] != '') {
+		if (!empty($ret[2])) {
 			$this->Ln(10);
 			$this->Cell($in);
 			$this->MultiCell( 175, 5.25, stripslashes($ret[2]));

@@ -1,14 +1,15 @@
 <?php
 require("mysql_connect.php");
+mysqli_report(MYSQLI_REPORT_OFF);
 ?>
 <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"></link>
 <?php
-$clientID = $_REQUEST['clientID'];
-$staffID = $_REQUEST['staffID'];
+$clientID = $_REQUEST['clientID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 $reportID=1;
 
-$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : thisQ();
-$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
+$thisQ = ($_GET['thatQ'] ?? null) ? $_GET['thatQ'] : thisQ();
+$thatY = ($_GET['thatY'] ?? null) ? $_GET['thatY'] : date('Y');
 if (date('z') < 14) $thatY--;
 
 $query = "SELECT * FROM clients c ORDER BY c.name";

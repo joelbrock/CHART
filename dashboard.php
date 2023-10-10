@@ -6,10 +6,13 @@ require("mysql_connect.php");
 // while ($row = mysqli_fetch_row($results)) {
 // 	$autocompletedata .= $row[0] . " ";
 // }
+$getDelete = $_GET['delete'] ?? null;
+if ($getDelete) {
+	if ($getDelete == 'delete') 
+		$jid = $_GET['jid'];
+		$delR = mysqli_query($dbc, "DELETE FROM journal WHERE id = $jid");
+}
 
-if ($_GET['delete'] == 'delete') 
-	$jid = $_GET['jid'];
-	$delR = mysqli_query($dbc, "DELETE FROM journal WHERE id = $jid");
 ?>
 
 <html>
@@ -119,10 +122,10 @@ $(document).ready(function(){
 
 <?php
 include_once('topbar.php');
-
-$staffID = $_GET['staffID'];
-if(empty($staffID))
-	$client_ID = $_GET['clientID'];
+// $clientID = '';
+$staffID = $_GET['staffID'] ?? null;
+// if(empty($staffID))
+	$client_ID = $_GET['clientID'] ?? null;
 
 if (!$client_ID && !$staffID) { $staffID = $userinfo['id']; }//add authentication
 // 
@@ -135,7 +138,7 @@ $sqlyear = "";
 $sqlgroup = "";
 $sqlgroup = "";
 $sqlactive = "AND c.active <> 0";
-switch ($_GET['range']) {
+switch ($_GET['range'] ?? null) {
 	case 'today':
 		$sqlrange = "AND j.Date = CURDATE()";
 		break;
@@ -270,7 +273,7 @@ echo "</div>";
 
 //$default_group = 'prev_year';
 $default_group = 'this_year';
-$group_on = ($_GET['range']) ? $_GET['range'] : $default_group;
+$group_on = ($_GET['range'] ?? null) ? $_GET['range'] : $default_group;
 $tags = array(
 	'range' => ($group_on) ? $group_on : 0,
 	'staffID' => (is_numeric($staffID)) ? 'consultant' : 0,
@@ -304,7 +307,7 @@ if(mysqli_num_rows($result)>0){
 			<th class='sortable-numeric'>hrs. used (tot)</th>\n
 			<th class='sortable-numeric'>pct. remain</th>\n	
 			<!-- <th class='sortable-text'>cat</th> -->\n";
-	echo ($admin) ? "<th class='sortable-numeric'>att</th>" : "";
+	echo (isset($admin)) ? "<th class='sortable-numeric'>att</th>" : "";
 	echo "		<th>Client Notes</th>\n
 			<th class='sortable-date'>Retreat</th>\n			
 			<th class='sortable-date'>Date</th>\n
@@ -365,7 +368,7 @@ if(mysqli_num_rows($result)>0){
 			
 			// echo "<td align='center'>".substr($row['cat'],0,6)."</td>";
 
-			if ($admin) {
+			if (isset($admin)) {
 				$cblQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE (a.event = 'CBL' OR a.event = '101') AND a.year = $sdate AND a.att <> ''
 			        AND a.clientID = ".$row['clientID']." GROUP BY a.id";
 				$cblR = mysqli_query($dbc, $cblQ);

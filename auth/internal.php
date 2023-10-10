@@ -1,5 +1,8 @@
 <?php
+mysqli_report(MYSQLI_REPORT_OFF);
 require_once('mysql_connect.php');
+$login = false;
+// $admin = false;
 if(!function_exists('thisQ')) require_once('functions.php');
 //GET LOGGED IN USER
 if (isset($_SESSION['username'])){
@@ -8,7 +11,8 @@ if (isset($_SESSION['username'])){
 	if (@mysqli_num_rows($result) != 0) {
 		$userinfo = mysqli_fetch_assoc($result);
 		$login = true;
-		if($userinfo['admin']==1) $admin=true;
+		// if($userinfo['admin']==1) $admin=true;
+		$admin = ($userinfo['admin']==1) ? true : false;
 		$hoursq = "SELECT * FROM journal WHERE ".($admin==true?"":"StaffID='{$userinfo['id']}'")." AND YEAR(Date) = YEAR(curdate()) AND (MONTH(Date) >= (".(3*(thisQ()-1)+1).") AND MONTH(Date)<=(".(3*thisQ())."))";
 		$hoursr = mysqli_query($dbc, $hoursq); 
 		// echo "thisQ: " . thisQ();

@@ -1,4 +1,5 @@
 <?php
+mysqli_report(MYSQLI_REPORT_OFF);
 require_once('mysql_connect.php');
 ?>
 <!DOCTYPE html>
@@ -61,8 +62,8 @@ $(function() {
 <body>
 <?php
 
-$clientID = $_REQUEST['clientID'];
-
+$clientID = $_REQUEST['clientID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 $query = "SELECT j.created AS datetime, 
 		c.name AS coopname, 
 		j.TeamNote as teamnotes, 
@@ -107,6 +108,7 @@ if (REPORT_READY) {
 } else {
 	echo "<li><b>Reports Arent Ready Yet.</b></li>\n";
 }
+$client = "";
 if(!empty($clientID)){
 	if(!$client) {
 		$c = mysqli_query($dbc, "SELECT * FROM clients WHERE id='".$clientID."'");

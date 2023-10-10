@@ -35,6 +35,7 @@ function escape_data ($data) {
 } // End of function.
 function db_send($cols,$vals,$table,$type,$where='',$display='') {
 	global $dbc;
+	mysqli_report(MYSQLI_REPORT_OFF);
 	if($type=='insert'){
 		$c_sql=implode(',',$cols);
 		$v_sql='';
@@ -70,7 +71,7 @@ function db_send($cols,$vals,$table,$type,$where='',$display='') {
 		}
 	}
 	
-	if($display==1) echo $sql;
+	// if($display==1) echo $sql;
 	return mysqli_query($dbc, $sql);
 }
 
@@ -232,12 +233,13 @@ function mini_dash($client,$align) {
 		AND Billable = 1 AND YEAR(Date) = " . $thisY;
 	$hoursr = mysqli_query($dbc, $hoursq);
 	$hours = mysqli_fetch_row($hoursr);
-	$hoursTotal = $hours[0];
-	if ($hoursTotal >= ($row['q_hours']/3) && $hoursTotal < (2*$row['q_hours']/3)) { $fcolor = '#ff9900'; }
-	if ($hoursTotal >= (2*$row['q_hours']/3)) { $fcolor = '#cc0033'; }
-	
 	$totr = mysqli_query($dbc, "SELECT * FROM clients WHERE ID = $client");
 	$tots = mysqli_fetch_assoc($totr);
+
+	$hoursTotal = $hours[0];
+	if ($hoursTotal >= ($tots['q_hours']/3) && $hoursTotal < (2*$tots['q_hours']/3)) { $fcolor = '#ff9900'; }
+	if ($hoursTotal >= (2*$tots['q_hours']/3)) { $fcolor = '#cc0033'; }
+	
 	$tot = $tots['total_hours'];
 	$hoursleft = $tot - $hoursTotal;
 	// echo $tot . " - " . $hoursTotal;
