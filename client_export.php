@@ -1,8 +1,8 @@
 <?php
 require("mysql_connect.php");
-require('../library/fpdf/fpdf.php');
-$clientID = $_REQUEST['clientID'];
-$staffID = $_REQUEST['staffID'];
+require('fpdf/fpdf.php');
+$clientID = $_REQUEST['clientID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 $reportID=1;
 
 class PDF extends FPDF
@@ -12,7 +12,7 @@ function Header()
 {
 	global $client,$thisQ;
 	//Logo
-	$this->Image('../images/pdf_header.png',5,5,200);
+	$this->Image('images/pdf_header.png',5,5,200);
 	$this->Ln(32);
 }
 
@@ -53,7 +53,7 @@ function PutLink($URL,$txt)
 //Report
 function Report($client,$filename,$dest='I')
 {
-	global $userinfo,$thisQ;
+	global $dbc,$userinfo,$thisQ;
 	$clientID = $_REQUEST['clientID'];
 	$this->AliasNbPages();
 	$this->AddPage();
@@ -138,7 +138,6 @@ function Report($client,$filename,$dest='I')
 		}
 	}
 
-
 	if ($ret[2] != '') {
 		$this->Ln(10);
 		$this->Cell($in);
@@ -182,8 +181,10 @@ function Report($client,$filename,$dest='I')
 		}
 		foreach($c as $client) {
 			$clientID=$client['id'];
-			$thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
-			$thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
+			// $thisQ = ($_GET['thatQ']) ? $_GET['thatQ'] : $thisQ;
+			$thisQ = ($_GET['thatQ']) ?? null;
+			// $thatY = ($_GET['thatY']) ? $_GET['thatY'] : date('Y');
+			$thatY = ($_GET['thatY']) ?? date('Y');
 			$hours_ty = "SELECT SUM(Hours) FROM journal WHERE ClientID = " . $clientID . ($admin==false?" AND StaffID='{$userinfo['id']}'":'') . " AND YEAR(Date) = $thatY";
 			$hours_tyr = mysqli_query($dbc, $hours_ty);
 			$client['hours_ty'] = mysqli_fetch_row($hours_tyr);

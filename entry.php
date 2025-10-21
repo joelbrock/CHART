@@ -133,14 +133,14 @@ if ( ( $_POST['submit'] ?? null ) || ( $_POST['addnew'] ?? null ) ) {
 		WHERE id = $jid";
 	} else {
 
-		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES ($clientID, $staffID, '$Flags', '$Hours', '$Billable', '". mysqli_real_escape_string($dbc, $TeamNote ?? null) . "', '". mysqli_real_escape_string($dbc, $ClientNote ?? null)."', '". mysqli_real_escape_string($dbc, $RetreatNote ?? null)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysqli_real_escape_string($dbc, $Quarterly ?? null)."', '".mysqli_real_escape_string($dbc, $Intro ?? null)."', '$Date', '$Category', NOW())";
+		$update = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES ($clientID, '$staffID', '$Flags', '$Hours', '$Billable', '". mysqli_real_escape_string($dbc, $TeamNote ?? null) . "', '". mysqli_real_escape_string($dbc, $ClientNote ?? null)."', '". mysqli_real_escape_string($dbc, $RetreatNote ?? null)."', '$RetreatDate1', '$RetreatDate2', '$QtrInc', '".mysqli_real_escape_string($dbc, $Quarterly ?? null)."', '".mysqli_real_escape_string($dbc, $Intro ?? null)."', '$Date', '$Category', NOW())";
 		
 		// $upQ = "INSERT INTO journal (ClientID, StaffID, Flags, Hours, Billable, TeamNote, ClientNote, RetreatNote, RetreatDate1, RetreatDate2, QtrInc, Quarterly, Intro, Date, Category, created) VALUES (?, ?, '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', NOW())";
 		// $update = mysqli_prepare($dbc,$upQ, array($clientID, $staffID, $Flags, $Hours, $Billable,mysqli_real_escape_string($dbc, $TeamNote ?? null), mysqli_real_escape_string($dbc, $ClientNote ?? null), mysqli_real_escape_string($dbc, $RetreatNote ?? null), $RetreatDate1, $RetreatDate2, $QtrInc, mysqli_real_escape_string($dbc, $Quarterly ?? null),  mysqli_real_escape_string($dbc, $Intro ?? null), $Date, $Category));
 		// $update = mysqli_execute($dbc, $upR);
 		
 	}
-	// echo $update;
+	//echo $update;
 	if (!mysqli_query($dbc, $update)) {
 		die('Error: ' . mysqli_error($update).$update);
 	}

@@ -251,15 +251,15 @@ class PDF extends FPDF
 		// $attWEB = (mysqli_num_rows($webR)==0) ? "None" : mysqli_num_rows($webR);
 		// $this->Cell( 20, 12, "$attWEB", 0, 0, 'L');
 		// $this->Ln(6);
-		// $this->SetFont('Arial','',12);
-		// $this->Cell( 60, 12, "Cooperative Cafe: ", 0, 0, 'L' );
-		// $this->SetFont('Arial','B',12);
-		// $scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY
-		// 	AND a.clientID = $clientID GROUP BY a.id";
-		// $scsR = mysqli_query($dbc, $scsQ);
-		// $attSCS = (mysqli_num_rows($scsR)==0) ? "None" : mysqli_num_rows($scsR);
-		// $this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
-		// $this->Ln(6);
+		$this->SetFont('Arial','',12);
+		$this->Cell( 60, 12, "Cooperative Cafe: ", 0, 0, 'L' );
+		$this->SetFont('Arial','B',12);
+		$scsQ = "SELECT a.coop, a.lastname FROM attendance a, clients c WHERE a.event = 'CC' AND a.year = $printY 
+			AND a.clientID = $clientID GROUP BY a.id";
+		$scsR = mysqli_query($dbc, $scsQ);
+		$attSCS = (mysqli_num_rows($scsR)==0) ? "None" : mysqli_num_rows($scsR);
+		$this->Cell( 20, 12, "$attSCS", 0, 0, 'L');
+		$this->Ln(6);
 		$this->SetFont('Arial','',12);
 		$this->Cell( 60, 12, "CBLD Academy: ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
@@ -316,24 +316,6 @@ class PDF extends FPDF
 	    $this->Cell(array_sum($w),0,'');
 	}
 	
-	protected function getHoursUsageStatus($used_hours, $total_hours, $current_quarter, $tolerance = 0.2) 
-	{
-	    if ($total_hours == 0) return 'no plan'; // Avoid division by zero
-
-	    $expected = $total_hours * ($current_quarter / 4);
-	    $lower_bound = $expected * (1 - $tolerance);
-	    $upper_bound = $expected * (1 + $tolerance);
-
-	    if ($used_hours > $total_hours) {
-	        return 'over'; // Used more than available
-	    } elseif ($used_hours < $lower_bound) {
-	        return 'behind'; // Not using enough
-	    } elseif ($used_hours > $upper_bound) {
-	        return 'ahead'; // Using too fast
-	    } else {
-	        return 'balanced'; // On track
-	    }
-	}
 	
 	//Report
 	public function Report($client,$filename,$dest='I')
@@ -396,26 +378,15 @@ class PDF extends FPDF
 		$this->SetFont('Arial','',12);
 		$this->Cell( 90, 12, "Do we have an established pattern of contact? ", 0, 0, 'L' );
 		$this->SetFont('Arial','B',12);
-		// $this->Cell( 20, 12, ($client['hrs']['cat']['quarterly']>=2 ? 'yes ' : 'no') , 0, 0, 'L');
-		$this->Cell( 20, 12, (count($client['hrs']['cat'])>=2?'yes':'no'), 0, 0, 'L');
+		$this->Cell( 20, 12, ($client['hrs']['cat']>=2?'yes':'no'), 0, 0, 'L');
 		$this->SetFont('Arial','',12);
 		$this->Ln(6);
-
-		$status = $this->getHoursUsageStatus($client['hrs']['total'], $client['total_hours'], $thisQ);
-		switch ($status) {
-		    case 'over': $msg = 'no. Over budget'; break;
-		    case 'behind': $msg = 'no. Behind pace'; break;
-		    case 'ahead': $msg = 'yes. Ahead of pace'; break;
-		    case 'balanced': $msg = 'yes. Balanced.'; break;
-		    default: $msg = 'N/A';
-		}
 
 		$this->Cell($in);
 		if ($nolimit === FALSE) {
 			$this->Cell( 94, 12, "On track for balanced use of hours for the year? ", 0, 0, 'L' );
 			$this->SetFont('Arial','B',12);
-			// $this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'no.' : 'yes.' ), 0, 0, 'L');
-			$this->Cell(20, 12, $msg, 0, 0, 'L');
+			$this->Cell( 20, 12, ($client['hrs']['alert']=='low'?'yes':'no'), 0, 0, 'L');
 		}
 		$this->SetFont('Arial','B',12);
 		$this->Ln(6);
@@ -505,16 +476,13 @@ class PDF extends FPDF
 
 
 		$this->AddPage();
-		$this->Image('images/2025Q3.jpeg',0,10,210);
+		$this->Image('images/2024Q4.jpeg',0,10,210);
 		
-		$this->Link(2,10,200,140,'https://columinate.coop/coopcafe');
-
-
+		$this->Link(2,140,110,140,'https://columinate.coop/events');
 		
-		$this->Link(2,160,100,15,'https://columinate.coop/cbld');
-		// $this->Link(120,30,100,70,'https://www.youtube.com/watch?v=cFlJV4LzI7g');
-		// $this->Link(120,160,110,110,'http://cbld.academy');
-		$this->Link(105,265,80,15,'mailto:cbld_enrollment@columinate.coop');
+		$this->Link(120,30,100,70,'https://www.youtube.com/watch?v=cFlJV4LzI7g');		
+		$this->Link(120,140,110,110,'http://cbld.academy');
+		$this->Link(120,255,200,25,'mailto:cbld_enrollment@columinate.coop');
 
 		
 
@@ -593,7 +561,7 @@ if(!empty($clientID)){
 		$client['q_hours']=$client['total_hours']/4; //est hours per q
 
 		if($client['hrs']['total'] > $client['total_hours'] || ($client['hrs']['total'] == $client['total_hours'] && $thisQ<4))$client['hrs']['alert']='med';
-		elseif ($thisQ<4 && $client['hrs']['total'] > ($client['q_hours']*$thisQ) && $client['hrs']['total'] < (2*$client['q_hours']/3)) $client['hrs']['alert']='high';
+		elseif ($thisQ<4 && $client['hrs']['total'] > ($row['q_hours']*$thisQ) && $client['hrs']['total'] < (2*$row['q_hours']/3)) $client['hrs']['alert']='high';
 		else $client['hrs']['alert']='low';
 			$filename=($action=='batch'?$_SERVER['DOCUMENT_ROOT'].'/reports/':'').'CBLD_'.$thatY.'_Q'.$thisQ.'-'.getSlug($client['name']).'.pdf'; if($action=='batch')$filenames[]=$filename;
 			$pdf=new PDF();

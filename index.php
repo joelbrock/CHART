@@ -1,8 +1,8 @@
 <?php
 mysqli_report(MYSQLI_REPORT_OFF);
 require("mysql_connect.php");
-$clientID = $_REQUEST['clientID'];
-$staffID = $_REQUEST['staffID'];
+$clientID = $_REQUEST['clientID'] ?? null;
+$staffID = $_REQUEST['staffID'] ?? null;
 $login_error = false;
 
 if(!empty($_REQUEST['email'])){
@@ -27,7 +27,7 @@ if($auth==1 || $row['id']==1){
 	$sessionid = session_id();
 	$user_now = time();
 	
-	if ($_POST['referer']!=''){
+	if (!empty($_POST['referer'])){
 		header("Location:".$_POST['referer']);
 	} else {
 		header("Location: dashboard.php");
@@ -45,7 +45,7 @@ if($auth==1 || $row['id']==1){
 <body>
 <?php
 			
-		echo "<form method='POST' action='" . $_SERVER[PHP_SELF];
+		echo "<form method='POST' action='" . $_SERVER['PHP_SELF'];
 		echo "'>\n<table border=0 cellspacing=0 id='login'>";
 		echo "<tr><td colspan=2 align='center'><img src='images/CBLDlogo.png' alt='CBLD Logo' width=300 border=0 /></td></tr>";
 		// echo "<tr><td colspan=2><span class='cname'>Login</span></td></tr>";
