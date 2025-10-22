@@ -1,61 +1,178 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CHaRT - Modernized Version
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+This is the modernized version of CHaRT (Client Hours and Reporting Tool), built with Laravel 12 and modern PHP practices. The application has been completely refactored while preserving all core functionality.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Key Improvements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🏗️ **Modern Architecture**
+- **Laravel 12** with PHP 8.2+
+- **Eloquent ORM** for database interactions
+- **Service Layer** pattern for business logic
+- **Proper MVC** separation of concerns
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🗄️ **Database Modernization**
+- **Migration-based** schema management
+- **Foreign key constraints** for data integrity
+- **Proper relationships** between models
+- **Type casting** and validation
 
-## Learning Laravel
+### 📊 **Enhanced PDF Generation**
+- **DomPDF** instead of legacy FPDF
+- **Blade templates** for report layouts
+- **Modern CSS** styling
+- **Better error handling**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🎨 **Modern Frontend**
+- **Tailwind CSS** for responsive design
+- **Clean, intuitive interface**
+- **Mobile-friendly** dashboard
+- **Real-time filtering** and search
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features Preserved
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+✅ **Time Tracking** - All original journal functionality  
+✅ **Quarterly Reports** - Enhanced PDF generation  
+✅ **Client Management** - Full CRUD operations  
+✅ **Staff Assignments** - Many-to-many relationships  
+✅ **Event Attendance** - Complete tracking system  
+✅ **Usage Analytics** - Hours balance calculations  
 
-## Laravel Sponsors
+## New Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+🚀 **Modern Dashboard** - Clean, responsive interface  
+🚀 **API Endpoints** - RESTful API for future integrations  
+🚀 **Better Security** - CSRF protection, input validation  
+🚀 **Improved Performance** - Optimized queries, caching  
+🚀 **Mobile Support** - Responsive design  
 
-### Premium Partners
+## Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd modern-chart
+   ```
+
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Database setup**
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+5. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+## API Endpoints
+
+### Reports
+- `GET /reports/quarterly/{client}` - Generate quarterly report
+- `GET /reports/batch` - Generate batch reports
+
+### Dashboard
+- `GET /` - Main dashboard with filtering
+
+## Database Schema
+
+### Core Tables
+- **clients** - Client information and settings
+- **staff** - Staff members and authentication
+- **journal** - Time tracking entries
+- **attendance** - Event attendance records
+- **staff_clients** - Many-to-many relationship
+
+### Key Relationships
+- Client → Journal (One-to-Many)
+- Staff → Journal (One-to-Many)
+- Client ↔ Staff (Many-to-Many)
+- Client → Attendance (One-to-Many)
+
+## Migration from Legacy
+
+### Data Migration
+1. Export data from legacy MySQL database
+2. Transform data to match new schema
+3. Import using Laravel seeders
+4. Verify relationships and constraints
+
+### Feature Mapping
+| Legacy Feature | Modern Implementation |
+|----------------|----------------------|
+| `pdf.php` | `ReportService` + Blade templates |
+| `dashboard.php` | `DashboardController` + Tailwind |
+| `entry.php` | Journal CRUD with validation |
+| Raw SQL queries | Eloquent relationships |
+
+## Development
+
+### Code Structure
+```
+app/
+├── Http/Controllers/     # Request handling
+├── Models/               # Eloquent models
+├── Services/            # Business logic
+└── Providers/           # Service providers
+
+resources/
+├── views/               # Blade templates
+└── css/                 # Styling
+
+database/
+├── migrations/          # Schema definitions
+└── seeders/            # Sample data
+```
+
+### Key Services
+- **ReportService** - PDF generation and report logic
+- **HoursCalculationService** - Usage analytics
+- **ClientService** - Client management
+
+## Security Improvements
+
+- **CSRF Protection** on all forms
+- **Input Validation** with Laravel rules
+- **SQL Injection Prevention** via Eloquent
+- **XSS Protection** with Blade escaping
+- **Authentication** ready for implementation
+
+## Performance Optimizations
+
+- **Eager Loading** to prevent N+1 queries
+- **Database Indexing** on foreign keys
+- **Query Optimization** with proper relationships
+- **Caching** ready for implementation
+
+## Future Enhancements
+
+- [ ] **Authentication System** (Laravel Breeze/Sanctum)
+- [ ] **Real-time Updates** (WebSockets)
+- [ ] **Mobile App** (API-based)
+- [ ] **Advanced Analytics** (Charts/Graphs)
+- [ ] **Automated Notifications** (Email/SMS)
+- [ ] **Multi-tenant Support** (Organization isolation)
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Follow PSR-12 coding standards
+2. Write tests for new features
+3. Update documentation
+4. Use meaningful commit messages
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Same as original CHaRT application - see LICENSE file for details.

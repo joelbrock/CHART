@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: chart-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=chart_production
+      - DB_USERNAME=chart_user
+      - DB_PASSWORD=chart_secure_password
+      - SEED_DATABASE=true
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./bootstrap/cache:/var/www/html/bootstrap/cache
+    depends_on:
+      - db
+    networks:
+      - chart-network
+
+  db:
+    image: mysql:8.0
+    container_name: chart-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_secure_password
+      - MYSQL_DATABASE=chart_production
+      - MYSQL_USER=chart_user
+      - MYSQL_PASSWORD=chart_secure_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - chart-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: chart-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - chart-network
+
+volumes:
+  db_data:
+
+networks:
+  chart-network:
+    driver: bridge
